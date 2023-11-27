@@ -1,0 +1,25 @@
+.dark-gray-background{
+-fx-background-color: #46474A;
+}
+
+.pagination {
+    -fx-background-color: red;
+}
+
+.text-field{
+   -fx-font-family: "Arial";
+   -fx-font-size: 14;
+   -fx-padding: 5,1,1,1;
+   -fx-border-color: #568199;
+   -fx-border-width: 0.8;
+   -fx-border-radius: 3;
+   -fx-text-fill: #0F2A62;
+   -fx-prompt-text-fill: #426283;
+}
+
+.id_lvList{
+-fx-padding: 5px;
+}
+
+
+
