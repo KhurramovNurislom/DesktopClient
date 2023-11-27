@@ -35,7 +35,7 @@ public class MainPageController implements Initializable {
     @FXML
     public Circle id_Circle;
     @FXML
-    public JFXButton id_btnEriOlish;
+    public JFXButton id_btnGetKeyPair;
     @FXML
     public JFXButton id_btnImzoQoyish;
     @FXML
@@ -81,7 +81,7 @@ public class MainPageController implements Initializable {
         id_lblUserNameMini.setText(Main.getLoginData().getUser().getUsername());
         id_lblEmailMini.setText(Main.getLoginData().getUser().getEmail());
 
-        id_btnEriOlish.setOnAction(new EventHandler<ActionEvent>() {
+        id_btnGetKeyPair.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 mainPane.setRight(id_vbLeft);

@@ -3,6 +3,7 @@ package org.example;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -10,6 +11,7 @@ import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import okhttp3.OkHttpClient;
 import org.example.moduls.login.LoginData;
+import org.example.moduls.login.UserData;
 import org.example.utils.SSLClient;
 
 
@@ -33,6 +35,10 @@ public class Main extends Application {
     @Setter
     static LoginData loginData;
 
+    @Getter
+    @Setter
+    static UserData userData;
+
     @Override
     public void start(Stage stage) throws Exception {
 
@@ -40,9 +46,9 @@ public class Main extends Application {
         Scene scene = new Scene(fxmlLoader.load());
 
         stage.setTitle("Kirish oynasi...");
-//        stage.getIcons().add(new Image("icon.png"));
+        stage.getIcons().add(new Image("/images/icon.png"));
         stage.setScene(scene);
-        stage.setResizable(false);
+//        stage.setResizable(false);
         stage.show();
     }
 

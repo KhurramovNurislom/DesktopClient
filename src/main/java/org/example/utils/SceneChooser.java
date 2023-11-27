@@ -35,7 +35,7 @@ public class SceneChooser {
         scene.getStylesheets().add
                 (Objects.requireNonNull(Main.class.getResource("/css/Style.css")).toExternalForm());
         stage.setScene(scene);
-        stage.setResizable(false);
+//        stage.setResizable(false);
         stage.show();
     }
 }

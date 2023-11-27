@@ -74,7 +74,7 @@ public class LoginPageController implements Initializable {
                     if (new Requestes().RequestLogin(id_tfLogin.getText(), id_pfPassword.getText())) {
                         SceneChooser.changeScene(event, "/fxml/MainPage.fxml", "Asosiy oyna...");
                     } else {
-                        System.out.println("login yoki parol xato");
+                        System.out.println("login yoki parol xato...");
                     }
                 } catch (Exception e) {
                     System.err.println("error: LoginPageController(btnTizimgaKirish) => " + e.getMessage());

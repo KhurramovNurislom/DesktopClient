@@ -71,7 +71,7 @@
 
                 <Line endX="250.0" stroke="WHITE"/>
 
-                <JFXButton fx:id="id_btnEriOlish" alignment="BASELINE_LEFT" prefHeight="50.0" prefWidth="250.0"
+                <JFXButton fx:id="id_btnGetKeyPair" alignment="BASELINE_LEFT" prefHeight="50.0" prefWidth="250.0"
                            style="-fx-cursor: hand;" text="  Kalit olish" textFill="WHITE">
                     <font>
                         <Font name="Arial Bold" size="18.0"/>
