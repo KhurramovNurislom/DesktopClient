@@ -1,70 +1,85 @@
-//package org.example.controllers;
-//
-//import com.example.webclient.Main;
-//import com.example.webclient.services.PDFWorker;
-//import com.example.webclient.services.Requestes;
-//import com.example.webclient.signature.VerifyDigitalSignature;
-//import com.google.zxing.ChecksumException;
-//import com.google.zxing.FormatException;
-//import com.google.zxing.NotFoundException;
-//import com.jfoenix.controls.JFXButton;
-//import javafx.event.ActionEvent;
-//import javafx.event.EventHandler;
-//import javafx.fxml.Initializable;
-//import javafx.scene.control.Label;
-//import javafx.scene.control.TextField;
-//import javafx.scene.image.Image;
-//import javafx.scene.image.ImageView;
-//import javafx.scene.paint.Color;
-//import javafx.stage.FileChooser;
-//import javafx.stage.Stage;
-//
-//import java.io.File;
-//import java.io.IOException;
-//import java.net.URL;
-//import java.nio.file.Files;
-//import java.nio.file.Path;
-//import java.nio.file.attribute.BasicFileAttributes;
-//import java.text.DecimalFormat;
-//import java.text.SimpleDateFormat;
-//import java.util.Date;
-//import java.util.List;
-//import java.util.ResourceBundle;
-//
-//public class SignVerPageController implements Initializable {
-//    public JFXButton id_btnChangeFile;
-//    public TextField id_tfFilePath;
-//    public Label id_lblImzoEgasi;
-//    public JFXButton id_btnSignVerification;
-//    public ImageView id_ivUserImage;
-//    public TextField id_tfLogin;
-//    public TextField id_tfEmail;
-//    public TextField id_tfSignedFileName;
-//    public TextField id_tfSignedFilePath;
-//    public TextField id_tfSignedFileVolume;
-//    public TextField id_tfFileSignedTime;
-//    public ImageView id_ivCheckSign;
-//    public Label id_lblVerification;
-//    private FileChooser fileChooser;
-//    private List<File> fileList;
-//    private String link;
-//    private String[] temp;
-//
-//    @Override
-//    public void initialize(URL location, ResourceBundle resources) {
-//
-//        id_lblVerification.setVisible(false);
-//
-//        fileChooser = new FileChooser();
-//        fileChooser.getExtensionFilters().addAll(
-//                new FileChooser.ExtensionFilter("All files", "*.*"),
-//                new FileChooser.ExtensionFilter("pdf files", "*.pdf"));
-//
-//        id_btnChangeFile.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//                id_btnChangeFile.setDisable(true);
-//
+package org.example.controllers;
+
+import javafx.fxml.FXML;
+import org.example.Main;
+import org.example.utils.PDFWorker;
+import org.example.utils.Requestes;
+//import org.example.signature.VerifyDigitalSignature;
+import com.google.zxing.ChecksumException;
+import com.google.zxing.FormatException;
+import com.google.zxing.NotFoundException;
+import com.jfoenix.controls.JFXButton;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.ResourceBundle;
+
+public class SignVerPageController implements Initializable {
+   @FXML
+   public JFXButton id_btnChangeFile;
+   @FXML
+   public TextField id_tfFilePath;
+   @FXML
+   public Label id_lblImzoEgasi;
+   @FXML
+   public JFXButton id_btnSignVerification;
+   @FXML
+   public ImageView id_ivUserImage;
+   @FXML
+   public TextField id_tfLogin;
+   @FXML
+   public TextField id_tfEmail;
+   @FXML
+   public TextField id_tfSignedFileName;
+   @FXML
+   public TextField id_tfSignedFilePath;
+   @FXML
+   public TextField id_tfSignedFileVolume;
+   @FXML
+   public TextField id_tfFileSignedTime;
+   @FXML
+   public ImageView id_ivCheckSign;
+   @FXML
+   public Label id_lblVerification;
+
+    private FileChooser fileChooser;
+    private List<File> fileList;
+    private String link;
+    private String[] temp;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+        id_lblVerification.setVisible(false);
+
+        fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("All files", "*.*"),
+                new FileChooser.ExtensionFilter("pdf files", "*.pdf"));
+
+        id_btnChangeFile.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                id_btnChangeFile.setDisable(true);
+
 //                fileList = fileChooser.showOpenMultipleDialog(new Stage());
 //                if (fileList != null) {
 //                    fileList.stream().forEach(selectedFiles -> {
@@ -87,14 +102,16 @@
 //                        throw new RuntimeException(e);
 //                    }
 //                }
-//                id_btnChangeFile.setDisable(false);
-//            }
-//        });
-//
-//        id_btnSignVerification.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//                /**      Test ishchi   */
+
+                id_btnChangeFile.setDisable(false);
+            }
+        });
+
+        id_btnSignVerification.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                /**      Test ishchi   */
 //                for (int i = 0; i < temp.length; i++) {
 //                    boolean boolSignVerify = VerifyDigitalSignature.verifyDigitalSignature(Main.getVerification().getFayl().getImzo(), temp[i], Main.getVerification().getPubkey());
 //
@@ -144,23 +161,23 @@
 //
 //                    }
 //                }
-//
-//                /*****************************************************/
-//            }
-//        });
-//    }
-//
-//    private String PDFWorker() {
-//
-//
-//        return "asdasdasdasd";
-//    }
-//
-//    private void PaneSingerInfo() {
-//
-//
-//    }
-//}
-//
-//
-//
+
+                /*****************************************************/
+            }
+        });
+    }
+
+    private String PDFWorker() {
+
+
+        return "asdasdasdasd";
+    }
+
+    private void PaneSingerInfo() {
+
+
+    }
+}
+
+
+

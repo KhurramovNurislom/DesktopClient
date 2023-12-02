@@ -5,7 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import okhttp3.*;
 import org.example.Main;
-import org.example.moduls.login.LoginData;
+import org.example.modules.login.LoginData;
 
 public class Requestes {
 

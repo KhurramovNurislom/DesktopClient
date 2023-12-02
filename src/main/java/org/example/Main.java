@@ -10,8 +10,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import okhttp3.OkHttpClient;
-import org.example.moduls.login.LoginData;
-import org.example.moduls.login.UserData;
+import org.example.modules.login.LoginData;
+import org.example.modules.login.UserData;
 import org.example.utils.SSLClient;
 
 
@@ -42,7 +42,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/LoginPage.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/MainPage.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
         stage.setTitle("Kirish oynasi...");

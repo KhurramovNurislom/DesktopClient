@@ -16,7 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.example.moduls.login.UserData;
+import org.example.modules.login.UserData;
 import org.example.utils.SceneChooser;
 
 import java.io.File;

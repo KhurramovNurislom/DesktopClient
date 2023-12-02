@@ -12,6 +12,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import org.example.crypto.UzDSt_1092_2009;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -45,7 +46,7 @@ public class KeysGenPageController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
 
-        addPrivateKeys();
+//        addPrivateKeys();
 
 
         id_lvList.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -59,10 +60,13 @@ public class KeysGenPageController implements Initializable {
         });
 
 
-//        id_btnGenerate.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//                id_btnGenerate.setDisable(true);
+        id_btnGenerate.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                id_btnGenerate.setDisable(true);
+                keyPairGenerate();
+
+
 //                if (!id_tfKeyName.getText().isEmpty() && !id_tfPassword.getText().isEmpty() && !id_tfPassword2.getText().isEmpty() && id_tfPassword.getText().equals(id_tfPassword2.getText())) {
 //
 //                    new GenerateKeyPair().generateKeyPair(id_tfKeyName.getText(), id_tfPassword.getText());
@@ -86,59 +90,68 @@ public class KeysGenPageController implements Initializable {
 //                id_tfPassword2.clear();
 //                id_btnGenerate.setDisable(false);
 //                addPrivateKeys();
-//            }
-//        });
 
-        id_btnDel.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-
-//                try {
-//                    new Requestes().RequestKeyDel(items);
-//                } catch (IOException e) {
-//                    throw new RuntimeException(e);
-//                }
-//                addPrivateKeys();
+                id_btnGenerate.setDisable(false);
             }
         });
+
+
+//        id_btnDel.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent event) {
+//
+////                try {
+////                    new Requestes().RequestKeyDel(items);
+////                } catch (IOException e) {
+////                    throw new RuntimeException(e);
+////                }
+////                addPrivateKeys();
+//            }
+//        });
     }
 
-    private void addPrivateKeys() {
-
-//        try {
-//            new Requestes().RequestKeys();
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-
-//        ImageView ivPrivKey = new ImageView(new Image("privKey.png"));
-//        ivPrivKey.setFitWidth(30);
-//        ivPrivKey.setFitHeight(30);
-
-        ObservableList<String> items = FXCollections.observableArrayList();
-
-//        System.out.println("O'lcham: " + Main.getKeys().getData().getKalits().getData().length);
-//        for (int i = 0; i < Main.getKeys().getData().getKalits().getData().length; i++) {
-////            ImageView ivDel = new ImageView(new Image(new File("del.png").toURI().toString()));
-////            ivDel.setFitHeight(30);
-////            ivDel.setFitWidth(30);
-////            JFXButton btn = new JFXButton();
-////            btn.setGraphic(ivPrivKey);
-////            btn.setText(Main.getKeys().getData().getKalits().getData()[i].getAttributes().getNomi());
-////            btn.setGraphic(ivDel);
-//            items.add(Main.getKeys().getData().getKalits().getData()[i].getAttributes().getNomi());
-////            System.out.println("kerak: " + Main.getKeys().getData().getKalits().getData()[i].getAttributes().getNomi());
-//        }
-
-//        for (int i = 0; i < 100; i++) {
-//            items.add("Imzo_" + i);
-//
-//
-//        }
-
-        id_lvList.setItems(items);
+    private void keyPairGenerate() {
+        UzDSt_1092_2009 uzDSt10922009 = new UzDSt_1092_2009();
+        uzDSt10922009.generateKeyPair("12345");
 
     }
+
+//    private void addPrivateKeys() {
+//
+////        try {
+////            new Requestes().RequestKeys();
+////        } catch (IOException e) {
+////            throw new RuntimeException(e);
+////        }
+//
+////        ImageView ivPrivKey = new ImageView(new Image("privKey.png"));
+////        ivPrivKey.setFitWidth(30);
+////        ivPrivKey.setFitHeight(30);
+//
+//        ObservableList<String> items = FXCollections.observableArrayList();
+//
+////        System.out.println("O'lcham: " + Main.getKeys().getData().getKalits().getData().length);
+////        for (int i = 0; i < Main.getKeys().getData().getKalits().getData().length; i++) {
+//////            ImageView ivDel = new ImageView(new Image(new File("del.png").toURI().toString()));
+//////            ivDel.setFitHeight(30);
+//////            ivDel.setFitWidth(30);
+//////            JFXButton btn = new JFXButton();
+//////            btn.setGraphic(ivPrivKey);
+//////            btn.setText(Main.getKeys().getData().getKalits().getData()[i].getAttributes().getNomi());
+//////            btn.setGraphic(ivDel);
+////            items.add(Main.getKeys().getData().getKalits().getData()[i].getAttributes().getNomi());
+//////            System.out.println("kerak: " + Main.getKeys().getData().getKalits().getData()[i].getAttributes().getNomi());
+////        }
+//
+////        for (int i = 0; i < 100; i++) {
+////            items.add("Imzo_" + i);
+////
+////
+////        }
+//
+//        id_lvList.setItems(items);
+//
+//    }
 
 
 //        private void FulledMessagePane() {
@@ -167,11 +180,5 @@ public class KeysGenPageController implements Initializable {
 ////                id_lvList.setItems(FXCollections.observableArrayList(items.subList(fromIndex, toIndex)));
 ////                return new BorderPane(id_lvList, null, null, new Label("Page " + (pageIndex + 1)), null);
 ////            });
-//        }
-
-    private void Test() {
-
-
-    }
-
+//}
 }

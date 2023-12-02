@@ -12,6 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
+
 import org.example.Main;
 import org.example.utils.FXMLLoaderMade;
 import org.example.utils.SceneChooser;
@@ -68,7 +69,7 @@ public class MainPageController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         defaultPage();
         timeNow();
-//        Pageinfo();
+//        pageInfo();
 
 //        id_btnImzoniBoshqarish.setVisible(false);
 
@@ -78,8 +79,8 @@ public class MainPageController implements Initializable {
 
         id_pnUserInfo.setVisible(false);
 
-        id_lblUserNameMini.setText(Main.getLoginData().getUser().getUsername());
-        id_lblEmailMini.setText(Main.getLoginData().getUser().getEmail());
+//        id_lblUserNameMini.setText(Main.getLoginData().getUser().getUsername());
+//        id_lblEmailMini.setText(Main.getLoginData().getUser().getEmail());
 
         id_btnGetKeyPair.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -87,9 +88,9 @@ public class MainPageController implements Initializable {
                 mainPane.setRight(id_vbLeft);
                 id_pnUserInfo.setVisible(false);
                 try {
-                    mainPane.setCenter(new FXMLLoaderMade().getPane("SignGenerationPage"));
+                    mainPane.setCenter(new FXMLLoaderMade().getPane("KeysGenPage"));
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    System.err.println("exception: MainPageController(btnGetKeyPair) => " + e.getMessage());
                 }
             }
         });
@@ -101,7 +102,7 @@ public class MainPageController implements Initializable {
                 try {
                     mainPane.setCenter(new FXMLLoaderMade().getPane("SigningPage"));
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    System.err.println("exception: MainPageController(btnImzoQoyish) => " + e.getMessage());
                 }
             }
         });
@@ -111,9 +112,9 @@ public class MainPageController implements Initializable {
                 mainPane.setRight(id_vbLeft);
                 id_pnUserInfo.setVisible(false);
                 try {
-                    mainPane.setCenter(new FXMLLoaderMade().getPane("SignVerificationPage"));
+                    mainPane.setCenter(new FXMLLoaderMade().getPane("SignVerPage"));
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    System.err.println("exception: MainPageController(btnImzoniTekshirish) => " + e.getMessage());
                 }
             }
         });
@@ -126,7 +127,7 @@ public class MainPageController implements Initializable {
 //                try {
 //                    mainPane.setCenter(new FXMLLoaderMade().getPane("ManageSignPage"));
 //                } catch (IOException e) {
-//                    e.printStackTrace();
+//                  System.err.println("exception: MainPageController(btnImzoniBoshqarish) => " + e.getMessage());
 //                }
 //            }
 //        });
@@ -138,7 +139,7 @@ public class MainPageController implements Initializable {
                 try {
                     mainPane.setCenter(new FXMLLoaderMade().getPane("ChatPage"));
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    System.err.println("exception: MainPageController(btnChat) => " + e.getMessage());
                 }
             }
         });
@@ -150,10 +151,12 @@ public class MainPageController implements Initializable {
 //                try {
 //                    mainPane.setCenter(new FXMLLoaderMade().getPane("GuidePage"));
 //                } catch (IOException e) {
-//                    throw new RuntimeException(e);
+//                         System.err.println("exception: MainPageController(btnYoriqnoma) => " + e.getMessage());
+//                         throw new RuntimeException(e);
 //                }
 //            }
 //        });
+
 //        id_btnYangilash.setOnAction(new EventHandler<ActionEvent>() {
 //            @Override
 //            public void handle(ActionEvent event) {
@@ -161,7 +164,8 @@ public class MainPageController implements Initializable {
 //                try {
 //                    mainPane.setCenter(new FXMLLoaderMade().getPane("UpdatePage"));
 //                } catch (IOException e) {
-//                    throw new RuntimeException(e);
+//                     System.err.println("exception: MainPageController(btnYangilanish) => " + e.getMessage());
+//                     throw new RuntimeException(e);
 //                }
 //            }
 //        });
@@ -180,7 +184,6 @@ public class MainPageController implements Initializable {
             }
         });
 
-
         id_btnPowerOff.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -192,9 +195,9 @@ public class MainPageController implements Initializable {
     private void defaultPage() {
         mainPane.setRight(id_vbLeft);
         try {
-            mainPane.setCenter(new FXMLLoaderMade().getPane("SigningPage"));
+            mainPane.setCenter(new FXMLLoaderMade().getPane("KeysGenPage"));
         } catch (IOException e) {
-            System.err.println("error: MainPageController().defaultPage() => " + e.getMessage());
+            System.err.println("exception: MainPageController().defaultPage() => " + e.getMessage());
         }
     }
 
@@ -205,7 +208,7 @@ public class MainPageController implements Initializable {
                 try {
                     Thread.sleep(10);
                 } catch (Exception e) {
-                    System.err.println("error: MainPageController().timeNow() => " + e.getMessage());
+                    System.err.println("exception: MainPageController().timeNow() => " + e.getMessage());
                 }
                 final String timeNow = simpleDateFormat.format(new Date());
                 Platform.runLater(() -> {
@@ -216,11 +219,12 @@ public class MainPageController implements Initializable {
         thread.start();
     }
 
-//    public void Pageinfo() {
+//    public void pageInfo() {
 //        try {
 ////            new Requestes().RequestUsers(); /** Boshqa userlar haqida ma'lumotlar olinadi */
 //            new Requestes().ResponseUsersMe(); /** Login bilan kirgan user haqida */
 //        } catch (IOException e) {
+//            System.err.println("exception: MainPageController().pageInfo() => " + e.getMessage());
 //            throw new RuntimeException(e);
 //        }
 //        id_lblUserName.setText(Main.getLoginData().getUser().getUsername());

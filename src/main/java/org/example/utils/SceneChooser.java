@@ -25,12 +25,13 @@ public class SceneChooser {
             }
 
         } catch (IOException e) {
-            System.err.println("error: SceneChooser => " + e.getMessage());
+            System.err.println("exception: SceneChooser => " + e.getMessage());
         }
 
         assert event != null;
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle(title);
+        assert root != null;
         Scene scene = new Scene(root);
         scene.getStylesheets().add
                 (Objects.requireNonNull(Main.class.getResource("/css/Style.css")).toExternalForm());
