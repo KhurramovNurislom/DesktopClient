@@ -1,6 +1,5 @@
 package org.example.utils;
 
-import org.example.Main;
 import org.example.modules.SignedFileInfo;
 import com.google.zxing.*;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
@@ -32,16 +31,19 @@ public class PDFWorker {
 
     private String outputImageFile;
 
-    public void PasteSignLink(String filePathPDF, String signText) throws IOException, WriterException {
-        File file = new File(filePathPDF);
-        generateQRCodeImage(signText, 100, 100, file.getParentFile() + File.separator + "signImage.png", file);
+    public void PasteSignLink(String filePathPDF, String signText) throws RuntimeException {
+        try {
+            File file = new File(filePathPDF);
+            generateQRCodeImage(signText, 100, 100, file.getParentFile() + File.separator + "signImage.png", file);
+        } catch (WriterException | IOException e) {
+            System.err.println("Exception : PDFWorker().PasteSignLink() => " + e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     public String ReadSignLink(String inputPDFFile) throws ChecksumException, NotFoundException, IOException, FormatException {
-
 //        System.out.println("file path => " + inputPDFFile);
         File file = new File(inputPDFFile);
-
         return ImageExtraction(file);
     }
 
@@ -51,13 +53,9 @@ public class PDFWorker {
         hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
         BitMatrix bitMatrix = qrCodeWriter.encode(sign, BarcodeFormat.QR_CODE, width, height, hints);
         Path path = FileSystems.getDefault().getPath(filePath);
-
         MatrixToImageWriter.writeToPath(bitMatrix, "JPG", path);
-
         File fileImage = new File(filePDF.getParentFile() + File.separator + "signImage.png");
-
         AddImage(filePDF, fileImage);
-
         fileImage.delete();
     }
 
@@ -84,7 +82,7 @@ public class PDFWorker {
             /** O'zgartirilgan PDF faylini saqlash */
             String fileNameWithoutExtension = filePDF.getName().substring(0, filePDF.getName().lastIndexOf("."));
 
-            String pathSignedFile = filePDF.getParentFile() + File.separator + fileNameWithoutExtension + " " +  new SimpleDateFormat("HH_mm_ss dd_MM_yyyy").format(new Date()) + ".pdf";
+            String pathSignedFile = filePDF.getParentFile() + File.separator + fileNameWithoutExtension + " " + new SimpleDateFormat("HH_mm_ss dd_MM_yyyy").format(new Date()) + ".pdf";
 
             SignedFileInfo signedFileInfo = new SignedFileInfo();
 
@@ -119,13 +117,13 @@ public class PDFWorker {
 
                     try {
                         sign = ReadQRCode(image);
-                    } catch (NotFoundException ex) {
+                    } catch (NotFoundException ignored) {
                     }
                 }
             }
 
         } catch (IOException e) {
-            System.err.println("129 qator: " + e.getMessage());
+            System.err.println("exception: PDFWorker(). ImageExtraction() => " + e.getMessage());
         }
 
         return sign;

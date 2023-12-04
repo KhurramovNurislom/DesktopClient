@@ -72,7 +72,7 @@ public class KeysGenPageController implements Initializable {
 //                    new GenerateKeyPair().generateKeyPair(id_tfKeyName.getText(), id_tfPassword.getText());
 //
 //                    try {
-//                        new Requestes().RequestkeysGen(Main.getPrivateKey(), Main.getPublicKey(), id_tfKeyName.getText());
+//                        new Requests().RequestkeysGen(Main.getPrivateKey(), Main.getPublicKey(), id_tfKeyName.getText());
 //                    } catch (IOException e) {
 //                        throw new RuntimeException(e);
 //                    }
@@ -101,7 +101,7 @@ public class KeysGenPageController implements Initializable {
 //            public void handle(ActionEvent event) {
 //
 ////                try {
-////                    new Requestes().RequestKeyDel(items);
+////                    new Requests().RequestKeyDel(items);
 ////                } catch (IOException e) {
 ////                    throw new RuntimeException(e);
 ////                }
@@ -119,7 +119,7 @@ public class KeysGenPageController implements Initializable {
 //    private void addPrivateKeys() {
 //
 ////        try {
-////            new Requestes().RequestKeys();
+////            new Requests().RequestKeys();
 ////        } catch (IOException e) {
 ////            throw new RuntimeException(e);
 ////        }
@@ -157,7 +157,7 @@ public class KeysGenPageController implements Initializable {
 //        private void FulledMessagePane() {
 //
 //            try {
-//                new Requestes().RequestUserMessages();
+//                new Requests().RequestUserMessages();
 //            } catch (IOException e) {
 //                throw new RuntimeException(e);
 //            }

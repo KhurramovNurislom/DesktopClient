@@ -1,10 +1,11 @@
 package org.example.crypto;
 
-import org.bouncycastle.asn1.pkcs.Pfx;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.jce.spec.ECNamedCurveGenParameterSpec;
+import org.example.utils.Requests;
 import org.paynet.util.encoders.Hex;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.security.*;
 
@@ -16,14 +17,34 @@ public class UzDSt_1092_2009 {
 
         KeyPair keyPair = generationKeyPair();
 
-        System.out.println("\n PrivateKey => " + Hex.toHexString(keyPair.getPrivate().getEncoded()));
-        System.out.println("\n PublicKey => " + Hex.toHexString(keyPair.getPublic().getEncoded()));
+//        System.out.println("\n PrivateKey => " + Hex.toHexString(keyPair.getPrivate().getEncoded()));
+//
+//        System.out.println("\n PublicKey => " + Hex.toHexString(keyPair.getPublic().getEncoded()));
 
-        PFX pfx = new PFX();
-        pfx.pfx();
+        /** Bazaga kalitlarni yuklash */
+        try {
+            new Requests().RequestkeysGen(Hex.toHexString(keyPair.getPrivate().getEncoded()), Hex.toHexString(keyPair.getPublic().getEncoded()), "keyName");
+        } catch (IOException e) {
+            System.err.println("exception: UzDSt_1092_2009().generateKeyPair() => " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+
+        /** PFX file integratsiya */
+//        PFX pfx = new PFX();
+//        pfx.pfx();
+
+//        Main.setKeyPair(keyPair);
+//        PFX pfx = new PFX();
+//        try {
+//            pfx.generateCertificate();
+//        } catch (Exception e) {
+//            System.err.println("exception : UzDSt_1092_2009().generateKeyPair() => " + e.getMessage());
+//            throw new RuntimeException(e);
+//        }
+        /** /PFX file integratsiya */
+
 
     }
-
 
 
     public void generateKeyPair2() {
@@ -40,8 +61,8 @@ public class UzDSt_1092_2009 {
 
             System.out.println("\n\n" + Hex.toHexString(keyPair.getPrivate().getEncoded()));
             System.out.println("\n\n" + Hex.toHexString(keyPair.getPublic().getEncoded()));
-            System.out.println("\n\n" + keyPair.getPrivate().toString());
-            System.out.println("\n\n" + keyPair.getPublic().toString());
+//            System.out.println("\n\n" + keyPair.getPrivate().toString());
+//            System.out.println("\n\n" + keyPair.getPublic().toString());
             System.out.println(Hex.toHexString(sign));
 
             System.out.println("X: " + new BigInteger("2ce004f1422395361b49ad4a10e7336152957804708c04eb5c1f32298d821a87", 16));

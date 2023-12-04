@@ -1,5 +1,6 @@
 package org.example.controllers;
 
+import com.google.zxing.WriterException;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
@@ -15,16 +16,21 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.example.Main;
+import org.example.utils.PDFWorker;
+import org.example.utils.Requests;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class SigningPageController implements Initializable {
 
     @FXML
-
     public JFXButton id_btnChangeFile;
     @FXML
     public JFXButton id_btnSign;
@@ -50,6 +56,7 @@ public class SigningPageController implements Initializable {
     public ImageView id_ivCheckSign;
     @FXML
     public Label id_lblVerification;
+
     private final FileChooser fileChooser = new FileChooser();
     private List<File> fileList;
     private final ObservableList<String> keysList = FXCollections.observableArrayList();
@@ -89,65 +96,90 @@ public class SigningPageController implements Initializable {
             public void handle(ActionEvent event) {
                 id_btnSign.setDisable(true);
 
-                /** Imzo index*/
-                String[] temp = id_tfFilePath.getText().split(",");
+                String t = id_tfFilePath.getText();
+                t = t.replaceAll(", ", ",");
+
+                /** Imzo index */
+                String[] temp = t.split(",");
 
 
-                if (!id_tfFilePath.getText().isEmpty() && new File(id_tfFilePath.getText()).isFile()) {
+                for (String s : temp) {
+                    System.err.println(" => " + s);
+                }
 
-
+                if (!id_tfFilePath.getText().isEmpty()) {
                     /**  Fayllar tanlanganda imzo qo'yish */
+                    for (String s : temp) {
+                        if (new File(s).isFile() && new File(s).getName().toLowerCase().endsWith(".pdf")) {
 
-//                    for (int i = 0; i < temp.length; i++) {
-//
-////                        System.out.println("orginal file => " + temp[i]);
-//
-//                        try {
-//                            /** PDF document ga qrcode ga link upload qilish */
-//                            PDFWorkerMethod(temp[i], signLink());
-//
-////                            System.out.println("qrcode pasted file => " + new PDFWorker().ReadSignLink(Main.getSignedFileInfo().getFilePath()));
-//
-//                            /** Imzolangan QRCode qo'yilgan faylni qrcode dagi link ka upload qilish */
-//                            UpLoadSignedFile(Main.getSignedFileInfo().getFilePath());
-//
-//
-//                            /** File ga imzo qo'yilmoqda */
-//                            sign = GenerateDigitalSignature.generateDigitalSignature(Main.getKeys().getData().getKalits().
-//                                            getData()[id_cbSignes.getSelectionModel().getSelectedIndex()].getAttributes().getPrivkey(),
-//                                    new FileInputStream(Main.getSignedFileInfo().getFilePath()));
-//
-////                            System.out.println("sign : " + sign);
-//                            /** Messages fayl va imzo haqidagi ma'lumotlar yuklanadi */
-//                            new Requestes().ResponseMessage(Main.getLoginData().getUser().getId(), sign, Main.getKeys().getData().getKalits().getData()[id_cbSignes.getSelectionModel().getSelectedIndex()].getId(), null, null);
-//
-//                            PaneSingerInfo();
-//
-//                        } catch (IOException | NoSuchAlgorithmException | KeyManagementException e) {
-//                            System.err.println(e.getMessage());
-//                        }
-//                    }
-//
 
+                            System.out.println("orginal file => " + s);
+
+                            try {
+                                /** PDF document ga qrcode ga link upload qilish */
+                                new PDFWorker().PasteSignLink(s, signLink());
+
+                                /** Imzolangan QRCode qo'yilgan faylni qrcode dagi link ka upload qilish */
+                                new Requests().RequestUpload(Main.getSignedFileInfo().getFilePath());
+
+
+
+                            } catch (IOException | NoSuchAlgorithmException | KeyManagementException e) {
+                                System.err.println("exception : SigningPageController(btnSign) => " + e.getMessage());
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    }
                 } else {
-
-
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setHeaderText("Fayl tanlanmagan");
                     alert.setContentText("Imzolanadigan faylni tanlang");
                     alert.show();
-
-
                 }
 
-                id_ivCheckSign.setVisible(true);
-                id_ivCheckSign.setImage(new Image("check.png"));
-                id_lblVerification.setVisible(true);
-                id_lblVerification.setText("Fayl imzolandi");
-
-                id_btnSign.setDisable(false);
-
-
+//                        try {
+//                            /** PDF document ga qrcode ga link upload qilish */
+//                            new PDFWorker().PasteSignLink(temp[i], signLink());
+//
+//                            /** Imzolangan QRCode qo'yilgan faylni qrcode dagi link ka upload qilish */
+//                            new Requests().RequestUpload(Main.getSignedFileInfo().getFilePath());
+//
+//
+////                            System.out.println("qrcode pasted file => " + new PDFWorker().ReadSignLink(Main.getSignedFileInfo().getFilePath()));
+//
+//
+////                            UpLoadSignedFile(Main.getSignedFileInfo().getFilePath());
+//
+//
+//                            /** File ga imzo qo'yilmoqda */
+////                            sign = GenerateDigitalSignature.generateDigitalSignature(Main.getKeys().getData().getKalits().
+////                                            getData()[id_cbSignes.getSelectionModel().getSelectedIndex()].getAttributes().getPrivkey(),
+////                                    new FileInputStream(Main.getSignedFileInfo().getFilePath()));
+//
+////                            System.out.println("sign : " + sign);
+////                            /** Messages fayl va imzo haqidagi ma'lumotlar yuklanadi */
+////                            new Requests().ResponseMessage(Main.getLoginData().getUser().getId(), sign, Main.getKeys().getData().getKalits().getData()[id_cbSignes.getSelectionModel().getSelectedIndex()].getId(), null, null);
+//
+//                            PaneSingerInfo();
+//
+//                        } catch (IOException | NoSuchAlgorithmException | KeyManagementException | WriterException e) {
+//                            System.err.println("exception : SigningPageController(btnSign) => " + e.getMessage());
+//                            throw new RuntimeException(e);
+//                        }
+//                    }
+//
+//                } else {
+//                System.out.println("asdasd");
+//                    Alert alert = new Alert(Alert.AlertType.ERROR);
+//                    alert.setHeaderText("Fayl tanlanmagan");
+//                    alert.setContentText("Imzolanadigan faylni tanlang");
+//                    alert.show();
+//                }
+//                id_ivCheckSign.setVisible(true);
+//                id_ivCheckSign.setImage(new Image("check.png"));
+//                id_lblVerification.setVisible(true);
+//                id_lblVerification.setText("Fayl imzolandi");
+//                id_btnSign.setDisable(false);
             }
         });
     }
@@ -158,10 +190,10 @@ public class SigningPageController implements Initializable {
 
     }
 
-//    private String signLink() throws IOException, NoSuchAlgorithmException, KeyManagementException {
-//        new Requestes().RequestSignLink();
-//        return Main.getUrl() + "/api/imzo/link/fayl/" + Main.getHash().getHash();
-//    }
+    private String signLink() throws IOException, NoSuchAlgorithmException, KeyManagementException {
+        new Requests().RequestSignLink();
+        return Main.getUrl() + "/api/imzo/link/fayl/" + Main.getHash().getHash();
+    }
 
 
 //    private void AddedKeysList() {
@@ -169,7 +201,7 @@ public class SigningPageController implements Initializable {
 //
 //        /** Foydalanuvchining kalitlarini serverdan olib beradi */
 //        try {
-//            new Requestes().RequestKeys();
+//            new Requests().RequestKeys();
 //        } catch (IOException e) {
 //            throw new RuntimeException(e);
 //        }
@@ -180,18 +212,19 @@ public class SigningPageController implements Initializable {
 //        }
 //    }
 
-//    public void UpLoadSignedFile(String filePath) throws IOException, NoSuchAlgorithmException, KeyManagementException {
-////        System.out.println(filePath);
-//        new Requestes().RequestUpload(filePath);
-//    }
+    public void UpLoadSignedFile(String filePath) throws
+            IOException, NoSuchAlgorithmException, KeyManagementException {
+//        System.out.println(filePath);
+//        new Requests().RequestUpload(filePath);
+    }
 
 
-//    private void PaneSingerInfo() {
-//
-//        id_tfLogin.setText(Main.getLoginData().getUser().getUsername());
-//        id_tfEmail.setText(Main.getLoginData().getUser().getEmail());
-//        id_ivUserImage.setImage(new Image(Main.getUrl() + Main.getaUsersMe().getData().getUsersPermissionsUser().getData().getAttributes().getRasm().getData().getAttributes().getUrl()));
-//
+    private void PaneSingerInfo() {
+
+        id_tfLogin.setText(Main.getLoginData().getUser().getUsername());
+        id_tfEmail.setText(Main.getLoginData().getUser().getEmail());
+        id_ivUserImage.setImage(new Image(Main.getUrl() + Main.getAUsersMe().getData().getUsersPermissionsUser().getData().getAttributes().getRasm().getData().getAttributes().getUrl()));
+
 //        id_tfSignedFileName.setText(Main.getSignedFileInfo().getName());
 //        id_tfSignedFilePath.setText(Main.getSignedFileInfo().getFilePath());
 //        try {
@@ -200,17 +233,13 @@ public class SigningPageController implements Initializable {
 //        } catch (IOException e) {
 //            System.err.println("Failed to get file creation time: " + e.getMessage());
 //        }
-//    }
+    }
 
     /**
      * imzoni pdf file ga qrcode shaklida yuklash va yangi pdf hosil qilish
      */
-//    private void PDFWorkerMethod(String filePathPDF, String signText) {
-//        /** QRCode qo'yish */
-//        try {
-//            new PDFWorker().PasteSignLink(filePathPDF, signText);
-//        } catch (IOException | WriterException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
+    private void PDFWorkerMethod(String filePathPDF, String signText) {
+        /** QRCode qo'yish */
+        new PDFWorker().PasteSignLink(filePathPDF, signText);
+    }
 }

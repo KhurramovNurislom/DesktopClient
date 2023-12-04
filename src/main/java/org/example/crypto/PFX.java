@@ -7,13 +7,16 @@ import lombok.Getter;
 import org.bouncycastle.asn1.cryptopro.CryptoProObjectIdentifiers;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.jce.spec.GOST3410ParameterSpec;
+import org.example.Main;
 import org.example.crypto.TestCertificateGen;
+import org.paynet.util.encoders.Hex;
 
 import java.io.*;
 import java.security.*;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.Arrays;
 import java.util.Enumeration;
 
 // PFX faylni o'qish
@@ -159,13 +162,7 @@ public class PFX {
 // store the keystore protected with password
             try {
                 keyStore.store(fos, password);
-            } catch (KeyStoreException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (NoSuchAlgorithmException e) {
-                throw new RuntimeException(e);
-            } catch (CertificateException e) {
+            } catch (KeyStoreException | IOException | NoSuchAlgorithmException | CertificateException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -177,14 +174,22 @@ public class PFX {
 
         Security.addProvider(new BouncyCastleProvider());
 
-        GOST3410ParameterSpec gost3410P = new GOST3410ParameterSpec(CryptoProObjectIdentifiers.gostR3410_94_CryptoPro_B.getId());
+        GOST3410ParameterSpec gost3410P = new GOST3410ParameterSpec(CryptoProObjectIdentifiers.gostR3410_94_CryptoPro_B.getId());   //gostR3410_2001_CryptoPro_A
 
         KeyPairGenerator g = KeyPairGenerator.getInstance("GOST3410", "BC");
         g.initialize(gost3410P, new SecureRandom());
         KeyPair p = g.generateKeyPair();
 
+
+//        KeyPair p = Main.getKeyPair();
+
+
         PrivateKey sKey = p.getPrivate();
         PublicKey vKey = p.getPublic();
+
+        System.out.println("\n\n  PFX privateKey => " + Hex.toHexString(sKey.getEncoded()));
+        System.out.println("\n  PFX publicKey => " + Hex.toHexString(vKey.getEncoded()));
+
 
         KeyStore ks = KeyStore.getInstance("PKCS12");
 
@@ -227,7 +232,7 @@ public class PFX {
 // create the outputstream to store the keystore
             FileOutputStream fos = null;
             try {
-                fos = new FileOutputStream("C:\\Users\\programmer\\Desktop\\PFX_file11111\\" + getFileName() + ".pfx");
+                fos = new FileOutputStream("C:\\Users\\user\\Desktop\\" + getFileName() + ".pfx");
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }

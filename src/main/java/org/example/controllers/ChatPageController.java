@@ -6,8 +6,6 @@ import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -22,16 +20,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
@@ -39,9 +33,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import org.example.Main;
-import org.example.utils.Requestes;
 
 
 public class ChatPageController implements Initializable {
@@ -229,7 +220,7 @@ public class ChatPageController implements Initializable {
      */
     private void handleSendMessages() {
 
-//        new Requestes().ResponseMessage(Main.getLoginData().getUser().getId(), sign, Main.getKeys().getData().getKalits().getData()[id_cbSignes.getSelectionModel().getSelectedIndex()].getId(), null, null);
+//        new Requests().ResponseMessage(Main.getLoginData().getUser().getId(), sign, Main.getKeys().getData().getKalits().getData()[id_cbSignes.getSelectionModel().getSelectedIndex()].getId(), null, null);
 
 
     }
@@ -552,7 +543,7 @@ public class ChatPageController implements Initializable {
 //    private void ResponseUsers() {
 //        /** Userlarni serverdan oladi */
 //        try {
-//            new Requestes().RequestUsers();
+//            new Requests().RequestUsers();
 //        } catch (IOException e) {
 //            throw new RuntimeException(e);
 //        }
@@ -560,7 +551,7 @@ public class ChatPageController implements Initializable {
 
 //    private void ResponseUserMessages(String userId, String meId, int start, int limit) {
 //        try {
-//            new Requestes().RequestUserMessages(userId, meId, start, limit);
+//            new Requests().RequestUserMessages(userId, meId, start, limit);
 //        } catch (IOException e) {
 //            throw new RuntimeException(e);
 //        }

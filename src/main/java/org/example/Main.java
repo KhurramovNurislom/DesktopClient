@@ -10,9 +10,14 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import okhttp3.OkHttpClient;
+import org.example.modules.Hash;
+import org.example.modules.keysGen.KeysGen;
 import org.example.modules.login.LoginData;
 import org.example.modules.login.UserData;
+import org.example.modules.usersMe.AUsersMe;
 import org.example.utils.SSLClient;
+
+import java.security.KeyPair;
 
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -39,10 +44,29 @@ public class Main extends Application {
     @Setter
     static UserData userData;
 
+    @Getter
+    @Setter
+    static AUsersMe aUsersMe;
+
+    /**
+     * PFX ni tekshirish uchun
+     */
+    @Getter
+    @Setter
+    static KeyPair keyPair;
+
+    @Getter
+    @Setter
+    static KeysGen keysGen;
+
+    @Getter
+    @Setter
+    static Hash hash;
+
     @Override
     public void start(Stage stage) throws Exception {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/MainPage.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/LoginPage.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
         stage.setTitle("Kirish oynasi...");

@@ -1,34 +1,18 @@
 package org.example.controllers;
 
 import javafx.fxml.FXML;
-import org.example.Main;
-import org.example.utils.PDFWorker;
-import org.example.utils.Requestes;
 //import org.example.signature.VerifyDigitalSignature;
-import com.google.zxing.ChecksumException;
-import com.google.zxing.FormatException;
-import com.google.zxing.NotFoundException;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -96,7 +80,7 @@ public class SignVerPageController implements Initializable {
 //                    try {
 //                        link = new PDFWorker().ReadSignLink(temp[i]);
 //                        System.out.println("Link => " + link);
-//                        new Requestes().RequestGetSignerFilesInfo(link);
+//                        new Requests().RequestGetSignerFilesInfo(link);
 //
 //                    } catch (ChecksumException | NotFoundException | IOException | FormatException e) {
 //                        throw new RuntimeException(e);
@@ -127,7 +111,7 @@ public class SignVerPageController implements Initializable {
 //                        id_tfEmail.setText(Main.getVerification().getUser().getEmail());
 //                        System.out.println(Main.getUrl());
 //                        try {
-//                            new Requestes().RequestUsers();
+//                            new Requests().RequestUsers();
 //                        } catch (IOException e) {
 //                            throw new RuntimeException(e);
 //                        }

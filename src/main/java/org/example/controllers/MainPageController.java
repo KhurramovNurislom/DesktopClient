@@ -8,13 +8,17 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
 import org.example.Main;
 import org.example.utils.FXMLLoaderMade;
+import org.example.utils.Requests;
 import org.example.utils.SceneChooser;
 
 import java.io.IOException;
@@ -69,7 +73,7 @@ public class MainPageController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         defaultPage();
         timeNow();
-//        pageInfo();
+        pageInfo();
 
 //        id_btnImzoniBoshqarish.setVisible(false);
 
@@ -219,31 +223,29 @@ public class MainPageController implements Initializable {
         thread.start();
     }
 
-//    public void pageInfo() {
-//        try {
-////            new Requestes().RequestUsers(); /** Boshqa userlar haqida ma'lumotlar olinadi */
-//            new Requestes().ResponseUsersMe(); /** Login bilan kirgan user haqida */
-//        } catch (IOException e) {
-//            System.err.println("exception: MainPageController().pageInfo() => " + e.getMessage());
-//            throw new RuntimeException(e);
+    public void pageInfo() {
+        try {
+//            new Requests().RequestUsers(); /** Boshqa userlar haqida ma'lumotlar olinadi */
+            new Requests().ResponseUsersMe(); /** Login bilan kirgan user haqida */
+        } catch (IOException e) {
+            System.err.println("exception: MainPageController().pageInfo() => " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+        id_lblUserName.setText(Main.getLoginData().getUser().getUsername());
+        id_lblEmail.setText(Main.getLoginData().getUser().getEmail());
+        id_Circle.setStroke(Color.LIGHTBLUE);
+
+        Image image = new Image(Main.getUrl() + Main.getAUsersMe().getData().getUsersPermissionsUser().getData().getAttributes().getRasm().getData().getAttributes().getUrl());
+        id_Circle.setFill(new ImagePattern(image));
+
+//        for (int i = 0; i < Main.getaUsers().getData().getUsersPermissionsUsers().getData().length; i++) {
+//
+//            System.out.println(i);
+//            System.out.println(Main.getaUsers().getData().getUsersPermissionsUsers().getData()[i].getId());
+//            if (Main.getaUsers().getData().getUsersPermissionsUsers().getData()[i].getId() == Main.getLoginData().getUser().getId()) {
+//                System.out.println("chiqishi kerak edi: " + i);
+//            }
+//
 //        }
-//        id_lblUserName.setText(Main.getLoginData().getUser().getUsername());
-////
-//        id_lblEmail.setText(Main.getLoginData().getUser().getEmail());
-////
-//        id_Circle.setStroke(Color.LIGHTBLUE);
-////
-//        Image image = new Image(Main.getUrl() + Main.getaUsersMe().getData().getUsersPermissionsUser().getData().getAttributes().getRasm().getData().getAttributes().getUrl());
-//        id_Circle.setFill(new ImagePattern(image));
-//
-////        for (int i = 0; i < Main.getaUsers().getData().getUsersPermissionsUsers().getData().length; i++) {
-////
-////            System.out.println(i);
-////            System.out.println(Main.getaUsers().getData().getUsersPermissionsUsers().getData()[i].getId());
-////            if (Main.getaUsers().getData().getUsersPermissionsUsers().getData()[i].getId() == Main.getLoginData().getUser().getId()) {
-////                System.out.println("chiqishi kerak edi: " + i);
-////            }
-//
-////        }
-//    }
+    }
 }

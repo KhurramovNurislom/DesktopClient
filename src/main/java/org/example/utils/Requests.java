@@ -5,9 +5,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import okhttp3.*;
 import org.example.Main;
+import org.example.modules.Hash;
+import org.example.modules.keysGen.KeysGen;
 import org.example.modules.login.LoginData;
+import org.example.modules.usersMe.AUsersMe;
 
-public class Requestes {
+import java.io.IOException;
+
+public class Requests {
 
     /******************
      *** server.loc ***
@@ -30,69 +35,54 @@ public class Requestes {
 
         Response response = client.newCall(request).execute();
 
+        assert response.body() != null;
         LoginData loginData = objectMapper.readValue(response.body().byteStream(), LoginData.class);
 
         Main.setLoginData(loginData);
 
 //        System.out.println(Main.getLoginData());
 
-        if (Main.getLoginData().getJwt().equals("") || Main.getLoginData().getJwt() == null || Main.getLoginData().getJwt().isEmpty()) {
-            return false;
-        } else {
-            return true;
-        }
+        return Main.getLoginData().getJwt() != null && !Main.getLoginData().getJwt().isEmpty();
 
     }
 
-//    public void ResponseUsersMe() throws IOException {
-//
-//        /** Foydalanuvchi haqidagi ma'lumotlarni olib keladi */
-//
-//        OkHttpClient client = new OkHttpClient().newBuilder().build();
-//
-//        MediaType mediaType = MediaType.parse("application/json");
-//
-//        RequestBody body = RequestBody.create(mediaType, "{\"query\":\"query GetUser($userid:ID){ " +
-//                "usersPermissionsUser(id:$userid){ data{ id attributes{ username email   " +
-//                " rasm{ data{ id attributes{ url } } } kalits{   " +
-//                "data{ attributes{ pubkey } } } } } } } \",\"variables\":{\"userid\":" +
-//                Main.getLoginData().getUser().getId() + "}}");
-//
-//        Request request = new Request.Builder().url(Main.getUrl() + "/graphql").method("POST", body).
-//                addHeader("Content-Type", "application/json")
-//                .addHeader("Authorization", "Bearer " + Main.getLoginData().getJwt())
-//                .build();
-//
-//        Response response = client.newCall(request).execute();
-//
-//        AUsersMe aUsersMe = objectMapper.readValue(response.body().byteStream(), AUsersMe.class);
-//
-//        Main.setaUsersMe(aUsersMe);
-//    }
-//
-//    public void RequestkeysGen(String privateKey, String publicKey, String keyName) throws IOException {
-//        /**
-//         * Kalit generatsiya qilish
-//         */
-//        MediaType mediaType = MediaType.parse("application/json");
-//
-//        RequestBody body = RequestBody.create(mediaType, "{  \"data\":{  \"privkey\": \"" + privateKey +
-//                "\",  " + " \"pubkey\": \"" + publicKey + "\",  \"user\":" + Main.getLoginData().getUser().getId() +
-//                ",  \"nomi\": \"" + keyName + "\"  } }");
-//
-//        Request request = new Request.Builder().url(Main.getUrl() + "/api/kalits").method("POST", body)
-//                .addHeader("Content-Type", "application/json")
-//                .addHeader("Authorization", "Bearer " + Main.getLoginData().getJwt())
-//                .build();
-//
-//        Response response = Main.getClient().newCall(request).execute();
-//
-//        KeysGen keysGen = objectMapper.readValue(response.body().byteStream(), KeysGen.class);
-//
-//        Main.setKeysGen(keysGen);
-//    }
-//
-//    public void RequestKeys() throws IOException {
+    public void ResponseUsersMe() throws IOException {
+
+        /** Foydalanuvchi haqidagi ma'lumotlarni olib keladi */
+
+        OkHttpClient client = new OkHttpClient().newBuilder().build();
+        MediaType mediaType = MediaType.parse("application/json");
+
+        RequestBody body = RequestBody.create(mediaType, "{\"query\":\"query GetUser($userid:ID){ " + "usersPermissionsUser(id:$userid){ data{ id attributes{ username email "
+                + " rasm{ data{ id attributes{ url } } } kalits{   " + "data{ attributes{ pubkey } } } } } } } \",\"variables\":{\"userid\":" + Main.getLoginData().getUser().getId() + "}}");
+
+        Request request = new Request.Builder().url(Main.getUrl() + "/graphql").method("POST", body).addHeader("Content-Type", "application/json").addHeader("Authorization", "Bearer " + Main.getLoginData().getJwt()).build();
+
+        Response response = client.newCall(request).execute();
+        assert response.body() != null;
+        AUsersMe aUsersMe = objectMapper.readValue(response.body().byteStream(), AUsersMe.class);
+        Main.setAUsersMe(aUsersMe);
+    }
+
+    public void RequestkeysGen(String privateKey, String publicKey, String keyName) throws IOException {
+        /**
+         * Kalit generatsiya qilish
+         */
+        MediaType mediaType = MediaType.parse("application/json");
+
+        RequestBody body = RequestBody.create(mediaType, "{  \"data\":{  \"privkey\": \"" + privateKey + "\",  " + " \"pubkey\": \"" + publicKey + "\",  \"user\":" + Main.getLoginData().getUser().getId() + ",  \"nomi\": \"" + keyName + "\"  } }");
+
+        Request request = new Request.Builder().url(Main.getUrl() + "/api/kalits").method("POST", body).addHeader("Content-Type", "application/json").addHeader("Authorization", "Bearer " + Main.getLoginData().getJwt()).build();
+
+        Response response = Main.getClient().newCall(request).execute();
+
+        assert response.body() != null;
+        KeysGen keysGen = objectMapper.readValue(response.body().byteStream(), KeysGen.class);
+
+        Main.setKeysGen(keysGen);
+    }
+
+    //    public void RequestKeys() throws IOException {
 //        /**
 //         * Kalitlarni olib keladi
 //         */
@@ -118,17 +108,23 @@ public class Requestes {
 //        Main.setKeys(keys);
 //    }
 //
-//    public void RequestSignLink() throws IOException, NoSuchAlgorithmException, KeyManagementException {
-//
-//        Request request = new Request.Builder().url(Main.getUrl() + "/api/imzo/link/").method("GET", null).build();
-//
-//        Response response = Main.getClient().newCall(request).execute();
-//
-//        Hash hash = objectMapper.readValue(response.body().byteStream(), Hash.class);
-//        Main.setHash(hash);
-//// System.out.println("hash: => " + hash.getHash());
-//
-//    }
+    public void RequestSignLink() {
+
+        Request request = new Request.Builder().url(Main.getUrl() + "/api/imzo/link/").method("GET", null).build();
+
+        Response response = null;
+        try {
+            response = Main.getClient().newCall(request).execute();
+            assert response.body() != null;
+            Hash hash = objectMapper.readValue(response.body().byteStream(), Hash.class);
+            Main.setHash(hash);
+        } catch (IOException e) {
+            System.err.println("exception : Requests().RequestSignLink() => " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+// System.out.println("hash: => " + hash.getHash());
+
+    }
 //
 //
 //    public void ResponseMessage(int to_user_id, String signText, int keyId, String xabar, String signXabar) throws IOException {
