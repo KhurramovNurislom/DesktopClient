@@ -1,5 +1,6 @@
 package org.example.utils;
 
+import org.example.Main;
 import org.example.modules.SignedFileInfo;
 import com.google.zxing.*;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
@@ -75,7 +76,7 @@ public class PDFWorker {
 
                 PDImageXObject image = PDImageXObject.createFromFile(fileImage.getPath(), document);
                 try (PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true, true)) {
-                    contentStream.drawImage(image, xPosition, yPosition, image.getWidth() / 2, image.getHeight() / 2);
+                    contentStream.drawImage(image, xPosition, yPosition, (float) image.getWidth() / 2, (float) image.getHeight() / 2);
                 }
             }
 
@@ -90,14 +91,13 @@ public class PDFWorker {
             signedFileInfo.setFilePath(pathSignedFile);
             signedFileInfo.setCreatedAt(new SimpleDateFormat("HH:mm:ss dd.MM.yyyy").format(new Date()));
 
-//            Main.setSignedFileInfo(signedFileInfo);
+            Main.setSignedFileInfo(signedFileInfo);
             document.save(pathSignedFile);
 
         } catch (IOException e) {
             System.err.println("PDF faylini ochishda xatolik: " + e.getMessage());
         }
     }
-
 
     private String ImageExtraction(File file) throws ChecksumException, NotFoundException, IOException, FormatException {
 
@@ -121,27 +121,21 @@ public class PDFWorker {
                     }
                 }
             }
-
         } catch (IOException e) {
             System.err.println("exception: PDFWorker(). ImageExtraction() => " + e.getMessage());
         }
-
         return sign;
     }
 
     private String ReadQRCode(BufferedImage barcBufferedImage) throws IOException, FormatException, ChecksumException, NotFoundException {
-
         LuminanceSource source = new BufferedImageLuminanceSource(barcBufferedImage);
         BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
-
         Reader reader = new MultiFormatReader();
         Result result = reader.decode(bitmap);
-
         return result.toString();
     }
 
     private void ConvertDocxToPDF(String filePath) {
-
 
     }
 }

@@ -11,9 +11,12 @@ import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import okhttp3.OkHttpClient;
 import org.example.modules.Hash;
+import org.example.modules.SignedFileInfo;
+import org.example.modules.keys.Keys;
 import org.example.modules.keysGen.KeysGen;
 import org.example.modules.login.LoginData;
 import org.example.modules.login.UserData;
+import org.example.modules.upload.Upload;
 import org.example.modules.usersMe.AUsersMe;
 import org.example.utils.SSLClient;
 
@@ -54,6 +57,9 @@ public class Main extends Application {
     @Getter
     @Setter
     static KeyPair keyPair;
+    /**
+     * /PFX ni tekshirish uchun
+     */
 
     @Getter
     @Setter
@@ -62,6 +68,18 @@ public class Main extends Application {
     @Getter
     @Setter
     static Hash hash;
+
+    @Getter
+    @Setter
+    static SignedFileInfo signedFileInfo;
+
+    @Getter
+    @Setter
+    static Upload upload;
+
+    @Getter
+    @Setter
+    static Keys keys;
 
     @Override
     public void start(Stage stage) throws Exception {

@@ -6,6 +6,7 @@ import org.example.utils.Requests;
 import org.paynet.util.encoders.Hex;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigInteger;
 import java.security.*;
 
@@ -46,6 +47,18 @@ public class UzDSt_1092_2009 {
 
     }
 
+    public String signGenerate(String privKey, InputStream is) {
+
+        System.out.println(privKey);
+
+
+
+
+//        byte[] bytes = signGeneration();
+
+        return "test";
+    }
+
 
     public void generateKeyPair2() {
 
@@ -57,19 +70,19 @@ public class UzDSt_1092_2009 {
         try {
             KeyPair keyPair = generationKeyPair();
 
-            byte[] sign = signGenerate(keyPair.getPrivate(), text);
+//            byte[] sign = signGenerate(keyPair.getPrivate(), text);
 
             System.out.println("\n\n" + Hex.toHexString(keyPair.getPrivate().getEncoded()));
             System.out.println("\n\n" + Hex.toHexString(keyPair.getPublic().getEncoded()));
 //            System.out.println("\n\n" + keyPair.getPrivate().toString());
 //            System.out.println("\n\n" + keyPair.getPublic().toString());
-            System.out.println(Hex.toHexString(sign));
+//            System.out.println(Hex.toHexString(sign));
 
             System.out.println("X: " + new BigInteger("2ce004f1422395361b49ad4a10e7336152957804708c04eb5c1f32298d821a87", 16));
             System.out.println("Y: " + new BigInteger("f505d55905d1a7627afa0a3e3e31e741fdc0d57a516032d26070863b4ea4270b", 16));
 
 
-            verification(keyPair.getPublic(), text, sign);
+//            verification(keyPair.getPublic(), text, sign);
         } catch (Exception e) {
             System.err.println(e.getMessage());
             throw new RuntimeException(e);
@@ -94,27 +107,17 @@ public class UzDSt_1092_2009 {
 
     }
 
-    private byte[] signGenerate(PrivateKey privateKey, String text) {
-
-        byte[] message = text.getBytes();
-        Signature sgr = null;
-        byte[] sigBytes = null;
+    private byte[] signGeneration(PrivateKey privateKey, byte[] message) {
+        Security.addProvider(new BouncyCastleProvider());
         try {
-            sgr = Signature.getInstance("ECGOST3410", "BC");
-
+            Signature sgr = Signature.getInstance("ECGOST3410", "BC");
             sgr.initSign(privateKey, new SecureRandom());
-
             sgr.update(message);
-
-            sigBytes = sgr.sign();
-
-
+            return sgr.sign();
         } catch (NoSuchAlgorithmException | NoSuchProviderException | InvalidKeyException | SignatureException e) {
             System.err.println("exception: UzDSt_1092_2009().signGenerate() => " + e.getMessage());
             throw new RuntimeException(e);
         }
-        return sigBytes;
-
     }
 
     private void verification(PublicKey publicKey, String text, byte[] sign) {

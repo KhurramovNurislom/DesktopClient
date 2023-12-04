@@ -14,6 +14,7 @@ import org.example.utils.Requests;
 import org.example.utils.SSLClient;
 import org.example.utils.SceneChooser;
 
+import java.io.IOException;
 import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -81,11 +82,12 @@ public class LoginPageController implements Initializable {
                 }
 
                 /** Foydalanuvchining kalitlarini olib beradi */
-//                try {
-//                    new Requests().RequestKeys();
-//                } catch (IOException e) {
-//                    throw new RuntimeException(e);
-//                }
+                try {
+                    new Requests().RequestKeys();
+                } catch (IOException e) {
+                    System.err.println();
+                    throw new RuntimeException(e);
+                }
 
             }
         });
