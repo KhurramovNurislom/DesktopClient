@@ -18,6 +18,7 @@ import org.example.modules.login.LoginData;
 import org.example.modules.login.UserData;
 import org.example.modules.upload.Upload;
 import org.example.modules.usersMe.AUsersMe;
+import org.example.modules.verificationInfo.VerificationInfo;
 import org.example.utils.SSLClient;
 
 import java.security.KeyPair;
@@ -80,6 +81,10 @@ public class Main extends Application {
     @Getter
     @Setter
     static Keys keys;
+
+    @Getter
+    @Setter
+    static VerificationInfo verification;
 
     @Override
     public void start(Stage stage) throws Exception {

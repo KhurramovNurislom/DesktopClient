@@ -293,22 +293,23 @@ public class Requests {
 //
 
 
-//    public void RequestGetSignedFilesInfo(String link) throws IOException {
-//        /**
-//         *    Imzolangan faylni tekshirish uchun undagi ma'lumotlarni o'qib oladi;
-//         * */
-//        Request request = new Request.Builder()
-//                .url(link)
-//                .method("GET", null)
-//                .addHeader("Authorization", "Bearer " + Main.getLoginData().getJwt())
-//                .build();
-//        Response response = Main.getClient().newCall(request).execute();
-////        System.out.println(" => " + response.body().string());
-//
-//        VerificationInfo verification = gson.fromJson(response.body().string(), VerificationInfo.class);
-//        Main.setVerification(verification);
-//
-////        System.out.println(Main.getVerification());
-//    }
+    public void RequestGetSignedFilesInfo(String link) throws IOException {
+        /**
+         *    Imzolangan faylni tekshirish uchun undagi ma'lumotlarni o'qib oladi;
+         * */
+        Request request = new Request.Builder()
+                .url(link)
+                .method("GET", null)
+                .addHeader("Authorization", "Bearer " + Main.getLoginData().getJwt())
+                .build();
+        Response response = Main.getClient().newCall(request).execute();
+//        System.out.println(" => " + response.body().string());
+
+        assert response.body() != null;
+        VerificationInfo verification = gson.fromJson(response.body().string(), VerificationInfo.class);
+        Main.setVerification(verification);
+
+//        System.out.println(Main.getVerification());
+    }
 
 }

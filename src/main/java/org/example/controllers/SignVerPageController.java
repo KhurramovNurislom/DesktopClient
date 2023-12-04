@@ -1,5 +1,8 @@
 package org.example.controllers;
 
+import com.google.zxing.ChecksumException;
+import com.google.zxing.FormatException;
+import com.google.zxing.NotFoundException;
 import javafx.fxml.FXML;
 //import org.example.signature.VerifyDigitalSignature;
 import com.jfoenix.controls.JFXButton;
@@ -10,8 +13,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import org.example.utils.PDFWorker;
+import org.example.utils.Requests;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -64,28 +71,28 @@ public class SignVerPageController implements Initializable {
             public void handle(ActionEvent event) {
                 id_btnChangeFile.setDisable(true);
 
-//                fileList = fileChooser.showOpenMultipleDialog(new Stage());
-//                if (fileList != null) {
-//                    fileList.stream().forEach(selectedFiles -> {
-//                        id_tfFilePath.setText(fileList.toString().replaceAll("\\[", "").replaceAll("]", ""));
-//                    });
-//                }
-//                temp = id_tfFilePath.getText().split(",");
-//                for (int i = 0; i < temp.length; i++) {
-//                    System.out.println(temp[i]);
-//
-//                    /**
-//                     * QRCodeni o'qish
-//                     */
-//                    try {
-//                        link = new PDFWorker().ReadSignLink(temp[i]);
-//                        System.out.println("Link => " + link);
-//                        new Requests().RequestGetSignerFilesInfo(link);
-//
-//                    } catch (ChecksumException | NotFoundException | IOException | FormatException e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                }
+                fileList = fileChooser.showOpenMultipleDialog(new Stage());
+                if (fileList != null) {
+                    fileList.forEach(selectedFiles -> {
+                        id_tfFilePath.setText(fileList.toString().replaceAll("\\[", "").replaceAll("]", ""));
+                    });
+                }
+                temp = id_tfFilePath.getText().split(",");
+                for (int i = 0; i < temp.length; i++) {
+                    System.out.println(temp[i]);
+
+                    /**
+                     * QRCodeni o'qish
+                     */
+                    try {
+                        link = new PDFWorker().ReadSignLink(temp[i]);
+                        System.out.println("Link => " + link);
+                        new Requests().RequestGetSignedFilesInfo(link);
+
+                    } catch (ChecksumException | NotFoundException | IOException | FormatException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
 
                 id_btnChangeFile.setDisable(false);
             }

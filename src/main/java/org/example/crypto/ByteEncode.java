@@ -17,7 +17,7 @@ public class ByteEncode {
         return new String(hexDigits);
     }
 
-    public byte[] decodeHexString(String hexString) {
+    public static byte[] decodeHexString(String hexString) {
         if (hexString.length() % 2 == 1) {
             throw new IllegalArgumentException(
                     "Invalid hexadecimal String supplied.");
@@ -30,13 +30,13 @@ public class ByteEncode {
         return bytes;
     }
 
-    private byte hexToByte(String hexString) {
+    private static byte hexToByte(String hexString) {
         int firstDigit = toDigit(hexString.charAt(0));
         int secondDigit = toDigit(hexString.charAt(1));
         return (byte) ((firstDigit << 4) + secondDigit);
     }
 
-    private int toDigit(char hexChar) {
+    private static int toDigit(char hexChar) {
         int digit = Character.digit(hexChar, 16);
         if (digit == -1) {
             throw new IllegalArgumentException(
