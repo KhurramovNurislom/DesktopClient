@@ -17,6 +17,7 @@ import org.example.modules.keysGen.KeysGen;
 import org.example.modules.login.LoginData;
 import org.example.modules.login.UserData;
 import org.example.modules.upload.Upload;
+import org.example.modules.users.AUsers;
 import org.example.modules.usersMe.AUsersMe;
 import org.example.modules.verificationInfo.VerificationInfo;
 import org.example.utils.SSLClient;
@@ -85,6 +86,10 @@ public class Main extends Application {
     @Getter
     @Setter
     static VerificationInfo verification;
+
+    @Getter
+    @Setter
+    static AUsers aUsers;
 
     @Override
     public void start(Stage stage) throws Exception {

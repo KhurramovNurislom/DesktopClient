@@ -106,11 +106,8 @@ public class SigningPageController implements Initializable {
             public void handle(ActionEvent event) {
                 id_btnSign.setDisable(true);
 
-                String t = id_tfFilePath.getText();
-                t = t.replaceAll(", ", ",");
-
                 /** Imzolanadigan pdf filelarni ajratib oladi */
-                String[] temp = t.split(",");
+                String[] temp = id_tfFilePath.getText().replaceAll(", ", ",").split(",");
 
                 if (!id_tfFilePath.getText().isEmpty()) {
                     /**  Fayllar tanlanganda imzo qo'yish */

@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
@@ -67,6 +69,21 @@ public class UzDSt_1092_2009 {
         }
     }
 
+
+    public boolean verifySignature(String sign, String path, String pubKey) {
+        try {
+            PublicKey publicKey = readPublicKey(pubKey);
+            File file = new File(path);
+            String str = Files.readString(file.toPath());
+            byte[] signByte = sign.getBytes();
+
+            return verification(publicKey, str, signByte);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     private KeyPair generationKeyPair() {
         try {
             KeyPairGenerator g = KeyPairGenerator.getInstance("ECGOST3410", "BC");
@@ -92,7 +109,7 @@ public class UzDSt_1092_2009 {
         }
     }
 
-    private void verification(PublicKey publicKey, String text, byte[] sign) {
+    private boolean verification(PublicKey publicKey, String text, byte[] sign) {
 
         try {
             Signature sgr = Signature.getInstance("ECGOST3410", "BC");
@@ -100,9 +117,13 @@ public class UzDSt_1092_2009 {
             sgr.initVerify(publicKey);
             sgr.update(message);
 
-            if (!sgr.verify(sign))
+            if (!sgr.verify(sign)) {
                 System.out.println("Imzo haqiqiy emas...");
-            else System.out.println("Imzo haqiqiy...");
+                return false;
+            } else {
+                System.out.println("Imzo haqiqiy...");
+                return true;
+            }
 
         } catch (NoSuchAlgorithmException | NoSuchProviderException | InvalidKeyException | SignatureException e) {
             System.err.println("exception: UzDSt_1092_2009().verification() => " + e.getMessage());
