@@ -2,7 +2,7 @@ package org.example.crypto;
 
 public class ByteEncode {
 
-    public String encodeHexString(byte[] byteArray) {
+    public static String encodeHexString(byte[] byteArray) {
         StringBuilder hexStringBuffer = new StringBuilder();
         for (byte b : byteArray) {
             hexStringBuffer.append(byteToHex(b));
@@ -10,7 +10,7 @@ public class ByteEncode {
         return hexStringBuffer.toString();
     }
 
-    private String byteToHex(byte num) {
+    private static String byteToHex(byte num) {
         char[] hexDigits = new char[2];
         hexDigits[0] = Character.forDigit((num >> 4) & 0xF, 16);
         hexDigits[1] = Character.forDigit((num & 0xF), 16);
@@ -19,6 +19,7 @@ public class ByteEncode {
 
     public static byte[] decodeHexString(String hexString) {
         if (hexString.length() % 2 == 1) {
+
             throw new IllegalArgumentException(
                     "Invalid hexadecimal String supplied.");
         }

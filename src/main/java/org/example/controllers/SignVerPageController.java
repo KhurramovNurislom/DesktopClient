@@ -3,11 +3,10 @@ package org.example.controllers;
 import com.google.zxing.ChecksumException;
 import com.google.zxing.FormatException;
 import com.google.zxing.NotFoundException;
-import javafx.fxml.FXML;
-//import org.example.signature.VerifyDigitalSignature;
-import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import com.jfoenix.controls.JFXButton;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -118,25 +117,25 @@ public class SignVerPageController implements Initializable {
                 /**      Test ishchi   */
                 for (int i = 0; i < temp.length; i++) {
 
-                    boolean boolSignVerify = new UzDSt_1092_2009().verifySignature(Main.getVerification().getFayl().getImzo(), temp[i], Main.getVerification().getPubkey());
+                    boolean boolSignVerify = new UzDSt_1092_2009().verifySignature(Main.getVerification().getPubkey(), temp[i], Main.getVerification().getFayl().getImzo());
 
                     if (boolSignVerify) {
                         id_lblVerification.setVisible(true);
                         id_lblVerification.setText("Imzo tasdiqlandi");
                         id_lblVerification.setTextFill(Color.GREEN);
-                        id_ivCheckSign.setImage(new Image("accept.png"));
+                        id_ivCheckSign.setImage(new Image("/images/signVerPage/accept.png"));
 
                         id_tfLogin.setText(Main.getVerification().getUser().getUsername());
                         id_tfEmail.setText(Main.getVerification().getUser().getEmail());
-                        System.out.println(Main.getUrl());
+//                        System.out.println(Main.getUrl());
 
                         try {
                             new Requests().RequestUsers();
                         } catch (IOException e) {
+                            System.err.println("exception : SignVerPageController(btnSignVerification) => " + e.getMessage());
                             throw new RuntimeException(e);
                         }
 
-                        String rasmUrl;
                         for (int j = 0; j < Main.getAUsers().getData().getUsersPermissionsUsers().getData().length; j++) {
                             if (Main.getVerification().getUser().getId() == Main.getAUsers().getData().getUsersPermissionsUsers().getData()[j].getId()) {
                                 id_ivUserImage.setImage(new Image(Main.getUrl() + Main.getAUsers().getData().getUsersPermissionsUsers().getData()[j].getAttributes().getRasm().getData().getAttributes().getUrl()));
@@ -154,7 +153,7 @@ public class SignVerPageController implements Initializable {
                             id_tfFileSignedTime.setText(new SimpleDateFormat("HH:mm:ss dd.MM.yyyy").format(new Date(Files.readAttributes(Path.of(id_tfSignedFilePath.getText()),
                                     BasicFileAttributes.class).creationTime().toMillis())));
                         } catch (IOException e) {
-                            System.err.println("Failed to get file creation time: " + e.getMessage());
+                            System.err.println("exception : SignVerPageController(btnSignVerification) => " + e.getMessage());
                         }
 
                     } else {
@@ -164,21 +163,8 @@ public class SignVerPageController implements Initializable {
                         id_ivCheckSign.setImage(new Image("/images/signVerPage/warning.png"));
                     }
                 }
-
-                /*****************************************************/
             }
         });
-    }
-
-    private String PDFWorker() {
-
-
-        return "asdasdasdasd";
-    }
-
-    private void PaneSingerInfo() {
-
-
     }
 }
 

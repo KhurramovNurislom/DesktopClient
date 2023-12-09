@@ -28,36 +28,35 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PDFWorker {
+public class PDFWorker2222222 {
 
     private String outputImageFile;
 
-    public void PasteSignLink(String filePathPDF, String signText) throws IOException, WriterException {
-        File file = new File(filePathPDF);
-        generateQRCodeImage(signText, 100, 100, file.getParentFile() + File.separator + "signImage.png", file);
+    public void PasteSignLink(String filePathPDF, String link) throws RuntimeException {
+        try {
+            File file = new File(filePathPDF);
+            generateQRCodeImage(link, 100, 100, file.getParentFile() + File.separator + "signImage.png", file);
+        } catch (WriterException | IOException e) {
+            System.err.println("Exception : PDFWorker().PasteSignLink() => " + e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     public String ReadSignLink(String inputPDFFile) throws ChecksumException, NotFoundException, IOException, FormatException {
-
 //        System.out.println("file path => " + inputPDFFile);
         File file = new File(inputPDFFile);
-
         return ImageExtraction(file);
     }
 
-    private void generateQRCodeImage(String sign, int width, int height, String filePath, File filePDF) throws WriterException, IOException {
+    private void generateQRCodeImage(String link, int width, int height, String filePath, File filePDF) throws WriterException, IOException {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         Map<EncodeHintType, Object> hints = new HashMap<>();
         hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
-        BitMatrix bitMatrix = qrCodeWriter.encode(sign, BarcodeFormat.QR_CODE, width, height, hints);
+        BitMatrix bitMatrix = qrCodeWriter.encode(link, BarcodeFormat.QR_CODE, width, height, hints);
         Path path = FileSystems.getDefault().getPath(filePath);
-
         MatrixToImageWriter.writeToPath(bitMatrix, "JPG", path);
-
         File fileImage = new File(filePDF.getParentFile() + File.separator + "signImage.png");
-
         AddImage(filePDF, fileImage);
-
         fileImage.delete();
     }
 
@@ -77,14 +76,14 @@ public class PDFWorker {
 
                 PDImageXObject image = PDImageXObject.createFromFile(fileImage.getPath(), document);
                 try (PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true, true)) {
-                    contentStream.drawImage(image, xPosition, yPosition, image.getWidth() / 2, image.getHeight() / 2);
+                    contentStream.drawImage(image, xPosition, yPosition, (float) image.getWidth() / 2, (float) image.getHeight() / 2);
                 }
             }
 
             /** O'zgartirilgan PDF faylini saqlash */
             String fileNameWithoutExtension = filePDF.getName().substring(0, filePDF.getName().lastIndexOf("."));
 
-            String pathSignedFile = filePDF.getParentFile() + File.separator + fileNameWithoutExtension + " " +  new SimpleDateFormat("HH_mm_ss dd_MM_yyyy").format(new Date()) + ".pdf";
+            String pathSignedFile = filePDF.getParentFile() + File.separator + fileNameWithoutExtension + " " + new SimpleDateFormat("HH_mm_ss dd_MM_yyyy").format(new Date()) + ".pdf";
 
             SignedFileInfo signedFileInfo = new SignedFileInfo();
 
@@ -99,7 +98,6 @@ public class PDFWorker {
             System.err.println("PDF faylini ochishda xatolik: " + e.getMessage());
         }
     }
-
 
     private String ImageExtraction(File file) throws ChecksumException, NotFoundException, IOException, FormatException {
 
@@ -119,31 +117,25 @@ public class PDFWorker {
 
                     try {
                         sign = ReadQRCode(image);
-                    } catch (NotFoundException ex) {
+                    } catch (NotFoundException ignored) {
                     }
                 }
             }
-
         } catch (IOException e) {
-            System.err.println("129 qator: " + e.getMessage());
+            System.err.println("exception: PDFWorker(). ImageExtraction() => " + e.getMessage());
         }
-
         return sign;
     }
 
     private String ReadQRCode(BufferedImage barcBufferedImage) throws IOException, FormatException, ChecksumException, NotFoundException {
-
         LuminanceSource source = new BufferedImageLuminanceSource(barcBufferedImage);
         BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
-
         Reader reader = new MultiFormatReader();
         Result result = reader.decode(bitmap);
-
         return result.toString();
     }
 
     private void ConvertDocxToPDF(String filePath) {
-
 
     }
 }

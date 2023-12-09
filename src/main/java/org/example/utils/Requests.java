@@ -190,7 +190,7 @@ public class Requests {
                     .build();
             Response response = Main.getClient().newCall(request).execute();
 
-            assert response.body() != null;
+//            assert response.body() != null;
             Upload[] uploadData = gson.fromJson(response.body().string(), Upload[].class);
             System.out.println(Arrays.toString(uploadData));
             Main.setUpload(uploadData[0]);
@@ -300,7 +300,7 @@ public class Requests {
 
 //        System.out.println(" => " + response.body().string());
 
-            assert response.body() != null;
+//            assert response.body() != null;
             VerificationInfo verification = gson.fromJson(response.body().string(), VerificationInfo.class);
             Main.setVerification(verification);
 

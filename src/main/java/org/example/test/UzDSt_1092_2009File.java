@@ -1,15 +1,12 @@
-package org.example.crypto;
+package org.example.test;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.jce.spec.ECNamedCurveGenParameterSpec;
+import org.example.crypto.ByteEncode;
 import org.example.utils.Requests;
 import org.paynet.util.encoders.Hex;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.*;
@@ -18,11 +15,12 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
 
-public class UzDSt_1092_2009 {
+public class UzDSt_1092_2009File {
 
     public void generateKeyPair(String password) {
 
         Security.addProvider(new BouncyCastleProvider());
+
         KeyPair keyPair = generationKeyPair();
 
         /** Bazaga kalitlarni yuklash */
@@ -50,19 +48,41 @@ public class UzDSt_1092_2009 {
     }
 
     public String signGenerate(String privKey, String filePath) {
+
+        System.out.println("privKey => " + privKey);
+        System.out.println(filePath);
+
         try {
-            return ByteEncode.encodeHexString(signGeneration(readPrivateKey(privKey), Files.readAllBytes(Paths.get(filePath))));
+
+            byte[] faylBytes = Files.readAllBytes(Paths.get(filePath));
+
+            byte[] signBytes = signGeneration(readPrivateKey(privKey), faylBytes);
+            System.out.println("signByte => " + Arrays.toString(signBytes));
+
+            String sign = ByteEncode.encodeHexString(signBytes);
+
+            System.out.println("sign => " + sign);
+
+            return sign;
+
         } catch (IOException e) {
-            System.err.println("exception : UzDSt_1092_2009().signGenerate() => " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
 
-    public boolean verifySignature(String pubKey, String path, String sign) {
+    public boolean verifySignature(String sign, String path, String pubKey) {
+
         try {
-            return verification(readPublicKey(pubKey), Files.readAllBytes(Paths.get(path)), ByteEncode.decodeHexString(sign));
+
+            System.out.println("sign2 => " + sign);
+
+            byte[] signBytes = ByteEncode.decodeHexString(sign);
+
+            System.out.println("signBytes => " + Arrays.toString(signBytes));
+
+            return verification(readPublicKey(pubKey), Files.readAllBytes(Paths.get(path)), signBytes);
+
         } catch (IOException e) {
-            System.err.println("exception : UzDSt_1092_2009().FileToString() => " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -92,11 +112,14 @@ public class UzDSt_1092_2009 {
     }
 
     private boolean verification(PublicKey publicKey, byte[] message, byte[] sign) {
-        Security.addProvider(new BouncyCastleProvider());
+
         try {
+
             Signature sgr = Signature.getInstance("ECGOST3410", "BC");
+
             sgr.initVerify(publicKey);
             sgr.update(message);
+
             if (sgr.verify(sign)) {
                 System.out.println("Imzo haqiqiy...");
                 return true;
@@ -104,17 +127,20 @@ public class UzDSt_1092_2009 {
                 System.out.println("Imzo haqiqiy emas...");
                 return false;
             }
+
         } catch (NoSuchAlgorithmException | NoSuchProviderException | InvalidKeyException | SignatureException e) {
             System.err.println("exception: UzDSt_1092_2009().verification() => " + e.getMessage());
             throw new RuntimeException(e);
         }
+
     }
 
     private PrivateKey readPrivateKey(String privateKey) {
         Security.addProvider(new BouncyCastleProvider());
+        byte[] encodedPrivateKey = ByteEncode.decodeHexString(privateKey);
         try {
             KeyFactory keyFactory = KeyFactory.getInstance("ECGOST3410", "BC");
-            PKCS8EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(ByteEncode.decodeHexString(privateKey));
+            PKCS8EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(encodedPrivateKey);
             return keyFactory.generatePrivate(privateKeySpec);
         } catch (NoSuchAlgorithmException | NoSuchProviderException | InvalidKeySpecException e) {
             System.err.println("exception : UzDSt_1092_2009().readPrivateKey() => " + e.getMessage());
@@ -124,13 +150,25 @@ public class UzDSt_1092_2009 {
 
     private PublicKey readPublicKey(String publicKey) {
         Security.addProvider(new BouncyCastleProvider());
+        byte[] encodedPublicKey = ByteEncode.decodeHexString(publicKey);
         try {
             KeyFactory keyFactory = KeyFactory.getInstance("ECGOST3410", "BC");
-            X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(ByteEncode.decodeHexString(publicKey));
+            X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(encodedPublicKey);
             return keyFactory.generatePublic(publicKeySpec);
         } catch (NoSuchAlgorithmException | NoSuchProviderException | InvalidKeySpecException e) {
             System.err.println("exception : UzDSt_1092_2009().readPublicKey() => " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
+
+    private String FileToString(String filePth) {
+        try {
+            byte[] faylBytes = Files.readAllBytes(Paths.get(filePth));
+            // Faylni stringga konvertatsiya qilish
+            return ByteEncode.encodeHexString(faylBytes);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
