@@ -82,12 +82,7 @@ public class LoginPageController implements Initializable {
                 }
 
                 /** Foydalanuvchining kalitlarini olib beradi */
-                try {
-                    new Requests().RequestKeys();
-                } catch (IOException e) {
-                    System.err.println();
-                    throw new RuntimeException(e);
-                }
+                new Requests().RequestKeys();
 
             }
         });

@@ -1,6 +1,5 @@
 package org.example.controllers;
 
-import com.google.zxing.WriterException;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
@@ -16,7 +15,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import lombok.SneakyThrows;
 import org.example.Main;
 import org.example.crypto.UzDSt_1092_2009;
 import org.example.utils.PDFWorker;
@@ -28,8 +26,6 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -97,7 +93,6 @@ public class SigningPageController implements Initializable {
         });
 
         id_btnSign.setOnAction(new EventHandler<ActionEvent>() {
-            //            @SneakyThrows
             @Override
             public void handle(ActionEvent event) {
                 id_btnSign.setDisable(true);
@@ -108,32 +103,19 @@ public class SigningPageController implements Initializable {
                     for (String s : temp) {
                         if (new File(s).isFile() && new File(s).getName().toLowerCase().endsWith(".pdf")) {
                             /** PDF document ga link yuklangan qrcode yuklash */
-                            try {
-                                new PDFWorker().PasteSignLink(s, signLink());
-                                /** Imzolangan, QRCode qo'yilgan faylni qrcode dagi link ka yuklash */
-                                try {
-                                    new Requests().RequestUpload(Main.getSignedFileInfo().getFilePath());
-                                } catch (NoSuchAlgorithmException e) {
-                                    throw new RuntimeException(e);
-                                } catch (KeyManagementException e) {
-                                    throw new RuntimeException(e);
-                                }
-                                sign = new UzDSt_1092_2009().signGenerate(Main.getKeys().getData().getKalits().
-                                                getData()[id_cbSignes.getSelectionModel().getSelectedIndex()].getAttributes().getPrivkey(),
-                                        Main.getSignedFileInfo().getFilePath());
-                                /** Messages fayl va imzo haqidagi ma'lumotlar yuklanadi */
-                                new Requests().ResponseMessage(Main.getLoginData().getUser().getId(),
-                                        sign,
-                                        Main.getKeys().getData().getKalits().getData()[id_cbSignes.getSelectionModel().getSelectedIndex()].getId(),
-                                        null,
-                                        null);
-                                PaneSingerInfo();
-                            } catch (IOException e) {
-                                System.err.println("exception : SigningPageController(btnSign) => " + e.getCause());
-                                throw new RuntimeException(e);
-                            }
-
-//                            PaneSingerInfo();
+                            new PDFWorker().PasteSignLink(s, signLink());
+                            /** Imzolangan, QRCode qo'yilgan faylni qrcode dagi link ka yuklash */
+                            new Requests().RequestUpload(Main.getSignedFileInfo().getFilePath());
+                            sign = new UzDSt_1092_2009().signGenerate(Main.getKeys().getData().getKalits().
+                                            getData()[id_cbSignes.getSelectionModel().getSelectedIndex()].getAttributes().getPrivkey(),
+                                    Main.getSignedFileInfo().getFilePath());
+                            /** Messages fayl va imzo haqidagi ma'lumotlar yuklanadi */
+                            new Requests().ResponseMessage(Main.getLoginData().getUser().getId(),
+                                    sign,
+                                    Main.getKeys().getData().getKalits().getData()[id_cbSignes.getSelectionModel().getSelectedIndex()].getId(),
+                                    null,
+                                    null);
+                            PaneSingerInfo();
                         }
                     }
                 } else {
@@ -142,7 +124,6 @@ public class SigningPageController implements Initializable {
                     alert.setContentText("Imzolanadigan faylni tanlang");
                     alert.show();
                 }
-
                 id_ivCheckSign.setVisible(true);
                 id_ivCheckSign.setImage(new Image("/images/signedPage/check.png"));
                 id_lblVerification.setVisible(true);
@@ -168,19 +149,13 @@ public class SigningPageController implements Initializable {
             id_tfFileSignedTime.setText(new SimpleDateFormat("HH:mm:ss dd.MM.yyyy").format(new Date(Files.readAttributes(Path.of(Main.getSignedFileInfo().getFilePath()),
                     BasicFileAttributes.class).creationTime().toMillis())));
         } catch (IOException e) {
-            System.err.println("Failed to get file creation time: " + e.getMessage());
+            System.err.println("exception : SigningPageController().PaneSingerInfo => " + e.getCause());
         }
     }
 
     private void AddedKeysList() {
         /** Foydalanuvchining kalitlarini serverdan olib beradi */
-        try {
-            new Requests().RequestKeys();
-        } catch (IOException e) {
-            System.err.println("exception : SigningPageController().AddedKeysList() => " + e.getMessage());
-            throw new RuntimeException(e);
-        }
-
+        new Requests().RequestKeys();
         /** Serverdan olingan foydalanuvchining kalitlarini keyListga yuklaydi */
         for (int i = 0; i < Main.getKeys().getData().getKalits().getData().length; i++) {
             keysList.add(Main.getKeys().getData().getKalits().getData()[i].getAttributes().getNomi() + "\n"

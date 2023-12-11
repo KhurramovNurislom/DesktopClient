@@ -21,7 +21,6 @@ import org.example.utils.FXMLLoaderMade;
 import org.example.utils.Requests;
 import org.example.utils.SceneChooser;
 
-import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -76,9 +75,7 @@ public class MainPageController implements Initializable {
         pageInfo();
 
 //        id_btnImzoniBoshqarish.setVisible(false);
-
 //        id_btnYangilash.setVisible(false);
-//
 //        id_btnYoriqnoma.setVisible(false);
 
         id_pnUserInfo.setVisible(false);
@@ -91,11 +88,7 @@ public class MainPageController implements Initializable {
             public void handle(ActionEvent event) {
                 mainPane.setRight(id_vbLeft);
                 id_pnUserInfo.setVisible(false);
-                try {
-                    mainPane.setCenter(new FXMLLoaderMade().getPane("KeysGenPage"));
-                } catch (IOException e) {
-                    System.err.println("exception: MainPageController(btnGetKeyPair) => " + e.getMessage());
-                }
+                mainPane.setCenter(new FXMLLoaderMade().getPane("KeysGenPage"));
             }
         });
         id_btnImzoQoyish.setOnAction(new EventHandler<ActionEvent>() {
@@ -103,11 +96,7 @@ public class MainPageController implements Initializable {
             public void handle(ActionEvent event) {
                 mainPane.setRight(id_vbLeft);
                 id_pnUserInfo.setVisible(false);
-                try {
-                    mainPane.setCenter(new FXMLLoaderMade().getPane("SigningPage"));
-                } catch (IOException e) {
-                    System.err.println("exception: MainPageController(btnImzoQoyish) => " + e.getMessage());
-                }
+                mainPane.setCenter(new FXMLLoaderMade().getPane("SigningPage"));
             }
         });
         id_btnImzoniTekshirish.setOnAction(new EventHandler<ActionEvent>() {
@@ -115,14 +104,9 @@ public class MainPageController implements Initializable {
             public void handle(ActionEvent event) {
                 mainPane.setRight(id_vbLeft);
                 id_pnUserInfo.setVisible(false);
-                try {
-                    mainPane.setCenter(new FXMLLoaderMade().getPane("SignVerPage"));
-                } catch (IOException e) {
-                    System.err.println("exception: MainPageController(btnImzoniTekshirish) => " + e.getMessage());
-                }
+                mainPane.setCenter(new FXMLLoaderMade().getPane("SignVerPage"));
             }
         });
-
 //        id_btnImzoniBoshqarish.setOnAction(new EventHandler<ActionEvent>() {
 //            @Override
 //            public void handle(ActionEvent event) {
@@ -135,19 +119,13 @@ public class MainPageController implements Initializable {
 //                }
 //            }
 //        });
-
         id_btnChat.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 mainPane.setRight(null);
-                try {
-                    mainPane.setCenter(new FXMLLoaderMade().getPane("ChatPage"));
-                } catch (IOException e) {
-                    System.err.println("exception: MainPageController(btnChat) => " + e.getMessage());
-                }
+                mainPane.setCenter(new FXMLLoaderMade().getPane("ChatPage"));
             }
         });
-
 //        id_btnYoriqnoma.setOnAction(new EventHandler<ActionEvent>() {
 //            @Override
 //            public void handle(ActionEvent event) {
@@ -173,21 +151,18 @@ public class MainPageController implements Initializable {
 //                }
 //            }
 //        });
-
         id_btnRefresh.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 defaultPage();
             }
         });
-
         id_btnChiqish.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 SceneChooser.changeScene(event, "/fxml/LoginPage.fxml", "Kirish oynasi...");
             }
         });
-
         id_btnPowerOff.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -198,11 +173,7 @@ public class MainPageController implements Initializable {
 
     private void defaultPage() {
         mainPane.setRight(id_vbLeft);
-        try {
-            mainPane.setCenter(new FXMLLoaderMade().getPane("KeysGenPage"));
-        } catch (IOException e) {
-            System.err.println("exception: MainPageController().defaultPage() => " + e.getMessage());
-        }
+        mainPane.setCenter(new FXMLLoaderMade().getPane("KeysGenPage"));
     }
 
     private void timeNow() {
@@ -224,28 +195,12 @@ public class MainPageController implements Initializable {
     }
 
     public void pageInfo() {
-        try {
-//            new Requests().RequestUsers(); /** Boshqa userlar haqida ma'lumotlar olinadi */
-            new Requests().ResponseUsersMe(); /** Login bilan kirgan user haqida */
-        } catch (IOException e) {
-            System.err.println("exception: MainPageController().pageInfo() => " + e.getMessage());
-            throw new RuntimeException(e);
-        }
+        /** Boshqa userlar haqida ma'lumotlar olinadi */
+        new Requests().ResponseUsersMe(); /** Login bilan kirgan user haqida */
         id_lblUserName.setText(Main.getLoginData().getUser().getUsername());
         id_lblEmail.setText(Main.getLoginData().getUser().getEmail());
         id_Circle.setStroke(Color.LIGHTBLUE);
-
         Image image = new Image(Main.getUrl() + Main.getAUsersMe().getData().getUsersPermissionsUser().getData().getAttributes().getRasm().getData().getAttributes().getUrl());
         id_Circle.setFill(new ImagePattern(image));
-
-//        for (int i = 0; i < Main.getaUsers().getData().getUsersPermissionsUsers().getData().length; i++) {
-//
-//            System.out.println(i);
-//            System.out.println(Main.getaUsers().getData().getUsersPermissionsUsers().getData()[i].getId());
-//            if (Main.getaUsers().getData().getUsersPermissionsUsers().getData()[i].getId() == Main.getLoginData().getUser().getId()) {
-//                System.out.println("chiqishi kerak edi: " + i);
-//            }
-//
-//        }
     }
 }

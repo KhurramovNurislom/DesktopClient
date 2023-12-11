@@ -4,18 +4,25 @@ import org.example.Main;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 
 public class FXMLLoaderMade {
-    private Pane view;
-
-    public Pane getPane(String fileName) throws IOException {
+    public Pane getPane(String fileName) {
         URL fileURL = Main.class.getResource("/fxml/" + fileName + ".fxml");
         if (fileURL == null) {
-            throw new java.io.FileNotFoundException("FXML file topilmadi");
+            try {
+                throw new java.io.FileNotFoundException("FXML file topilmadi");
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
         }
-        view = FXMLLoader.load(fileURL);
-        return view;
+        try {
+            return FXMLLoader.load(fileURL);
+        } catch (IOException e) {
+            System.err.println("exception : FXMLLoaderMade().getPane() => " + e.getCause());
+            throw new RuntimeException(e);
+        }
     }
 }

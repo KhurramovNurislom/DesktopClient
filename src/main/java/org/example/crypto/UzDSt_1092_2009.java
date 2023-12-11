@@ -26,12 +26,7 @@ public class UzDSt_1092_2009 {
         KeyPair keyPair = generationKeyPair();
 
         /** Bazaga kalitlarni yuklash */
-        try {
-            new Requests().RequestkeysGen(Hex.toHexString(keyPair.getPrivate().getEncoded()), Hex.toHexString(keyPair.getPublic().getEncoded()), "keyName");
-        } catch (IOException e) {
-            System.err.println("exception: UzDSt_1092_2009().generateKeyPair() => " + e.getMessage());
-            throw new RuntimeException(e);
-        }
+        new Requests().RequestkeysGen(Hex.toHexString(keyPair.getPrivate().getEncoded()), Hex.toHexString(keyPair.getPublic().getEncoded()), "keyName");
 
         /** PFX file integratsiya */
 //        PFX pfx = new PFX();
@@ -42,7 +37,7 @@ public class UzDSt_1092_2009 {
 //        try {
 //            pfx.generateCertificate();
 //        } catch (Exception e) {
-//            System.err.println("exception : UzDSt_1092_2009().generateKeyPair() => " + e.getMessage());
+//            System.err.println("exception : UzDSt_1092_2009().generateKeyPair() => " + e.getCause());
 //            throw new RuntimeException(e);
 //        }
         /** /PFX file integratsiya */
@@ -53,7 +48,7 @@ public class UzDSt_1092_2009 {
         try {
             return ByteEncode.encodeHexString(signGeneration(readPrivateKey(privKey), Files.readAllBytes(Paths.get(filePath))));
         } catch (IOException e) {
-            System.err.println("exception : UzDSt_1092_2009().signGenerate() => " + e.getMessage());
+            System.err.println("exception : UzDSt_1092_2009().signGenerate() => " + e.getCause());
             throw new RuntimeException(e);
         }
     }
@@ -62,7 +57,7 @@ public class UzDSt_1092_2009 {
         try {
             return verification(readPublicKey(pubKey), Files.readAllBytes(Paths.get(path)), ByteEncode.decodeHexString(sign));
         } catch (IOException e) {
-            System.err.println("exception : UzDSt_1092_2009().FileToString() => " + e.getMessage());
+            System.err.println("exception : UzDSt_1092_2009().verifySignature() => " + e.getCause());
             throw new RuntimeException(e);
         }
     }
@@ -73,7 +68,7 @@ public class UzDSt_1092_2009 {
             g.initialize(new ECNamedCurveGenParameterSpec("GostR3410-2001-CryptoPro-A"), new SecureRandom());
             return g.generateKeyPair();
         } catch (NoSuchAlgorithmException | NoSuchProviderException | InvalidAlgorithmParameterException e) {
-            System.err.println("exception: UzDSt_1092_2009().generationKeyPair() => " + e.getMessage());
+            System.err.println("exception: UzDSt_1092_2009().generationKeyPair() => " + e.getCause());
             throw new RuntimeException(e);
         }
     }
@@ -86,7 +81,7 @@ public class UzDSt_1092_2009 {
             sgr.update(message);
             return sgr.sign();
         } catch (NoSuchAlgorithmException | NoSuchProviderException | InvalidKeyException | SignatureException e) {
-            System.err.println("exception: UzDSt_1092_2009().signGenerate() => " + e.getMessage());
+            System.err.println("exception: UzDSt_1092_2009().signGeneration() => " + e.getCause());
             throw new RuntimeException(e);
         }
     }
@@ -117,7 +112,7 @@ public class UzDSt_1092_2009 {
             PKCS8EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(ByteEncode.decodeHexString(privateKey));
             return keyFactory.generatePrivate(privateKeySpec);
         } catch (NoSuchAlgorithmException | NoSuchProviderException | InvalidKeySpecException e) {
-            System.err.println("exception : UzDSt_1092_2009().readPrivateKey() => " + e.getMessage());
+            System.err.println("exception : UzDSt_1092_2009().readPrivateKey() => " + e.getCause());
             throw new RuntimeException(e);
         }
     }
@@ -129,7 +124,7 @@ public class UzDSt_1092_2009 {
             X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(ByteEncode.decodeHexString(publicKey));
             return keyFactory.generatePublic(publicKeySpec);
         } catch (NoSuchAlgorithmException | NoSuchProviderException | InvalidKeySpecException e) {
-            System.err.println("exception : UzDSt_1092_2009().readPublicKey() => " + e.getMessage());
+            System.err.println("exception : UzDSt_1092_2009().readPublicKey() => " + e.getCause());
             throw new RuntimeException(e);
         }
     }

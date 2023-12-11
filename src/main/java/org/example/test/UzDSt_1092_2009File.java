@@ -24,12 +24,7 @@ public class UzDSt_1092_2009File {
         KeyPair keyPair = generationKeyPair();
 
         /** Bazaga kalitlarni yuklash */
-        try {
-            new Requests().RequestkeysGen(Hex.toHexString(keyPair.getPrivate().getEncoded()), Hex.toHexString(keyPair.getPublic().getEncoded()), "keyName");
-        } catch (IOException e) {
-            System.err.println("exception: UzDSt_1092_2009().generateKeyPair() => " + e.getMessage());
-            throw new RuntimeException(e);
-        }
+        new Requests().RequestkeysGen(Hex.toHexString(keyPair.getPrivate().getEncoded()), Hex.toHexString(keyPair.getPublic().getEncoded()), "keyName");
 
         /** PFX file integratsiya */
 //        PFX pfx = new PFX();

@@ -29,7 +29,6 @@ import java.util.ResourceBundle;
 
 
 public class RegPageController implements Initializable {
-
     @FXML
     public TextField id_tfLogin;
     @FXML
@@ -64,9 +63,7 @@ public class RegPageController implements Initializable {
     public JFXButton id_btnExit;
 
     private FileChooser fileChooser;
-
     private List<File> fileList;
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -79,29 +76,21 @@ public class RegPageController implements Initializable {
         id_btnImageLoad.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
                 id_btnImageLoad.setDisable(true);
-
                 fileList = fileChooser.showOpenMultipleDialog(new Stage());
-
                 if (fileList != null) {
-
                     fileList.forEach(selectedFiles -> {
-
                         id_tfImagePath.setText(clearPunct(fileList.get(0).toString()));
-
                         if (id_tfImagePath.getText().toLowerCase().endsWith(".png") || id_tfImagePath.getText().toLowerCase().endsWith(".jpg")) {
                             ImageLoad();
                             id_tfImagePath.setStyle("-fx-text-fill: black");
                         } else {
                             id_tfImagePath.setStyle("-fx-text-fill: #db0404");
-
                             Alert alert = new Alert(Alert.AlertType.ERROR);
                             alert.setTitle("File");
                             alert.setHeaderText("Fayl yuklashda xatolik!");
                             alert.setContentText("Kechirasiz, siz faqat *.jpg va *.png rasmlarni tanlay olasiz");
                             alert.show();
-
                             id_tfImagePath.clear();
                         }
                     });
@@ -210,47 +199,21 @@ public class RegPageController implements Initializable {
     private boolean CheckFields() {
         int k = 0;
 
-        if (id_tfLogin.getText().equals("")) {
+        if (id_tfLogin.getText().isEmpty()) {
             k++;
             id_tfLogin.setStyle("-fx-prompt-text-fill: #db0404");
         } else {
             id_tfLogin.setStyle("-fx-prompt-text-fill: black");
         }
 
-        if (id_pfPassword.getText().equals("")) {
+        if (id_pfPassword.getText().isEmpty()) {
             k++;
             id_pfPassword.setStyle("-fx-prompt-text-fill: #db0404");
         } else {
             id_pfPassword.setStyle("-fx-prompt-text-fill: #123132");
         }
 
-        if (id_pfPasswordCheck.getText().equals("")) {
-            k++;
-            id_pfPasswordCheck.setStyle("-fx-prompt-text-fill: #db0404");
-        } else {
-            id_pfPasswordCheck.setStyle("-fx-prompt-text-fill: black");
-        }
-
-        if (id_tfName.getText().equals("")) {
-            k++;
-            id_tfName.setStyle("-fx-prompt-text-fill: #db0404");
-        } else {
-            id_tfName.setStyle("-fx-prompt-text-fill: black");
-        }
-
-        if (id_tfSurname.getText().equals("")) {
-            k++;
-            id_tfSurname.setStyle("-fx-prompt-text-fill: #db0404");
-        } else {
-            id_tfSurname.setStyle("-fx-prompt-text-fill: black");
-        }
-
-        if (id_tfFatherName.getText().equals("")) {
-            k++;
-            id_tfFatherName.setStyle("-fx-prompt-text-fill: #db0404");
-        } else {
-            id_tfFatherName.setStyle("-fx-prompt-text-fill: black");
-        }
+        k = getK(k, id_pfPasswordCheck, id_tfName, id_tfSurname, id_tfFatherName);
 
 
         if (id_dpBirthDay.getValue() == null) {
@@ -261,34 +224,7 @@ public class RegPageController implements Initializable {
         }
 
 
-        if (id_tfPassportSeries.getText().equals("")) {
-            k++;
-            id_tfPassportSeries.setStyle("-fx-prompt-text-fill: #db0404");
-        } else {
-            id_tfPassportSeries.setStyle("-fx-prompt-text-fill: black");
-        }
-
-        if (id_tfImagePath.getText().equals("")) {
-            k++;
-            id_tfImagePath.setStyle("-fx-prompt-text-fill: #db0404");
-        } else {
-            id_tfImagePath.setStyle("-fx-prompt-text-fill: black");
-        }
-
-
-        if (id_tfPrivatePhoneNumber.getText().equals("")) {
-            k++;
-            id_tfPrivatePhoneNumber.setStyle("-fx-prompt-text-fill: #db0404");
-        } else {
-            id_tfPrivatePhoneNumber.setStyle("-fx-prompt-text-fill: black");
-        }
-
-        if (id_tfWorkPhoneNumber.getText().equals("")) {
-            k++;
-            id_tfWorkPhoneNumber.setStyle("-fx-prompt-text-fill: #db0404");
-        } else {
-            id_tfWorkPhoneNumber.setStyle("-fx-prompt-text-fill: black");
-        }
+        k = getK(k, id_tfPassportSeries, id_tfImagePath, id_tfPrivatePhoneNumber, id_tfWorkPhoneNumber);
 
 
         if (k == 0) {
@@ -298,9 +234,40 @@ public class RegPageController implements Initializable {
         }
     }
 
+    private int getK(int k, TextField idPfPasswordCheck, TextField idTfName, TextField idTfSurname, TextField idTfFatherName) {
+        if (idPfPasswordCheck.getText().isEmpty()) {
+            k++;
+            idPfPasswordCheck.setStyle("-fx-prompt-text-fill: #db0404");
+        } else {
+            idPfPasswordCheck.setStyle("-fx-prompt-text-fill: black");
+        }
+
+        if (idTfName.getText().isEmpty()) {
+            k++;
+            idTfName.setStyle("-fx-prompt-text-fill: #db0404");
+        } else {
+            idTfName.setStyle("-fx-prompt-text-fill: black");
+        }
+
+        if (idTfSurname.getText().isEmpty()) {
+            k++;
+            idTfSurname.setStyle("-fx-prompt-text-fill: #db0404");
+        } else {
+            idTfSurname.setStyle("-fx-prompt-text-fill: black");
+        }
+
+        if (idTfFatherName.getText().isEmpty()) {
+            k++;
+            idTfFatherName.setStyle("-fx-prompt-text-fill: #db0404");
+        } else {
+            idTfFatherName.setStyle("-fx-prompt-text-fill: black");
+        }
+        return k;
+    }
+
     private void ImageLoad() {
         File personImage;
-        if (id_tfImagePath.getText().equals("")) {
+        if (id_tfImagePath.getText().isEmpty()) {
             personImage = new File("images/regPage/person.png");
             id_iwImage.setImage(new Image(personImage.toURI().toString()));
         } else {

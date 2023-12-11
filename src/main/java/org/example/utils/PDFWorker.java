@@ -30,9 +30,7 @@ import java.util.Map;
 
 public class PDFWorker {
 
-    private String outputImageFile;
-
-    public void PasteSignLink(String filePathPDF, String signText) {
+      public void PasteSignLink(String filePathPDF, String signText) {
         File file = new File(filePathPDF);
         generateQRCodeImage(signText, 100, 100, file.getParentFile() + File.separator + "signImage.png", file);
     }
@@ -46,73 +44,52 @@ public class PDFWorker {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         Map<EncodeHintType, Object> hints = new HashMap<>();
         hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
-        BitMatrix bitMatrix = null;
         try {
-            bitMatrix = qrCodeWriter.encode(sign, BarcodeFormat.QR_CODE, width, height, hints);
+            BitMatrix bitMatrix = qrCodeWriter.encode(sign, BarcodeFormat.QR_CODE, width, height, hints);
             Path path = FileSystems.getDefault().getPath(filePath);
-
             MatrixToImageWriter.writeToPath(bitMatrix, "JPG", path);
-
             File fileImage = new File(filePDF.getParentFile() + File.separator + "signImage.png");
-
             AddImage(filePDF, fileImage);
-
             fileImage.delete();
         } catch (WriterException | IOException e) {
             System.err.println("exception :  PDFWorker().generateQRCodeImage() => " + e.getCause());
             throw new RuntimeException(e);
         }
-
     }
 
     private void AddImage(File filePDF, File fileImage) {
-
         try (PDDocument document = PDDocument.load(filePDF)) {
-
             for (int i = 0; i < document.getPages().getCount(); i++) {
-//                System.out.println("Page Id => " + i);
                 PDPage page = document.getPage(i); // Rasmni qo'shish kerak bo'lgan sahifa (0 - birinchi sahifa)
                 PDRectangle mediaBox = page.getMediaBox();
                 float xPosition = mediaBox.getWidth() - 120; // Rasmning x koordinatasi
                 float yPosition = 15; // Rasmning y koordinatasi
-
-//                System.out.println(xPosition);
-//                System.out.println(yPosition);
-
                 PDImageXObject image = PDImageXObject.createFromFile(fileImage.getPath(), document);
                 try (PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true, true)) {
                     contentStream.drawImage(image, xPosition, yPosition, image.getWidth() / 2, image.getHeight() / 2);
                 }
             }
-
             /** O'zgartirilgan PDF faylini saqlash */
             String fileNameWithoutExtension = filePDF.getName().substring(0, filePDF.getName().lastIndexOf("."));
-
-            String pathSignedFile = filePDF.getParentFile() + File.separator + fileNameWithoutExtension + " " + new SimpleDateFormat("HH_mm_ss dd_MM_yyyy").format(new Date()) + ".pdf";
-
+            String pathSignedFile = filePDF.getParentFile() + File.separator + fileNameWithoutExtension + " "
+                    + new SimpleDateFormat("HH_mm_ss dd_MM_yyyy").format(new Date()) + ".pdf";
             SignedFileInfo signedFileInfo = new SignedFileInfo();
-
             signedFileInfo.setName(String.valueOf(Path.of(pathSignedFile).getFileName()));
             signedFileInfo.setFilePath(pathSignedFile);
             signedFileInfo.setCreatedAt(new SimpleDateFormat("HH:mm:ss dd.MM.yyyy").format(new Date()));
-
             Main.setSignedFileInfo(signedFileInfo);
             document.save(pathSignedFile);
-
         } catch (IOException e) {
             System.err.println("PDF faylini ochishda xatolik: " + e.getMessage());
         }
     }
 
-
     private String ImageExtraction(File file) {
-
-        String sign = "";
+        String sign = null;
         try (PDDocument document = PDDocument.load(file)) {
             int pageIndex = document.getNumberOfPages() - 1;
             PDPage page = document.getPage(pageIndex);
             PDResources resources = page.getResources();
-
             for (COSName cosName : resources.getXObjectNames()) {
                 PDXObject xObject = resources.getXObject(cosName);
                 if (xObject instanceof PDImageXObject imageXObject) {
@@ -120,7 +97,6 @@ public class PDFWorker {
                     sign = ReadQRCode(image);
                 }
             }
-
         } catch (Exception e) {
             System.err.println("PDFWorker().ImageExtraction() => " + e.getCause());
         }
@@ -128,24 +104,18 @@ public class PDFWorker {
     }
 
     private String ReadQRCode(BufferedImage barcBufferedImage) {
-
         LuminanceSource source = new BufferedImageLuminanceSource(barcBufferedImage);
         BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
-
         Reader reader = new MultiFormatReader();
-        Result result = null;
         try {
-            result = reader.decode(bitmap);
+            Result result = reader.decode(bitmap);
+            return result.toString();
         } catch (NotFoundException | ChecksumException | FormatException e) {
             System.err.println("exception : PDFWorker().ReadQRCode() => " + e.getCause());
             throw new RuntimeException(e);
         }
-
-        return result.toString();
     }
 
     private void ConvertDocxToPDF(String filePath) {
-
-
     }
 }
