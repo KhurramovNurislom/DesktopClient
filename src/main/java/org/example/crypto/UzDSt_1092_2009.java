@@ -105,7 +105,7 @@ public class UzDSt_1092_2009 {
                 return false;
             }
         } catch (NoSuchAlgorithmException | NoSuchProviderException | InvalidKeyException | SignatureException e) {
-            System.err.println("exception: UzDSt_1092_2009().verification() => " + e.getMessage());
+            System.err.println("exception: UzDSt_1092_2009().verification() => " + e.getCause());
             throw new RuntimeException(e);
         }
     }

@@ -95,15 +95,14 @@ public class SignVerPageController implements Initializable {
                     /**
                      * QRCodeni o'qish
                      */
+                    link = new PDFWorker().ReadSignLink(s);
+                    System.out.println("Link => " + link);
                     try {
-                        link = new PDFWorker().ReadSignLink(s);
-                        System.out.println("Link => " + link);
                         new Requests().RequestGetSignedFilesInfo(link);
-
-                    } catch (ChecksumException | NotFoundException | IOException | FormatException e) {
-                        System.err.println(" exception : SignVerPageController().btnChangeFile() => " + e.getMessage());
+                    } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
+
                 }
 
                 id_btnChangeFile.setDisable(false);
@@ -115,9 +114,10 @@ public class SignVerPageController implements Initializable {
             public void handle(ActionEvent event) {
 
                 /**      Test ishchi   */
-                for (int i = 0; i < temp.length; i++) {
+                for (String s : temp) {
 
-                    boolean boolSignVerify = new UzDSt_1092_2009().verifySignature(Main.getVerification().getPubkey(), temp[i], Main.getVerification().getFayl().getImzo());
+                    boolean boolSignVerify = new UzDSt_1092_2009().verifySignature(Main.getVerification().getPubkey(), s, Main.getVerification().getFayl().getImzo());
+
 
                     if (boolSignVerify) {
                         id_lblVerification.setVisible(true);
@@ -147,7 +147,7 @@ public class SignVerPageController implements Initializable {
                         }
 
                         id_tfSignedFileName.setText(Main.getVerification().getFayl().getName());
-                        id_tfSignedFilePath.setText(temp[i]);
+                        id_tfSignedFilePath.setText(s);
                         try {
                             id_tfSignedFileVolume.setText(new DecimalFormat("#.##").format((double) Files.size(Path.of(id_tfSignedFilePath.getText())) / (1024 * 1024)) + " Mb");
                             id_tfFileSignedTime.setText(new SimpleDateFormat("HH:mm:ss dd.MM.yyyy").format(new Date(Files.readAttributes(Path.of(id_tfSignedFilePath.getText()),
@@ -157,7 +157,6 @@ public class SignVerPageController implements Initializable {
                         }
 
                     } else {
-                        id_lblVerification.setVisible(true);
                         id_lblVerification.setText("Imzo tasdiqlanmadi");
                         id_lblVerification.setTextFill(Color.RED);
                         id_ivCheckSign.setImage(new Image("/images/signVerPage/warning.png"));

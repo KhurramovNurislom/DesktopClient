@@ -73,106 +73,6 @@ public class SigningPageController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-//        id_ivCheckSign.setVisible(false);
-//        id_lblVerification.setVisible(false);
-//
-//        /** kalitlar ro'yhatini to'ldirish*/
-//        AddedKeysList();
-//
-//        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("pdf files", "*.pdf"),
-//                new FileChooser.ExtensionFilter("all files", "*.*"));
-//
-//        id_cbSignes.setItems(keysList);
-//
-//        id_cbSignes.setPromptText("Kerakli yopiq kalitni tanlang...");
-//        id_btnChangeFile.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//                id_btnChangeFile.setDisable(true);
-//                fileList = fileChooser.showOpenMultipleDialog(new Stage());
-//                if (fileList != null) {
-//                    fileList.forEach(selectedFiles -> {
-//                        id_tfFilePath.setText(fileList.toString().replaceAll("\\[", "").replaceAll("]", ""));
-//                    });
-//                }
-//                id_btnChangeFile.setDisable(false);
-//            }
-//        });
-//
-//        id_btnSign.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//                id_btnSign.setDisable(true);
-//
-//                /** Imzo index*/
-//                String[] temp = id_tfFilePath.getText().split(",");
-//
-//
-//                if (!id_tfFilePath.getText().isEmpty() && new File(id_tfFilePath.getText()).isFile()) {
-//
-//
-//                    /**  Fayllar tanlanganda imzo qo'yish */
-//
-//                    for (int i = 0; i < temp.length; i++) {
-//
-////                        System.out.println("orginal file => " + temp[i]);
-//
-//                        try {
-//
-//                            System.out.println("=> kerak = " + temp[i]);
-//                            /** PDF document ga qrcode ga link upload qilish */
-//                            PDFWorkerMethod(temp[i], signLink());
-//
-////                            System.out.println("qrcode pasted file => " + new PDFWorker().ReadSignLink(Main.getSignedFileInfo().getFilePath()));
-//
-//                            /** Imzolangan QRCode qo'yilgan faylni qrcode dagi link ka upload qilish */
-//                            UpLoadSignedFile(Main.getSignedFileInfo().getFilePath());
-//
-//
-//                            /** File ga imzo qo'yilmoqda */
-//                            sign = new UzDSt_1092_2009().signGenerate(Main.getKeys().getData().getKalits().
-//                                            getData()[id_cbSignes.getSelectionModel().getSelectedIndex()].getAttributes().getPrivkey(),
-//                                    Main.getSignedFileInfo().getFilePath());
-//
-////                            System.out.println("sign : " + sign);
-//                            /** Messages fayl va imzo haqidagi ma'lumotlar yuklanadi */
-//                            new Requests().ResponseMessage(Main.getLoginData().getUser().getId(),
-//                                    sign,
-//                                    Main.getKeys().getData().getKalits().getData()[id_cbSignes.getSelectionModel().getSelectedIndex()].getId(),
-//                                    null,
-//                                    null);
-//
-//                            PaneSingerInfo();
-//
-//                        } catch (IOException | NoSuchAlgorithmException | KeyManagementException e) {
-//                            System.err.println(e.getMessage());
-//                        }
-//                    }
-//
-//
-//                } else {
-//
-//
-//                    Alert alert = new Alert(Alert.AlertType.ERROR);
-//                    alert.setHeaderText("Fayl tanlanmagan");
-//                    alert.setContentText("Imzolanadigan faylni tanlang");
-//                    alert.show();
-//
-//
-//                }
-//
-//                id_ivCheckSign.setVisible(true);
-//                id_ivCheckSign.setImage(new Image("check.png"));
-//                id_lblVerification.setVisible(true);
-//                id_lblVerification.setText("Fayl imzolandi");
-//
-//                id_btnSign.setDisable(false);
-//
-//
-//            }
-//        });
-
-
         id_ivCheckSign.setVisible(false);
         id_lblVerification.setVisible(false);
 
@@ -197,7 +97,7 @@ public class SigningPageController implements Initializable {
         });
 
         id_btnSign.setOnAction(new EventHandler<ActionEvent>() {
-//            @SneakyThrows
+            //            @SneakyThrows
             @Override
             public void handle(ActionEvent event) {
                 id_btnSign.setDisable(true);
@@ -211,7 +111,13 @@ public class SigningPageController implements Initializable {
                             try {
                                 new PDFWorker().PasteSignLink(s, signLink());
                                 /** Imzolangan, QRCode qo'yilgan faylni qrcode dagi link ka yuklash */
-                                new Requests().RequestUpload(Main.getSignedFileInfo().getFilePath());
+                                try {
+                                    new Requests().RequestUpload(Main.getSignedFileInfo().getFilePath());
+                                } catch (NoSuchAlgorithmException e) {
+                                    throw new RuntimeException(e);
+                                } catch (KeyManagementException e) {
+                                    throw new RuntimeException(e);
+                                }
                                 sign = new UzDSt_1092_2009().signGenerate(Main.getKeys().getData().getKalits().
                                                 getData()[id_cbSignes.getSelectionModel().getSelectedIndex()].getAttributes().getPrivkey(),
                                         Main.getSignedFileInfo().getFilePath());
@@ -219,14 +125,15 @@ public class SigningPageController implements Initializable {
                                 new Requests().ResponseMessage(Main.getLoginData().getUser().getId(),
                                         sign,
                                         Main.getKeys().getData().getKalits().getData()[id_cbSignes.getSelectionModel().getSelectedIndex()].getId(),
-                                        "myMessage",
-                                        "myMessageSing");
-                            } catch (IOException | WriterException e) {
-                                System.err.println("exception : ");
+                                        null,
+                                        null);
+                                PaneSingerInfo();
+                            } catch (IOException e) {
+                                System.err.println("exception : SigningPageController(btnSign) => " + e.getCause());
                                 throw new RuntimeException(e);
                             }
 
-                            PaneSingerInfo();
+//                            PaneSingerInfo();
                         }
                     }
                 } else {
