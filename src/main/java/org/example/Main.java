@@ -21,6 +21,7 @@ import org.example.modules.userMessages.UserMessages;
 import org.example.modules.users.AUsers;
 import org.example.modules.usersMe.AUsersMe;
 import org.example.modules.verificationInfo.VerificationInfo;
+import org.example.utils.Requests;
 import org.example.utils.SSLClient;
 
 import java.security.KeyPair;
@@ -107,6 +108,8 @@ public class Main extends Application {
         stage.setScene(scene);
 //        stage.setResizable(false);
         stage.show();
+
+
     }
 
     public static void main(String[] args) {

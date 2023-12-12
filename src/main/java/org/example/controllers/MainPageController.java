@@ -18,7 +18,6 @@ import javafx.scene.shape.Circle;
 
 import org.example.Main;
 import org.example.utils.FXMLLoaderMade;
-import org.example.utils.Requests;
 import org.example.utils.SceneChooser;
 
 import java.net.URL;
@@ -173,7 +172,7 @@ public class MainPageController implements Initializable {
 
     private void defaultPage() {
         mainPane.setRight(id_vbLeft);
-        mainPane.setCenter(new FXMLLoaderMade().getPane("KeysGenPage"));
+        mainPane.setCenter(new FXMLLoaderMade().getPane("SigningPage"));
     }
 
     private void timeNow() {
@@ -195,8 +194,6 @@ public class MainPageController implements Initializable {
     }
 
     public void pageInfo() {
-        /** Boshqa userlar haqida ma'lumotlar olinadi */
-        new Requests().ResponseUsersMe(); /** Login bilan kirgan user haqida */
         id_lblUserName.setText(Main.getLoginData().getUser().getUsername());
         id_lblEmail.setText(Main.getLoginData().getUser().getEmail());
         id_Circle.setStroke(Color.LIGHTBLUE);

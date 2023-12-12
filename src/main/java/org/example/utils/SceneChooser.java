@@ -15,6 +15,8 @@ public class SceneChooser {
     //this is for change Scene
     public static void changeScene(ActionEvent event, String fxmlFile, String title) {
 
+//        System.out.println(fxmlFile);
+//        System.out.println(event);
         Parent root = null;
         try {
             if (event != null) {
@@ -23,7 +25,6 @@ public class SceneChooser {
             } else {
                 root = FXMLLoader.load(Objects.requireNonNull(SceneChooser.class.getResource(fxmlFile)));
             }
-
         } catch (IOException e) {
             System.err.println("exception: SceneChooser => " + e.getMessage());
         }

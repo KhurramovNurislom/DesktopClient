@@ -10,7 +10,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class SSLClient {
 
-    public OkHttpClient httpsClient() throws NoSuchAlgorithmException, KeyManagementException {
+    public OkHttpClient httpsClient() {
 
         TrustManager[] trustAllCerts = new TrustManager[]{
                 new X509TrustManager() {
@@ -26,8 +26,15 @@ public class SSLClient {
                     }
                 }
         };
-        SSLContext sslContext = SSLContext.getInstance("SSL");
-        sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
+        SSLContext sslContext = null;
+        try {
+            sslContext = SSLContext.getInstance("SSL");
+            sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
+        } catch (NoSuchAlgorithmException | KeyManagementException e) {
+            System.err.println("exception : SSLClient().httpsClient() => " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+
 
         OkHttpClient.Builder newBuilder = new OkHttpClient.Builder();
         newBuilder.sslSocketFactory(sslContext.getSocketFactory(), (X509TrustManager) trustAllCerts[0]);

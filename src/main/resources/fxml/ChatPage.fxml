@@ -79,7 +79,7 @@
                     </rotationAxis>
                     <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../images/chatPageImages/magnifying-glass.png"/>
+                            <Image url="@../images/chatPage/magnifying-glass.png"/>
                         </ImageView>
                     </graphic>
                 </JFXButton>
@@ -90,7 +90,7 @@
                     </HBox.margin>
                     <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../images/chatPageImages/info.png"/>
+                            <Image url="@../images/chatPage/info.png"/>
                         </ImageView>
                     </graphic>
                 </JFXButton>
@@ -101,7 +101,7 @@
                     </HBox.margin>
                     <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../images/chatPageImages/menu.png"/>
+                            <Image url="@../images/chatPage/menu.png"/>
                         </ImageView>
                     </graphic>
                 </JFXButton>
@@ -126,7 +126,7 @@
                     </cursor>
                     <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../images/chatPageImages/paper-clip.png"/>
+                            <Image url="@../images/chatPage/paper-clip.png"/>
                         </ImageView>
                     </graphic>
                     <HBox.margin>
@@ -148,7 +148,7 @@
                     </cursor>
                     <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../images/chatPageImages/send-message.png"/>
+                            <Image url="@../images/chatPage/send-message.png"/>
                         </ImageView>
                     </graphic>
                     <HBox.margin>
@@ -165,7 +165,7 @@
                            layoutY="5.0" prefHeight="35.0" prefWidth="35.0" textAlignment="CENTER">
                     <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../images/chatPageImages/close.png"/>
+                            <Image url="@../images/chatPage/close.png"/>
                         </ImageView>
                     </graphic>
                 </JFXButton>
@@ -194,7 +194,7 @@
                                 <ImageView fitHeight="30.0" fitWidth="30.0" nodeOrientation="INHERIT"
                                            pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@../images/chatPageImages/reject.png"/>
+                                        <Image url="@../images/chatPage/reject.png"/>
                                     </image>
                                 </ImageView>
                             </graphic>
@@ -218,7 +218,7 @@
                             </cursor>
                             <graphic>
                                 <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                    <Image url="@../images/chatPageImages/send_message.png"/>
+                                    <Image url="@../images/chatPage/send_message.png"/>
                                 </ImageView>
                             </graphic>
                         </JFXButton>
@@ -232,7 +232,7 @@
                             <graphic>
                                 <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@../images/chatPageImages/plus-sign.png"/>
+                                        <Image url="@../images/chatPage/plus-sign.png"/>
                                     </image>
                                 </ImageView>
                             </graphic>

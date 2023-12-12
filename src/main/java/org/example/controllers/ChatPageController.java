@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -40,6 +41,7 @@ import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -106,14 +108,6 @@ public class ChatPageController implements Initializable {
     @FXML
     public VBox id_vbFilesMessagesPane;
     @FXML
-    private JFXButton[] btnArr;
-    @FXML
-    private JFXButton btn;
-    private FileChooser fileChooser;
-    private List<File> fileList;
-
-
-    @FXML
     private HBox hBox;
     @FXML
     private Label lbl;
@@ -126,23 +120,25 @@ public class ChatPageController implements Initializable {
     @FXML
     private JFXButton btnDel;
 
+    private FileChooser fileChooser;
+    private List<File> fileList;
+    private final List<File> fileListTemp = new ArrayList<>();
+    private File fileTemp;
+
     private int start = 0;
     private int limit = 7;
     private int tempUser = 0;
-    private final List<File> fileListTemp = new ArrayList<>();
-    private File fileTemp;
+
 
     TranslateTransition slide = new TranslateTransition();
 
     /***** SendDocument ga kerak o'zgaruvchilar ****/
 
 
-
-
-
     /*******************************************************/
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        FulledLeftPane();
         id_btnChatSetting.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -159,7 +155,7 @@ public class ChatPageController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
 //                System.out.println("AddDoc bosildi");
-                AddDocs();
+//                AddDocs();
             }
         });
         id_btnUserInfo.setOnAction(new EventHandler<ActionEvent>() {
@@ -172,7 +168,7 @@ public class ChatPageController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
 //                System.out.println("SendMessage bosildi");
-                handleSendMessages();
+//                handleSendMessages();
             }
         });
         id_vbAbonents.heightProperty().addListener(new ChangeListener<Number>() {
@@ -190,110 +186,109 @@ public class ChatPageController implements Initializable {
         id_tfFindAbonent.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                filterTable();
+
+                ObservableList<Integer> filterList = FXCollections.observableArrayList();
+
+                id_tfFindAbonent.textProperty().addListener((observable, oldValue, newValue) -> {
+                    for (int i = 0; i < Main.getAUsers().getData().getUsersPermissionsUsers().getData().length; i++) {
+                        if (Main.getAUsers().getData().getUsersPermissionsUsers().getData()[i].getAttributes().getUsername().toLowerCase().contains(newValue.toLowerCase())) {
+                            filterList.add(Main.getAUsers().getData().getUsersPermissionsUsers().getData()[i].getId());
+                            System.out.println("Name => " + Main.getAUsers().getData().getUsersPermissionsUsers().getData()[i].getAttributes().getUsername());
+                        }
+                    }
+
+                    int[] filterArr = new int[filterList.size()];
+
+                    for (int i = 0; i < filterList.size(); i++) {
+                        filterArr[i] = filterList.get(i);
+                    }
+
+                    filterList.clear();
+
+                    System.out.println("filterArr => " + Arrays.toString(filterArr));
+                    fulledList(filterArr);
+                });
             }
         });
         id_btnSendDoc.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                SendDocuments();
+//                SendDocuments();
             }
         });
 
         id_btnPlusDoc.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                AddDocuments();
+//                AddDocuments();
             }
         });
-        FulledLeftPane();
     }
-
-    /**
-     * Xabar jo'natish qismi
-     */
-    private void handleSendMessages() {
-
-//        new Requests().ResponseMessage(Main.getLoginData().getUser().getId(), sign, Main.getKeys().getData().getKalits().getData()[id_cbSignes.getSelectionModel().getSelectedIndex()].getId(), null, null);
-
-
-    }
-
-
-    /*********************************************/
-
 
     private void FulledLeftPane() {
-
-        /** userlarni serverdan oladigan so'rov */
-        ResponseUsers();
-
         int[] arr = new int[Main.getAUsers().getData().getUsersPermissionsUsers().getData().length];
         for (int i = 0; i < Main.getAUsers().getData().getUsersPermissionsUsers().getData().length; i++) {
             arr[i] = Main.getAUsers().getData().getUsersPermissionsUsers().getData()[i].getId();
         }
-
-
         fulledList(arr);
     }
 
     private void fulledList(int[] arr) {
 
+        System.out.println(" arr => " + Arrays.toString(arr));
 
         /** Kontaktlar hosil qilinadi */
         Circle circle;
-        id_vbAbonents.getChildren().clear();
+        JFXButton[] btnArr = new JFXButton[arr.length];
+        JFXButton btn = new JFXButton();
 
-        btnArr = new JFXButton[arr.length];
 
         for (int i = 0; i < arr.length; i++) {
-            for (int j = 0; j < arr.length; j++) {
+            for (int j = 0; j < Main.getAUsers().getData().getUsersPermissionsUsers().getData().length; j++) {
                 if (arr[i] == Main.getAUsers().getData().getUsersPermissionsUsers().getData()[j].getId()) {
                     circle = new Circle(30);
                     circle.setStroke(Color.LIGHTBLUE);
-
-
                     circle.setFill(new ImagePattern(new Image(Main.getUrl() + Main.getAUsers().getData().getUsersPermissionsUsers().getData()[j].getAttributes().getRasm().getData().getAttributes().getUrl())));
                     btn = new JFXButton(Main.getAUsers().getData().getUsersPermissionsUsers().getData()[j].getAttributes().getUsername());
-                    btn.setId(String.valueOf(Main.getAUsers().getData().getUsersPermissionsUsers().getData()[j].getId()));
-
+                    btn.setId(String.valueOf(arr[i]));
                     btn.setPrefSize(240, 60);
                     btn.setGraphic(circle);
                     btn.setAlignment(Pos.CENTER_LEFT);
+                    btnArr[i] = btn;
 
-
+                    final int finalI = Integer.parseInt(btn.getId());
+                    btnArr[i].setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            /** Abonent Name degan labelni to'ldiradi */
+                            for (int j = 0; j < btnArr.length; j++) {
+                                if (finalI == Main.getAUsers().getData().getUsersPermissionsUsers().getData()[j].getId()) {
+                                    id_crAbonent.setFill(new ImagePattern(new Image(Main.getUrl() + Main.getAUsers().getData().getUsersPermissionsUsers().getData()[j].getAttributes().getRasm().getData().getAttributes().getUrl())));
+                                    id_lblAbonentName.setText(Main.getAUsers().getData().getUsersPermissionsUsers().getData()[j].getAttributes().getUsername());
+                                    tempUser = Main.getAUsers().getData().getUsersPermissionsUsers().getData()[j].getId();
+                                    FulledMessagesPane(tempUser);
+                                    /** Paginatsiyani sozlaydi */
+                                    HandlePagination();
+                                }
+                            }
+                        }
+                    });
                 }
             }
-
-
-            btnArr[i] = btn;
-            final int finalI = Integer.parseInt(btn.getId());
-            System.out.println("finalId => " + finalI);
-
-            btnArr[i].setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    /** Abonent Name degan labelni to'ldiradi */
-
-                    for (int j = 0; j < btnArr.length; j++) {
-                        if (finalI == Main.getAUsers().getData().getUsersPermissionsUsers().getData()[j].getId()) {
-
-                            id_crAbonent.setFill(new ImagePattern(new Image(Main.getUrl() + Main.getAUsers().getData().getUsersPermissionsUsers().getData()[j].getAttributes().getRasm().getData().getAttributes().getUrl())));
-                            id_lblAbonentName.setText(Main.getAUsers().getData().getUsersPermissionsUsers().getData()[j].getAttributes().getUsername());
-                            tempUser = Main.getAUsers().getData().getUsersPermissionsUsers().getData()[j].getId();
-                            FulledMessagesPane(tempUser);
-                            /** Paginatsiyani sozlaydi */
-                            HandlePagination();
-                        }
-                    }
-                }
-            });
-
-
         }
-
+        id_vbAbonents.getChildren().clear();
         id_vbAbonents.getChildren().addAll(btnArr);
     }
+
+
+//    /** Xabar jo'natish qismi */
+//    private void handleSendMessages() {
+////        new Requests().ResponseMessage(Main.getLoginData().getUser().getId(), sign, Main.getKeys().getData().getKalits().getData()[id_cbSignes.getSelectionModel().getSelectedIndex()].getId(), null, null);
+//    }
+//
+//
+//    /*********************************************/
+//
 
     /**
      * Messageslar oynasini to'ldirish
@@ -411,48 +406,34 @@ public class ChatPageController implements Initializable {
                                 slide.setToX(700);
                                 slide.play();
                                 id_pnMessageInfo.setTranslateX(200);
-
                             }
                         });
-
                         id_lblPaneInfoLabel.setText(btnInfo.getId());
                     }
                 });
-
                 ImageView ivBtn = new ImageView(new Image("eye.png"));
-
                 ivBtn.setFitWidth(15);
                 ivBtn.setFitHeight(15);
                 btnInfo.setGraphic(ivBtn);
-
                 hbTop2.getChildren().add(btnInfo);
-
                 /** O'ng chekka tepa*/
                 HBox hbBottom2 = new HBox();
                 hbBottom2.setPrefHeight(25);
                 hbBottom2.setAlignment(Pos.BOTTOM_RIGHT);
                 hbBottom2.setSpacing(5);
-
-
                 Image img = new Image("check2.png");
                 ImageView ivCheck = new ImageView(img);
                 ivCheck.setFitHeight(15);
                 ivCheck.setFitWidth(22);
-
                 Label lblTime = new Label();
                 lblTime.setText(dateToString(a.getFayl().getData().getAttributes().getUpdatedAt()));
                 lblTime.setPrefSize(73, 20);
                 lblTime.setAlignment(Pos.BOTTOM_LEFT);
                 lblTime.setStyle("-fx-text-fill: #ffffff; -fx-font-size: 12");
-
                 hbBottom2.getChildren().addAll(lblTime, ivCheck);
-
                 vb2.getChildren().addAll(hbTop2, hbBottom2);
-
                 /** Umumiy */
                 hBox.getChildren().addAll(iv, vb1, vb2);
-
-
                 if (Main.getUserMessages().getData().getMessages().getData()[i].getAttributes().getFrom_user().getData().getId().equals(String.valueOf(Main.getLoginData().getUser().getId()))) {
                     label.setStyle("-fx-background-radius: 18 18 0 18; -fx-background-color: #578bcf; -fx-text-fill: #ffffff; -fx-font-size: 14");
                     hb.setAlignment(Pos.CENTER_RIGHT);
@@ -460,27 +441,18 @@ public class ChatPageController implements Initializable {
                     label.setStyle("-fx-background-radius: 18 18 18 0; -fx-background-color: #578ba0; -fx-text-fill: #ffffff; -fx-font-size: 14");
                     hb.setAlignment(Pos.CENTER_LEFT);
                 }
-
                 hb.getChildren().add(label);
                 id_vbMessages.getChildren().add(hb);
-
             }
-
             String ifXabar = Main.getUserMessages().getData().getMessages().getData()[i].getAttributes().getXabar();
             if (ifXabar != null && !ifXabar.isEmpty()) {
-
 //                System.out.println(Main.getUserMessages().getData().getMessages().getData()[i].getAttributes().getXabar());
-
                 label = new Label(Main.getUserMessages().getData().getMessages().getData()[i].getAttributes().getXabar());
-
                 label.setWrapText(true);
-
-
                 hb = new HBox();
                 hb.setPrefSize(700, 30);
                 hb.setPadding(new Insets(0, 10, 0, 10));
                 hb.getChildren().add(label);
-
                 if (Main.getUserMessages().getData().getMessages().getData()[i].getAttributes().getFrom_user().getData().getId().equals(String.valueOf(Main.getLoginData().getUser().getId()))) {
                     label.setStyle("-fx-background-radius: 18 18 0 18; -fx-background-color: #578bcf; -fx-text-fill: #ffffff");
                     hb.setAlignment(Pos.CENTER_RIGHT);
@@ -488,56 +460,15 @@ public class ChatPageController implements Initializable {
                     label.setStyle("-fx-background-radius: 18 18 18 0; -fx-background-color: #578ba0; -fx-text-fill: #ffffff");
                     hb.setAlignment(Pos.CENTER_LEFT);
                 }
-
                 label.setFont(new Font(14));
                 label.prefWidth(30);
                 label.maxHeight(500);
                 label.setPadding(new Insets(5, 10, 5, 10));
-
                 id_vbMessages.getChildren().add(hb);
-
             }
         }
     }
 
-
-    /**
-     * filter tayyor
-     */
-    private void filterTable() {
-
-        ObservableList<Integer> filterList = FXCollections.observableArrayList();
-
-        id_tfFindAbonent.textProperty().addListener((observable, oldValue, newValue) -> {
-
-            for (int i = 0; i < Main.getAUsers().getData().getUsersPermissionsUsers().getData().length; i++) {
-                if (Main.getAUsers().getData().getUsersPermissionsUsers().getData()[i].getAttributes().getUsername().toLowerCase().contains(newValue.toLowerCase())) {
-                    filterList.add(i);
-                }
-            }
-
-            int[] filterArr = new int[filterList.size()];
-
-            for (int i = 0; i < filterList.size(); i++) {
-                filterArr[i] = filterList.get(i);
-            }
-
-            filterList.clear();
-            fulledList(filterArr);
-        });
-    }
-
-
-    /**
-     * Messageslarni to'ldirish
-     */
-
-
-    /*** Message response */
-    private void ResponseUsers() {
-        /** Userlarni serverdan oladi */
-        new Requests().RequestUsers();
-    }
 
     private void ResponseUserMessages(String userId, String meId, int start, int limit) {
         new Requests().RequestUserMessages(userId, meId, start, limit);
@@ -548,10 +479,11 @@ public class ChatPageController implements Initializable {
         id_Pagination.setPageCount(Main.getUserMessages().getData().getMessages().getMeta().getPagination().getPageCount());
         id_Pagination.setPageFactory(pageIndex -> {
             start = pageIndex;
-            FulledMessagesPane(tempUser);
+//            FulledMessagesPane(tempUser);
             return new Pane();
         });
     }
+
     private String dateToString(String givenTime) {
         DateTimeFormatter givenFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         LocalDateTime dateTime = LocalDateTime.parse(givenTime, givenFormatter);
@@ -580,7 +512,8 @@ public class ChatPageController implements Initializable {
             alert.show();
         }
     }
-
+//
+//
 
     /**
      * Fayl jo'natish uchun tanlanganda slide style qilib beradi
@@ -728,9 +661,9 @@ public class ChatPageController implements Initializable {
         documentSendPane();
     }
 
-    private void SendDocuments() {
-    }
-
+    //    private void SendDocuments() {
+//    }
+//
     private void AddDocuments() {
         fileTemp = fileChooser.showOpenDialog(new Stage());
         if (fileTemp != null) {

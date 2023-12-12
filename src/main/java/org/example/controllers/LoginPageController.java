@@ -14,7 +14,6 @@ import org.example.utils.Requests;
 import org.example.utils.SSLClient;
 import org.example.utils.SceneChooser;
 
-import java.io.IOException;
 import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -38,6 +37,8 @@ public class LoginPageController implements Initializable {
     public TextField id_tfPassword;
 
     public boolean eyebool = false;
+
+     Requests requests = new Requests();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -64,25 +65,39 @@ public class LoginPageController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
 
-                try {
-                    Main.setClient(new SSLClient().httpsClient());
-                } catch (NoSuchAlgorithmException | KeyManagementException e) {
-                    System.err.println("exception: LoginPageController(btnTizimgaKirish) => " + e.getMessage());
-                }
+                Main.setClient(new SSLClient().httpsClient());
 
-                /** Serverga request jo'natib login parolni oladi va kiritilgan login parol bilan solishtiradi */
+               /** Serverga request jo'natib login parolni oladi va kiritilgan login parol bilan solishtiradi */
                 try {
-                    if (new Requests().RequestLogin(id_tfLogin.getText(), id_pfPassword.getText())) {
+                    if (requests.RequestLogin(id_tfLogin.getText(), id_pfPassword.getText())) {
+                        Thread thread = new Thread(){
+                            @Override
+                            public void run() {
+                                /** Login bilan kirgan user haqida */
+                                requests.ResponseUsersMe();
+                                /** Userlarni serverdan oladi */
+                                requests.RequestUsers();
+                                /** Foydalanuvchining kalitlarini olib beradi */
+                                requests.RequestKeys();
+                            }
+                        };
+                        thread.start();
+
                         SceneChooser.changeScene(event, "/fxml/MainPage.fxml", "Asosiy oyna...");
+
+
                     } else {
                         System.out.println("login yoki parol xato...");
                     }
                 } catch (Exception e) {
-                    System.err.println("exception: LoginPageController(btnTizimgaKirish) => " + e.getMessage());
+                    System.err.println("exception: LoginPageController(btnTizimgaKirish) => " + e.getCause());
                 }
 
-                /** Foydalanuvchining kalitlarini olib beradi */
-                new Requests().RequestKeys();
+
+
+
+
+
 
             }
         });
