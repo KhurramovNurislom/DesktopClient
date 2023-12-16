@@ -42,7 +42,7 @@
                 AnchorPane.topAnchor="0.0">
 
         <TextField fx:id="id_tfLogin" layoutX="150.0" layoutY="250.0" prefHeight="40.0" prefWidth="250.0"
-                   promptText="Login" text="nurislom" AnchorPane.leftAnchor="150.0"
+                   promptText="Login" text="azamatkuchkarov" AnchorPane.leftAnchor="150.0"
                    AnchorPane.rightAnchor="150.0">
             <font>
                 <Font size="15.0"/>

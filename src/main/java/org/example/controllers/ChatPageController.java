@@ -33,7 +33,9 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.example.Main;
 import org.example.modules.userMessages.Fayllar;
+import org.example.utils.FXMLLoaderMade;
 import org.example.utils.Requests;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,6 +47,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import static org.bouncycastle.asn1.x500.style.RFC4519Style.o;
 
 
 public class ChatPageController implements Initializable {
@@ -79,8 +83,6 @@ public class ChatPageController implements Initializable {
     @FXML
     public HBox id_hbPagination;
     @FXML
-    public Pane id_pnMessageInfo;
-    @FXML
     public JFXButton id_btnPaneClose;
     @FXML
     public Circle id_crAbonent;
@@ -108,6 +110,7 @@ public class ChatPageController implements Initializable {
     public ScrollPane id_spFiles;
     @FXML
     public VBox id_vbFilesMessagesPane;
+    public BorderPane id_bpMessageInfo;
     @FXML
     private HBox hBox;
     @FXML
@@ -122,7 +125,6 @@ public class ChatPageController implements Initializable {
     private JFXButton btnDel;
 
     private FileChooser fileChooser;
-    private List<File> fileList;
     private final List<File> fileListTemp = new ArrayList<>();
     private File fileTemp;
 
@@ -139,7 +141,10 @@ public class ChatPageController implements Initializable {
     /*******************************************************/
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+
         FulledLeftPane();
+
         id_btnChatSetting.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -221,6 +226,7 @@ public class ChatPageController implements Initializable {
 //                AddDocuments();
             }
         });
+
     }
 
     private void FulledLeftPane() {
@@ -296,183 +302,216 @@ public class ChatPageController implements Initializable {
     private void FulledMessagesPane(int userId) {
 
         System.out.println("id => " + userId);
+        System.out.println(" start => " + start);
 
-//        ResponseUserMessages(String.valueOf(userId), String.valueOf(Main.getLoginData().getUser().getId()), start, limit);
 
-        new Requests().RequestUserMessages(String.valueOf(userId), String.valueOf(Main.getLoginData().getUser().getId()), start, limit);
+        try {
+            new Requests().RequestUserMessages(String.valueOf(userId), String.valueOf(Main.getLoginData().getUser().getId()), start * limit, limit);
 
-        System.out.println(Main.getUserMessages().toString());
+        } catch (Exception e) {
+            System.out.println(" => " + e.getMessage());
+        }
 
-//        Label label;
-//        HBox hb;
+
+//        System.out.println(Main.getUserMessages().toString());
+
+
+        Label label;
+        HBox hb;
+
+        id_vbMessages.getChildren().clear();
+
+        for (int i = Main.getUserMessages().getData().getMessages().getData().length - 1; i >= 0; i--) {
+
+            for (Fayllar a : Main.getUserMessages().getData().getMessages().getData()[i].getAttributes().getFayllar()) {
+
+//                System.out.println(a.getFayl().getData().toString());
+
+                hb = new HBox();
+                hb.setPrefSize(700, 60);
+
+                /**************/
+                HBox hBox = new HBox();
+                hBox.setMaxSize(500, 60);
+
+                /**************/
+                label = new Label();
+                label.setMaxSize(500, 60);
+                label.setGraphic(hBox);
+                label.setAlignment(Pos.CENTER);
+                label.setPadding(new Insets(5, 5, 5, 5));
+
+                /***** Doc rasmi *********/
+                ImageView iv = new ImageView(new Image("/images/chatPage/docs.png"));
+                iv.setFitWidth(50);
+                iv.setFitHeight(50);
+
+                /** O'rta */
+                VBox vb1 = new VBox();
+                vb1.setPadding(new Insets(0, 5, 0, 5));
+                vb1.setAlignment(Pos.CENTER_LEFT);
+
+                /** O'rta tepa */
+                HBox hbTop1 = new HBox();
+                hbTop1.setPrefHeight(25);
+
+                Label lblFileName = new Label();
+                lblFileName.setText(a.getFayl().getData().getAttributes().getName());
+                lblFileName.setStyle("-fx-text-fill: #ffffff; -fx-font-size: 16");
+                lblFileName.setMaxWidth(340);
+
+                hbTop1.getChildren().add(lblFileName);
+
+                /** O'rta past */
+                HBox hbBottom1 = new HBox();
+                hbBottom1.setPrefHeight(25);
+                hbBottom1.setAlignment(Pos.BOTTOM_LEFT);
+
+                Label lblFileSize = new Label();
+                lblFileSize.setText(a.getFayl().getData().getAttributes().getSize() + " kByte");
+                lblFileSize.setStyle("-fx-text-fill: #182c66; -fx-font-size: 12");
+
+                hbBottom1.getChildren().add(lblFileSize);
+                vb1.getChildren().addAll(hbTop1, hbBottom1);
+
+                /** o'ng chekka **/
+                VBox vb2 = new VBox();
+                vb2.setPadding(new Insets(0, 5, 0, 5));
+                vb2.setAlignment(Pos.CENTER_RIGHT);
+
+                /** O'ng chekka tepa*/
+                HBox hbTop2 = new HBox();
+                hbTop2.setPrefHeight(25);
+
+                JFXButton btnInfo = getJfxButton(a);
+                hbTop2.getChildren().add(btnInfo);
+
+                /** O'ng chekka tepa*/
+                HBox hbBottom2 = new HBox();
+                hbBottom2.setPrefHeight(25);
+                hbBottom2.setAlignment(Pos.BOTTOM_RIGHT);
+                hbBottom2.setSpacing(5);
+
+                Image img = new Image("/images/chatPage/check2.png");
+                ImageView ivCheck = new ImageView(img);
+                ivCheck.setFitHeight(15);
+                ivCheck.setFitWidth(22);
+
+                Label lblTime = new Label();
+                lblTime.setText(dateToString(a.getFayl().getData().getAttributes().getUpdatedAt()));
+                lblTime.setPrefSize(73, 20);
+                lblTime.setAlignment(Pos.BOTTOM_LEFT);
+                lblTime.setStyle("-fx-text-fill: #ffffff; -fx-font-size: 12");
+
+                hbBottom2.getChildren().addAll(lblTime, ivCheck);
+                vb2.getChildren().addAll(hbTop2, hbBottom2);
+
+                /** Umumiy */
+                hBox.getChildren().addAll(iv, vb1, vb2);
+
+                if (Main.getUserMessages().getData().getMessages().getData()[i].getAttributes().getFrom_user().getData().getId().equals(String.valueOf(Main.getLoginData().getUser().getId()))) {
+                    label.setStyle("-fx-background-radius: 18 18 0 18; -fx-background-color: #578bcf; -fx-text-fill: #ffffff; -fx-font-size: 14");
+                    hb.setAlignment(Pos.CENTER_RIGHT);
+                } else {
+                    label.setStyle("-fx-background-radius: 18 18 18 0; -fx-background-color: #578ba0; -fx-text-fill: #ffffff; -fx-font-size: 14");
+                    hb.setAlignment(Pos.CENTER_LEFT);
+                }
+
+                hb.getChildren().add(label);
+                id_vbMessages.getChildren().add(hb);
+            }
+
+            String ifXabar = Main.getUserMessages().getData().getMessages().getData()[i].getAttributes().getXabar();
 //
-//        id_vbMessages.getChildren().clear();
-//
-//        for (int i = Main.getUserMessages().getData().getMessages().getData().length - 1; i >= 0; i--) {
-//
-//
-//            for (Fayllar a : Main.getUserMessages().getData().getMessages().getData()[i].getAttributes().getFayllar()) {
-//
-//                hb = new HBox();
-//                hb.setPrefSize(700, 60);
-//
-//                /**************/
-//                HBox hBox = new HBox();
-//                hBox.setMaxSize(500, 60);
-//
-//                /**************/
-//                label = new Label();
-//                label.setMaxSize(500, 60);
-//                label.setGraphic(hBox);
-//                label.setAlignment(Pos.CENTER);
-//                label.setPadding(new Insets(5, 5, 5, 5));
-//
-//                /***** Doc rasmi *********/
-//                ImageView iv = new ImageView(new Image("docs.png"));
-//                iv.setFitWidth(50);
-//                iv.setFitHeight(50);
-//
-//                /** O'rta */
-//                VBox vb1 = new VBox();
-//                vb1.setPadding(new Insets(0, 5, 0, 5));
-//                vb1.setAlignment(Pos.CENTER_LEFT);
-//
-//                /** O'rta tepa */
-//                HBox hbTop1 = new HBox();
-//                hbTop1.setPrefHeight(25);
-//
-//                Label lblFileName = new Label();
-//                lblFileName.setText(a.getFayl().getData().getAttributes().getName());
-//                lblFileName.setStyle("-fx-text-fill: #ffffff; -fx-font-size: 16");
-//                lblFileName.setMaxWidth(340);
-//
-//                hbTop1.getChildren().add(lblFileName);
-//
-//                /** O'rta past */
-//                HBox hbBottom1 = new HBox();
-//                hbBottom1.setPrefHeight(25);
-//                hbBottom1.setAlignment(Pos.BOTTOM_LEFT);
-//
-//                Label lblFileSize = new Label();
-//                lblFileSize.setText(a.getFayl().getData().getAttributes().getSize() + " kByte");
-//                lblFileSize.setStyle("-fx-text-fill: #182c66; -fx-font-size: 12");
-//
-//
-//                hbBottom1.getChildren().add(lblFileSize);
-//
-//                vb1.getChildren().addAll(hbTop1, hbBottom1);
-//
-//                /** o'ng chekka **/
-//                VBox vb2 = new VBox();
-//                vb2.setPadding(new Insets(0, 5, 0, 5));
-//                vb2.setAlignment(Pos.CENTER_RIGHT);
-//
-//                /** O'ng chekka tepa*/
-//                HBox hbTop2 = new HBox();
-//                hbTop2.setPrefHeight(25);
-//
-//                JFXButton btnInfo = new JFXButton("Batafsil");
-//                btnInfo.setPrefSize(100, 20);
-//                btnInfo.setId("id_btn" + a.getFayl().getData().getId());
-//
-//                FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.4), id_pnShadow);
-//
-//                btnInfo.setOnAction(new EventHandler<ActionEvent>() {
-//                    @Override
-//                    public void handle(ActionEvent event) {
-//
-//                        id_pnMessageInfo.setTranslateX(700);
-//                        slide.setDuration(Duration.seconds(0.4));
-//                        slide.setNode(id_pnMessageInfo);
-//
-//                        /** Bu narsa har bitta messagega beriladi */
-//                        slide.setOnFinished((ActionEvent e) -> {
-//                            id_pnShadow.setVisible(true);
-//                        });
-//
-//                        id_pnShadow.setVisible(true);
-//                        fadeTransition.setFromValue(0.0);
-//                        fadeTransition.setToValue(0.4);
-//                        fadeTransition.play();
-//                        slide.setToX(200);
-//                        slide.play();
-//
-//                        id_btnPaneClose.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//                            @Override
-//                            public void handle(MouseEvent event) {
-//
-//                                slide.setOnFinished((ActionEvent e) -> {
-//                                    id_pnShadow.setVisible(false);
-//                                });
-//
-//                                fadeTransition.setFromValue(0.4);
-//                                fadeTransition.setToValue(0.0);
-//                                fadeTransition.play();
-//
-//                                slide.setToX(700);
-//                                slide.play();
-//                                id_pnMessageInfo.setTranslateX(200);
-//                            }
-//                        });
-//                        id_lblPaneInfoLabel.setText(btnInfo.getId());
-//                    }
-//                });
-//                ImageView ivBtn = new ImageView(new Image("eye.png"));
-//                ivBtn.setFitWidth(15);
-//                ivBtn.setFitHeight(15);
-//                btnInfo.setGraphic(ivBtn);
-//                hbTop2.getChildren().add(btnInfo);
-//                /** O'ng chekka tepa*/
-//                HBox hbBottom2 = new HBox();
-//                hbBottom2.setPrefHeight(25);
-//                hbBottom2.setAlignment(Pos.BOTTOM_RIGHT);
-//                hbBottom2.setSpacing(5);
-//                Image img = new Image("check2.png");
-//                ImageView ivCheck = new ImageView(img);
-//                ivCheck.setFitHeight(15);
-//                ivCheck.setFitWidth(22);
-//                Label lblTime = new Label();
-//                lblTime.setText(dateToString(a.getFayl().getData().getAttributes().getUpdatedAt()));
-//                lblTime.setPrefSize(73, 20);
-//                lblTime.setAlignment(Pos.BOTTOM_LEFT);
-//                lblTime.setStyle("-fx-text-fill: #ffffff; -fx-font-size: 12");
-//                hbBottom2.getChildren().addAll(lblTime, ivCheck);
-//                vb2.getChildren().addAll(hbTop2, hbBottom2);
-//                /** Umumiy */
-//                hBox.getChildren().addAll(iv, vb1, vb2);
-//                if (Main.getUserMessages().getData().getMessages().getData()[i].getAttributes().getFrom_user().getData().getId().equals(String.valueOf(Main.getLoginData().getUser().getId()))) {
-//                    label.setStyle("-fx-background-radius: 18 18 0 18; -fx-background-color: #578bcf; -fx-text-fill: #ffffff; -fx-font-size: 14");
-//                    hb.setAlignment(Pos.CENTER_RIGHT);
-//                } else {
-//                    label.setStyle("-fx-background-radius: 18 18 18 0; -fx-background-color: #578ba0; -fx-text-fill: #ffffff; -fx-font-size: 14");
-//                    hb.setAlignment(Pos.CENTER_LEFT);
-//                }
-//                hb.getChildren().add(label);
-//                id_vbMessages.getChildren().add(hb);
-//            }
-//            String ifXabar = Main.getUserMessages().getData().getMessages().getData()[i].getAttributes().getXabar();
-//            if (ifXabar != null && !ifXabar.isEmpty()) {
-////                System.out.println(Main.getUserMessages().getData().getMessages().getData()[i].getAttributes().getXabar());
-//                label = new Label(Main.getUserMessages().getData().getMessages().getData()[i].getAttributes().getXabar());
-//                label.setWrapText(true);
-//                hb = new HBox();
-//                hb.setPrefSize(700, 30);
-//                hb.setPadding(new Insets(0, 10, 0, 10));
-//                hb.getChildren().add(label);
-//                if (Main.getUserMessages().getData().getMessages().getData()[i].getAttributes().getFrom_user().getData().getId().equals(String.valueOf(Main.getLoginData().getUser().getId()))) {
-//                    label.setStyle("-fx-background-radius: 18 18 0 18; -fx-background-color: #578bcf; -fx-text-fill: #ffffff");
-//                    hb.setAlignment(Pos.CENTER_RIGHT);
-//                } else {
-//                    label.setStyle("-fx-background-radius: 18 18 18 0; -fx-background-color: #578ba0; -fx-text-fill: #ffffff");
-//                    hb.setAlignment(Pos.CENTER_LEFT);
-//                }
-//                label.setFont(new Font(14));
-//                label.prefWidth(30);
-//                label.maxHeight(500);
-//                label.setPadding(new Insets(5, 10, 5, 10));
-//                id_vbMessages.getChildren().add(hb);
-//            }
-//        }
+//            System.out.println("ifXabar => " + ifXabar);
+
+
+            if (ifXabar != null && !ifXabar.isEmpty()) {
+
+                label = new Label(Main.getUserMessages().getData().getMessages().getData()[i].getAttributes().getXabar());
+                label.setWrapText(true);
+                hb = new HBox();
+                hb.setPrefSize(700, 30);
+                hb.setPadding(new Insets(0, 10, 0, 10));
+                hb.getChildren().add(label);
+
+                if (Main.getUserMessages().getData().getMessages().getData()[i].getAttributes().getFrom_user().getData().getId().equals(String.valueOf(Main.getLoginData().getUser().getId()))) {
+                    label.setStyle("-fx-background-radius: 18 18 0 18; -fx-background-color: #578bcf; -fx-text-fill: #ffffff");
+                    hb.setAlignment(Pos.CENTER_RIGHT);
+                } else {
+                    label.setStyle("-fx-background-radius: 18 18 18 0; -fx-background-color: #578ba0; -fx-text-fill: #ffffff");
+                    hb.setAlignment(Pos.CENTER_LEFT);
+                }
+
+                label.setFont(new Font(14));
+                label.prefWidth(30);
+                label.maxHeight(500);
+                label.setPadding(new Insets(5, 10, 5, 10));
+
+                id_vbMessages.getChildren().add(hb);
+            }
+        }
+    }
+
+    @NotNull
+    private JFXButton getJfxButton(Fayllar a) {
+        JFXButton btnInfo = new JFXButton("Batafsil");
+        btnInfo.setPrefSize(100, 20);
+        btnInfo.setId("id_btn" + a.getFayl().getData().getId());
+
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.4), id_pnShadow);
+        btnInfo.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                id_bpMessageInfo.setTranslateX(700);
+
+                slide.setDuration(Duration.seconds(0.5));
+                slide.setNode(id_bpMessageInfo);
+
+                /** Bu narsa har bitta messagega beriladi */
+                slide.setOnFinished((ActionEvent e) -> {
+                    id_pnShadow.setVisible(true);
+                });
+
+                id_pnShadow.setVisible(true);
+                fadeTransition.setFromValue(0.0);
+                fadeTransition.setToValue(0.5);
+                fadeTransition.play();
+
+                slide.setToX(200);
+                slide.play();
+
+                id_bpMessageInfo.setCenter(new FXMLLoaderMade().getPane("BtnInfo"));
+                id_btnPaneClose.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+
+                        slide.setOnFinished((ActionEvent e) -> {
+                            id_pnShadow.setVisible(false);
+                        });
+
+                        fadeTransition.setFromValue(0.5);
+                        fadeTransition.setToValue(0.0);
+                        fadeTransition.play();
+
+                        slide.setToX(700);
+                        slide.play();
+
+                        id_bpMessageInfo.setTranslateX(200);
+                    }
+                });
+
+                id_lblPaneInfoLabel.setText(btnInfo.getId() + "_Nurislom");
+
+            }
+        });
+
+        ImageView ivBtn = new ImageView(new Image("/images/chatPage/eye.png"));
+        ivBtn.setFitWidth(15);
+        ivBtn.setFitHeight(15);
+        btnInfo.setGraphic(ivBtn);
+        return btnInfo;
     }
 
     private void HandlePagination() {
@@ -495,7 +534,7 @@ public class ChatPageController implements Initializable {
     private void AddDocs() {
         if (tempUser != 0) {
             fileChooser = new FileChooser();
-            fileList = fileChooser.showOpenMultipleDialog(new Stage());
+            List<File> fileList = fileChooser.showOpenMultipleDialog(new Stage());
             if (fileList != null) {
                 PaneShadow();
                 id_vbFilesMessagesPane.getChildren().clear();
@@ -656,7 +695,7 @@ public class ChatPageController implements Initializable {
 
     //    private void SendDocuments() {
 //    }
-//
+
     private void AddDocuments() {
         fileTemp = fileChooser.showOpenDialog(new Stage());
         if (fileTemp != null) {
@@ -664,46 +703,6 @@ public class ChatPageController implements Initializable {
         }
         documentSendPane();
     }
-
-    /**
-     btnInfo.setOnAction(new EventHandler<ActionEvent>() {
-    @Override public void handle(ActionEvent event) {
-
-    id_pnMessageInfo.setTranslateX(700);
-    slide.setDuration(Duration.seconds(0.4));
-    slide.setNode(id_pnMessageInfo);
-
-    slide.setOnFinished((ActionEvent e) -> {
-    id_pnShadow.setVisible(true);
-    });
-
-    id_pnShadow.setVisible(true);
-    fadeTransition.setFromValue(0.0);
-    fadeTransition.setToValue(0.4);
-    fadeTransition.play();
-
-    slide.setToX(200);
-    slide.play();
-
-    id_btnPaneClose.setOnMouseClicked(new EventHandler<MouseEvent>() {
-    @Override public void handle(MouseEvent event) {
-
-    slide.setOnFinished((ActionEvent e) -> {
-    id_pnShadow.setVisible(false);
-    });
-
-    fadeTransition.setFromValue(0.4);
-    fadeTransition.setToValue(0.0);
-    fadeTransition.play();
-
-    slide.setToX(700);
-    slide.play();
-    id_pnMessageInfo.setTranslateX(200);}
-    });
-
-    id_lblPaneInfoLabel.setText(btnInfo.getId());}
-    });
-     */
 
 
 //    /*** Keyinchalikka */
@@ -763,3 +762,45 @@ public class ChatPageController implements Initializable {
 //        }
 //    }
 }
+
+
+/**
+ * btnInfo.setOnAction(new EventHandler<ActionEvent>() {
+ *
+ * @Override public void handle(ActionEvent event) {
+ * <p>
+ * id_pnMessageInfo.setTranslateX(700);
+ * slide.setDuration(Duration.seconds(0.4));
+ * slide.setNode(id_pnMessageInfo);
+ * <p>
+ * slide.setOnFinished((ActionEvent e) -> {
+ * id_pnShadow.setVisible(true);
+ * });
+ * <p>
+ * id_pnShadow.setVisible(true);
+ * fadeTransition.setFromValue(0.0);
+ * fadeTransition.setToValue(0.4);
+ * fadeTransition.play();
+ * <p>
+ * slide.setToX(200);
+ * slide.play();
+ * <p>
+ * id_btnPaneClose.setOnMouseClicked(new EventHandler<MouseEvent>() {
+ * @Override public void handle(MouseEvent event) {
+ * <p>
+ * slide.setOnFinished((ActionEvent e) -> {
+ * id_pnShadow.setVisible(false);
+ * });
+ * <p>
+ * fadeTransition.setFromValue(0.4);
+ * fadeTransition.setToValue(0.0);
+ * fadeTransition.play();
+ * <p>
+ * slide.setToX(700);
+ * slide.play();
+ * id_pnMessageInfo.setTranslateX(200);}
+ * });
+ * <p>
+ * id_lblPaneInfoLabel.setText(btnInfo.getId());}
+ * });
+ */

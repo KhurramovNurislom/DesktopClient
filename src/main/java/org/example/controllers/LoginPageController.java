@@ -85,19 +85,12 @@ public class LoginPageController implements Initializable {
 
                         SceneChooser.changeScene(event, "/fxml/MainPage.fxml", "Asosiy oyna...");
 
-
                     } else {
                         System.out.println("login yoki parol xato...");
                     }
                 } catch (Exception e) {
                     System.err.println("exception: LoginPageController(btnTizimgaKirish) => " + e.getCause());
                 }
-
-
-
-
-
-
 
             }
         });
