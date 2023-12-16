@@ -112,7 +112,7 @@ public class KeysGenPageController implements Initializable {
 
     private void keyPairGenerate() {
         UzDSt_1092_2009 uzDSt10922009 = new UzDSt_1092_2009();
-        uzDSt10922009.generateKeyPair("12345");
+        uzDSt10922009.generateKeyPair();
 
     }
 

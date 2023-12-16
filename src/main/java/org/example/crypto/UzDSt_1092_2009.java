@@ -20,7 +20,7 @@ import java.util.Arrays;
 
 public class UzDSt_1092_2009 {
 
-    public void generateKeyPair(String password) {
+    public void generateKeyPair() {
 
         Security.addProvider(new BouncyCastleProvider());
         KeyPair keyPair = generationKeyPair();

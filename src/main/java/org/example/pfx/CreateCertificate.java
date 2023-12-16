@@ -27,11 +27,17 @@ public class CreateCertificate {
 
     String CERTIFICATE_ALIAS = "YOUR_CERTIFICATE_NAME";
     String CERTIFICATE_DN = "CN=cn, O=o, L=L, ST=il, C= c";
-    String CERTIFICATE_NAME = "keystore.cer";
-    String password = "";
+    String CERTIFICATE_NAME;
+    String PASSWORD;
 
 
-    public X509Certificate managerCer() {
+    public X509Certificate managerCer(String CERTIFICATE_NAME, String PASSWORD) {
+        this.CERTIFICATE_NAME = CERTIFICATE_NAME;
+        this.PASSWORD = PASSWORD;
+
+
+
+
         CreateCertificate signedCertificate = new CreateCertificate();
         try {
           return signedCertificate.createCertificate();
@@ -72,7 +78,7 @@ public class CreateCertificate {
         try (FileOutputStream os = new FileOutputStream(file)) {
             KeyStore keyStore = KeyStore.getInstance("PKCS12");
             keyStore.load(null, null);
-            keyStore.setKeyEntry(CERTIFICATE_ALIAS, key, password.toCharArray(), new java.security.cert.Certificate[]{cert});
+            keyStore.setKeyEntry(CERTIFICATE_ALIAS, key, PASSWORD.toCharArray(), new java.security.cert.Certificate[]{cert});
             //        keyStore.store( new FileOutputStream(file), "YOUR_PASSWORD".toCharArray() );
             os.write(cert.getEncoded());
 
