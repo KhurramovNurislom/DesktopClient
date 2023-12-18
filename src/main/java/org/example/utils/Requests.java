@@ -36,7 +36,7 @@ public class Requests {
             response.close();
             return Main.getLoginData().getJwt() != null && !Main.getLoginData().getJwt().isEmpty();
         } catch (IOException e) {
-            System.err.println("exception : Requests().RequestLogin() => " + e.getCause());
+            System.out.println("exception : Requests().RequestLogin() => " + e.getCause());
             throw new RuntimeException(e);
         }
     }
@@ -61,7 +61,7 @@ public class Requests {
             Main.setAUsersMe(aUsersMe);
             response.close();
         } catch (IOException e) {
-            System.err.println("exception : Requests().ResponseUsersMe() => " + e.getCause());
+            System.out.println("exception : Requests().ResponseUsersMe() => " + e.getCause());
             throw new RuntimeException(e);
         }
     }
@@ -83,7 +83,7 @@ public class Requests {
             Main.setKeysGen(keysGen);
             response.close();
         } catch (IOException e) {
-            System.err.println("exception : Requests().RequestkeysGen() => " + e.getCause());
+            System.out.println("exception : Requests().RequestkeysGen() => " + e.getCause());
             throw new RuntimeException(e);
         }
     }
@@ -107,7 +107,7 @@ public class Requests {
             Main.setKeys(keys);
             response.close();
         } catch (IOException e) {
-            System.err.println("exception : Requests().RequestKeys() => " + e.getCause());
+            System.out.println("exception : Requests().RequestKeys() => " + e.getCause());
             throw new RuntimeException(e);
         }
     }
@@ -121,7 +121,7 @@ public class Requests {
             Main.setHash(hash);
             response.close();
         } catch (IOException e) {
-            System.err.println("exception : Requests().RequestSignLink() => " + e.getCause());
+            System.out.println("exception : Requests().RequestSignLink() => " + e.getCause());
             throw new RuntimeException(e);
         }
     }
@@ -144,7 +144,7 @@ public class Requests {
             Response response = Main.getClient().newCall(request).execute();
             response.close();
         } catch (IOException e) {
-            System.err.println("exception : Requests().ResponseMessage() => " + e.getCause());
+            System.out.println("exception : Requests().ResponseMessage() => " + e.getCause());
             throw new RuntimeException(e);
         }
     }
@@ -166,7 +166,7 @@ public class Requests {
             Main.setUpload(uploadData[0]);
             response.close();
         } catch (IOException e) {
-            System.err.println("exception : Requests().RequestUpload() => " + e.getCause());
+            System.out.println("exception : Requests().RequestUpload() => " + e.getCause());
             throw new RuntimeException(e);
         }
     }
@@ -190,7 +190,7 @@ public class Requests {
             Main.setAUsers(users);
             response.close();
         } catch (IOException e) {
-            System.err.println("exception : Requests().RequestUsers() => " + e.getCause());
+            System.out.println("exception : Requests().RequestUsers() => " + e.getCause());
             throw new RuntimeException(e);
         }
     }
@@ -220,16 +220,19 @@ public class Requests {
 
             System.out.println("14.12.2023 => " + messages);
         } catch (IOException e) {
-            System.err.println("exception : Requests().RequestUserMessages() => " + e.getMessage());
+            System.out.println("exception : Requests().RequestUserMessages() => " + e.getMessage());
 //            throw new RuntimeException(e);
         }
     }
 
     public void RequestKeyDel(int id) {
+        System.out.println("id => " + id);
+
         /** Tanlangan kalitni o'chirish */
         MediaType mediaType = MediaType.parse("text/plain");
         RequestBody body = RequestBody.create(mediaType, "");
-        Request request = new Request.Builder().url(Main.getUrl() + "/api/kalits/" + id)
+        Request request = new Request.Builder()
+                .url(Main.getUrl() + "/api/kalits/" + id)
                 .method("DELETE", body)
                 .addHeader("Authorization", "Bearer " + Main.getLoginData().getJwt())
                 .build();
@@ -237,9 +240,23 @@ public class Requests {
             Response response = Main.getClient().newCall(request).execute();
             response.close();
         } catch (IOException e) {
-            System.err.println("exception : Requests().RequestKeyDel() => " + e.getCause());
+            System.out.println("exception : Requests().RequestKeyDel() => " + e.getCause());
             throw new RuntimeException(e);
         }
+
+
+//        OkHttpClient client = new OkHttpClient().newBuilder()
+//                .build();
+//        MediaType mediaType = MediaType.parse("text/plain");
+//        RequestBody body = RequestBody.create(mediaType, "");
+//        Request request = new Request.Builder()
+//                .url("http://192.168.1.15:1337/api/kalits/287")
+//                .method("DELETE", body)
+//                .addHeader("Authorization", "Bearer " + Main.getLoginData().getJwt())
+//                .build();
+//        Response response = client.newCall(request).execute();
+
+
     }
 
     public void RequestGetSignedFilesInfo(String link) {
@@ -256,7 +273,7 @@ public class Requests {
             Main.setVerification(verification);
             response.close();
         } catch (IOException e) {
-            System.err.println("exception : Requests().RequestGetSignedFilesInfo() => " + e.getCause());
+            System.out.println("exception : Requests().RequestGetSignedFilesInfo() => " + e.getCause());
             throw new RuntimeException(e);
         }
     }

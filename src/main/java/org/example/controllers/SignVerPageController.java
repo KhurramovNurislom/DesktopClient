@@ -1,17 +1,21 @@
 package org.example.controllers;
 
+import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.Initializable;
+import javafx.scene.ImageCursor;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.example.Main;
 import org.example.crypto.UzDSt_1092_2009;
 import org.example.utils.PDFWorker;
@@ -56,14 +60,20 @@ public class SignVerPageController implements Initializable {
     public ImageView id_ivCheckSign;
     @FXML
     public Label id_lblVerification;
+    @FXML
+    public Pane id_pnShadow;
 
     private FileChooser fileChooser;
     private List<File> fileList;
     private String link;
     private String[] temp;
+    private boolean boolPane = true;
+    Duration duration = Duration.seconds(0.1);
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        shadow();
 
         id_lblVerification.setVisible(false);
 
@@ -91,6 +101,7 @@ public class SignVerPageController implements Initializable {
             }
         });
 
+
         id_btnSignVerification.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -101,6 +112,8 @@ public class SignVerPageController implements Initializable {
                         id_lblVerification.setText("Imzo tasdiqlandi");
                         id_lblVerification.setTextFill(Color.GREEN);
                         id_ivCheckSign.setImage(new Image("/images/signVerPage/accept.png"));
+                        boolPane = false;
+                        shadow();
                         id_tfLogin.setText(Main.getVerification().getUser().getUsername());
                         id_tfEmail.setText(Main.getVerification().getUser().getEmail());
                         new Requests().RequestUsers();
@@ -131,6 +144,35 @@ public class SignVerPageController implements Initializable {
                 }
             }
         });
+    }
+
+    private void shadow() {
+        if (boolPane) {
+            id_pnShadow.setVisible(true);
+            // Panega kursor kirganda
+            id_pnShadow.setOnMouseEntered(e -> {
+                Timeline timeline = new Timeline(
+                        new KeyFrame(duration, new KeyValue(id_pnShadow.opacityProperty(), 0.0)),
+                        new KeyFrame(Duration.ZERO, new KeyValue(id_pnShadow.opacityProperty(), 0.8)));
+                timeline.play();
+            });
+
+            // Panedan kursor chiqqanda
+            id_pnShadow.setOnMouseExited(e -> {
+
+                Timeline timeline = new Timeline(
+                        new KeyFrame(duration, new KeyValue(id_pnShadow.opacityProperty(), 0.8)),
+                        new KeyFrame(Duration.ZERO, new KeyValue(id_pnShadow.opacityProperty(), 0.0))
+                );
+                timeline.play();
+            });
+        } else {
+            Timeline timeline = new Timeline(
+                    new KeyFrame(duration, new KeyValue(id_pnShadow.opacityProperty(), 0.0)),
+                    new KeyFrame(Duration.ZERO, new KeyValue(id_pnShadow.opacityProperty(), 0.8)));
+            timeline.play();
+            id_pnShadow.setVisible(false);
+        }
     }
 }
 

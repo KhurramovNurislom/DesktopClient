@@ -306,7 +306,8 @@ public class ChatPageController implements Initializable {
 
 
         try {
-            new Requests().RequestUserMessages(String.valueOf(userId), String.valueOf(Main.getLoginData().getUser().getId()), start * limit, limit);
+            new Requests().RequestUserMessages(String.valueOf(userId),
+                    String.valueOf(Main.getLoginData().getUser().getId()), start * limit, limit);
 
         } catch (Exception e) {
             System.out.println(" => " + e.getMessage());
@@ -342,7 +343,7 @@ public class ChatPageController implements Initializable {
                 label.setPadding(new Insets(5, 5, 5, 5));
 
                 /***** Doc rasmi *********/
-                ImageView iv = new ImageView(new Image("/images/chatPage/docs.png"));
+                ImageView iv = new ImageView(new Image("\\images\\chatPage\\docs.png"));
                 iv.setFitWidth(50);
                 iv.setFitHeight(50);
 
@@ -392,7 +393,7 @@ public class ChatPageController implements Initializable {
                 hbBottom2.setAlignment(Pos.BOTTOM_RIGHT);
                 hbBottom2.setSpacing(5);
 
-                Image img = new Image("/images/chatPage/check2.png");
+                Image img = new Image("\\images\\chatPage\\check2.png");
                 ImageView ivCheck = new ImageView(img);
                 ivCheck.setFitHeight(15);
                 ivCheck.setFitWidth(22);

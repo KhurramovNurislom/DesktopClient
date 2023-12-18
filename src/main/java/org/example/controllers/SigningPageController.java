@@ -2,6 +2,10 @@ package org.example.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,8 +17,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.example.Main;
 import org.example.crypto.UzDSt_1092_2009;
 import org.example.utils.PDFWorker;
@@ -31,6 +37,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import static java.lang.Thread.sleep;
 
 public class SigningPageController implements Initializable {
 
@@ -60,14 +68,21 @@ public class SigningPageController implements Initializable {
     public ImageView id_ivCheckSign;
     @FXML
     public Label id_lblVerification;
+    @FXML
+    public Pane id_pnShadow;
 
     private final FileChooser fileChooser = new FileChooser();
+    public Pane id_pnBackground;
     private List<File> fileList;
     private final ObservableList<String> keysList = FXCollections.observableArrayList();
     private String sign;
+    private boolean boolPane = true;
+    Duration duration = Duration.seconds(0.1);
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        shadow();
 
         id_ivCheckSign.setVisible(false);
         id_lblVerification.setVisible(false);
@@ -126,11 +141,43 @@ public class SigningPageController implements Initializable {
                 }
                 id_ivCheckSign.setVisible(true);
                 id_ivCheckSign.setImage(new Image("/images/signedPage/check.png"));
+                boolPane = false;
+                shadow();
                 id_lblVerification.setVisible(true);
                 id_lblVerification.setText("Fayl imzolandi");
                 id_btnSign.setDisable(false);
             }
         });
+
+    }
+
+    private void shadow() {
+        if (boolPane) {
+            id_pnShadow.setVisible(true);
+            // Panega kursor kirganda
+            id_pnShadow.setOnMouseEntered(e -> {
+                Timeline timeline = new Timeline(
+                        new KeyFrame(duration, new KeyValue(id_pnShadow.opacityProperty(), 0.0)),
+                        new KeyFrame(Duration.ZERO, new KeyValue(id_pnShadow.opacityProperty(), 0.8)));
+                timeline.play();
+            });
+
+            // Panedan kursor chiqqanda
+            id_pnShadow.setOnMouseExited(e -> {
+
+                Timeline timeline = new Timeline(
+                        new KeyFrame(duration, new KeyValue(id_pnShadow.opacityProperty(), 0.8)),
+                        new KeyFrame(Duration.ZERO, new KeyValue(id_pnShadow.opacityProperty(), 0.0))
+                );
+                timeline.play();
+            });
+        } else {
+            Timeline timeline = new Timeline(
+                    new KeyFrame(duration, new KeyValue(id_pnShadow.opacityProperty(), 0.0)),
+                    new KeyFrame(Duration.ZERO, new KeyValue(id_pnShadow.opacityProperty(), 0.8)));
+            timeline.play();
+            id_pnShadow.setVisible(false);
+        }
     }
 
     private String signLink() {

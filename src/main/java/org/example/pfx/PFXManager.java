@@ -16,7 +16,9 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Enumeration;
 
-// PFX faylni o'qish
+/**
+ * PFX faylni o'qish
+ */
 @Getter
 @Setter
 @ToString
@@ -100,8 +102,8 @@ public class PFXManager {
     }
 
     private void certificate() {
-        // Security.addProvider(new BouncyCastleProvider());
 
+        Security.addProvider(new BouncyCastleProvider());
         String pfxFile = "C:\\DSKEYS\\DS4997124990002_Fazolat_Mukimova_24061996.pfx";
 
         char[] password = "24061996".toCharArray();
@@ -144,12 +146,10 @@ public class PFXManager {
                 }
             }
 
-
         } catch (NoSuchAlgorithmException | CertificateException | IOException | KeyStoreException e) {
             System.out.println("exception: PFXManager().certificate() => " + e.getMessage());
             throw new RuntimeException(e);
         }
-
 
     }
 
@@ -157,6 +157,7 @@ public class PFXManager {
     public void generateCertificate() {
 
         Security.addProvider(new BouncyCastleProvider());
+
         try {
             SecureRandom random = new SecureRandom();
             ECNamedCurveParameterSpec spec = ECNamedCurveTable.getParameterSpec("GostR3410-2001-CryptoPro-A");
@@ -182,7 +183,9 @@ public class PFXManager {
             ks.load(new ByteArrayInputStream(bOut.toByteArray()), "gost".toCharArray());
 
             Enumeration<String> aliases = ks.aliases();
+
             while (aliases.hasMoreElements()) {
+
                 String alias = aliases.nextElement();
                 System.out.println("Alias: " + alias);
                 //--------------------------------------------------------------------//

@@ -9,6 +9,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import org.example.Main;
 import org.example.utils.Requests;
 import org.example.utils.SSLClient;
@@ -30,7 +31,7 @@ public class LoginPageController implements Initializable {
     @FXML
     public JFXButton id_btnRoyhatdanOtish;
     @FXML
-    public JFXButton id_btnEyes;
+    public ImageView id_btnEyes;
     @FXML
     public ImageView id_ivHiddenEyes;
     @FXML
@@ -38,14 +39,15 @@ public class LoginPageController implements Initializable {
 
     public boolean eyebool = false;
 
-     Requests requests = new Requests();
+    Requests requests = new Requests();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         id_tfPassword.setVisible(false);
-        id_btnEyes.setOnAction(new EventHandler<ActionEvent>() {
+        id_ivHiddenEyes.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(ActionEvent event) {
+            public void handle(MouseEvent mouseEvent) {
+
                 eyebool = !eyebool;
                 if (eyebool) {
                     id_ivHiddenEyes.setImage(new Image("/images/loginPage/eye-crossed.png"));
@@ -58,6 +60,7 @@ public class LoginPageController implements Initializable {
                     id_pfPassword.setVisible(true);
                     id_pfPassword.setText(id_tfPassword.getText());
                 }
+
             }
         });
 
@@ -67,10 +70,10 @@ public class LoginPageController implements Initializable {
 
                 Main.setClient(new SSLClient().httpsClient());
 
-               /** Serverga request jo'natib login parolni oladi va kiritilgan login parol bilan solishtiradi */
+                /** Serverga request jo'natib login parolni oladi va kiritilgan login parol bilan solishtiradi */
                 try {
                     if (requests.RequestLogin(id_tfLogin.getText(), id_pfPassword.getText())) {
-                        Thread thread = new Thread(){
+                        Thread thread = new Thread() {
                             @Override
                             public void run() {
                                 /** Login bilan kirgan user haqida */

@@ -106,6 +106,7 @@ public class MainPageController implements Initializable {
                 mainPane.setCenter(new FXMLLoaderMade().getPane("SignVerPage"));
             }
         });
+
 //        id_btnImzoniBoshqarish.setOnAction(new EventHandler<ActionEvent>() {
 //            @Override
 //            public void handle(ActionEvent event) {
@@ -118,6 +119,7 @@ public class MainPageController implements Initializable {
 //                }
 //            }
 //        });
+
         id_btnChat.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -125,6 +127,7 @@ public class MainPageController implements Initializable {
                 mainPane.setCenter(new FXMLLoaderMade().getPane("ChatPage"));
             }
         });
+
 //        id_btnYoriqnoma.setOnAction(new EventHandler<ActionEvent>() {
 //            @Override
 //            public void handle(ActionEvent event) {
@@ -150,6 +153,7 @@ public class MainPageController implements Initializable {
 //                }
 //            }
 //        });
+
         id_btnRefresh.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
