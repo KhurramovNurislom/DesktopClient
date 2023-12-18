@@ -20,28 +20,11 @@ import java.util.Arrays;
 
 public class UzDSt_1092_2009 {
 
-    public void generateKeyPair() {
-
+    public KeyPair generateKeyPair() {
         Security.addProvider(new BouncyCastleProvider());
         KeyPair keyPair = generationKeyPair();
-
-        /** Bazaga kalitlarni yuklash */
         new Requests().RequestkeysGen(Hex.toHexString(keyPair.getPrivate().getEncoded()), Hex.toHexString(keyPair.getPublic().getEncoded()), "keyName");
-
-        /** PFX file integratsiya */
-//        PFX pfx = new PFX();
-//        pfx.pfx();
-
-//        Main.setKeyPair(keyPair);
-//        PFX pfx = new PFX();
-//        try {
-//            pfx.generateCertificate();
-//        } catch (Exception e) {
-//            System.err.println("exception : UzDSt_1092_2009().generateKeyPair() => " + e.getCause());
-//            throw new RuntimeException(e);
-//        }
-        /** /PFX file integratsiya */
-
+        return keyPair;
     }
 
     public String signGenerate(String privKey, String filePath) {

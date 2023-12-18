@@ -16,11 +16,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import org.example.Main;
 import org.example.crypto.UzDSt_1092_2009;
+import org.example.pfx.PFXManager;
 import org.example.utils.Requests;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.security.KeyPair;
 import java.util.ResourceBundle;
 
 public class KeysGenPageController implements Initializable {
@@ -61,20 +63,17 @@ public class KeysGenPageController implements Initializable {
     private PasswordField id_pfPassVer;
 
     @FXML
-    private TextField id_tfKeyName;
+    private TextField id_tfCerName;
 
     @FXML
     private TextField id_tfPass;
 
     @FXML
     private TextField id_tfPassVer;
-    @FXML
-    public ScrollPane id_ScrollPane;
 
     private int items;
 
     private static final int ITEMS_PER_PAGE = 10;
-    private int pageIndex;
     public boolean eyeBool = false;
 
     public boolean eyeBoolVer = false;
@@ -82,6 +81,7 @@ public class KeysGenPageController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
 
         addPrivateKeys();
 
@@ -138,16 +138,14 @@ public class KeysGenPageController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 id_btnGenerate.setDisable(true);
-                keyPairGenerate();
 
+                if (!id_tfCerName.getText().isEmpty() && !id_tfPass.getText().isEmpty() && !id_tfPassVer.getText().isEmpty() && id_tfPass.getText().equals(id_tfPassVer.getText())) {
 
-                if (!id_tfKeyName.getText().isEmpty() && !id_tfPass.getText().isEmpty() && !id_tfPassVer.getText().isEmpty() && id_tfPass.getText().equals(id_tfPassVer.getText())) {
+                    PFXManager pfxManager = new PFXManager();
 
-//                    try {
-//                        new Requests().RequestkeysGen(Main.getPrivateKey(), Main.getPublicKey(), id_tfKeyName.getText());
-//                    } catch (IOException e) {
-//                        throw new RuntimeException(e);
-//                    }
+                    pfxManager.setCERTIFICATE_NAME(id_tfCerName.getText() + "_");
+                    pfxManager.generateCertificate(keyPairGenerate(), id_tfPass.getText());
+
 
                 } else {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -157,7 +155,7 @@ public class KeysGenPageController implements Initializable {
                     alert.show();
                 }
 
-                id_tfKeyName.clear();
+                id_tfCerName.clear();
                 id_tfPass.clear();
                 id_pfPass.clear();
                 id_tfPassVer.clear();
@@ -179,9 +177,9 @@ public class KeysGenPageController implements Initializable {
         });
     }
 
-    private void keyPairGenerate() {
+    private KeyPair keyPairGenerate() {
         UzDSt_1092_2009 uzDSt10922009 = new UzDSt_1092_2009();
-        uzDSt10922009.generateKeyPair();
+        return uzDSt10922009.generateKeyPair();
     }
 
     private void addPrivateKeys() {

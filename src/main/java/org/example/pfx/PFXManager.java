@@ -26,10 +26,10 @@ import java.util.Enumeration;
 
 public class PFXManager {
 
-    String keyName;
+    String CERTIFICATE_NAME;
     String password;
-    private Long number = 1L;
-    private String pfxFilePath = "C:\\DSKEYS\\" + keyName + "_" + getFileName() + ".pfx";
+    Long number = 1L;
+    String pfxFilePath = "C:/DSKEYS/_" + getFileName() + ".pfx";
 
 
     String getFileName() {
@@ -48,14 +48,9 @@ public class PFXManager {
         } else return null;
     }
 
-    public void pfxManager() throws Exception {
-        Security.addProvider(new BouncyCastleProvider());
+    public void pfxManager(KeyPair p, String password) {
 
-        SecureRandom random = new SecureRandom();
-        ECNamedCurveParameterSpec spec = ECNamedCurveTable.getParameterSpec("GostR3410-2001-CryptoPro-A");
-        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("ECGOST3410");
-        keyPairGenerator.initialize(spec, random);
-        KeyPair p = keyPairGenerator.generateKeyPair();
+        Security.addProvider(new BouncyCastleProvider());
 
         PrivateKey sKey = p.getPrivate();
         PublicKey vKey = p.getPublic();
@@ -65,8 +60,13 @@ public class PFXManager {
         pfxManager.fileRead();
         pfxManager.fileEdit();
         pfxManager.setNumber();
-        pfxManager.generateCertificate();
+//        pfxManager.generateCertificate();
         pfxManager.keyStore(sKey, vKey);
+
+    }
+
+    public void createPFX(KeyPair p, String password) {
+        generateCertificate(p, password);
     }
 
 
@@ -104,7 +104,7 @@ public class PFXManager {
     private void certificate() {
 
         Security.addProvider(new BouncyCastleProvider());
-        String pfxFile = "C:\\DSKEYS\\DS4997124990002_Fazolat_Mukimova_24061996.pfx";
+        String pfxFile = "C:/DSKEYS/DS4997124990002_Fazolat_Mukimova_24061996.pfx";
 
         char[] password = "24061996".toCharArray();
 
@@ -154,16 +154,11 @@ public class PFXManager {
     }
 
 
-    public void generateCertificate() {
+    public void generateCertificate(KeyPair p, String password) {
 
         Security.addProvider(new BouncyCastleProvider());
 
         try {
-            SecureRandom random = new SecureRandom();
-            ECNamedCurveParameterSpec spec = ECNamedCurveTable.getParameterSpec("GostR3410-2001-CryptoPro-A");
-            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("ECGOST3410");
-            keyPairGenerator.initialize(spec, random);
-            KeyPair p = keyPairGenerator.generateKeyPair();
 
             PrivateKey sKey = p.getPrivate();
 
@@ -171,7 +166,7 @@ public class PFXManager {
 
             ks.load(null, null);
             CreateCertificate signedCertificate = new CreateCertificate();
-            X509Certificate cert = signedCertificate.managerCer(keyName, password);
+            X509Certificate cert = signedCertificate.managerCer(CERTIFICATE_NAME, password);
 
             ks.setKeyEntry("  ", sKey, "gost".toCharArray(), new Certificate[]{cert});
 
@@ -194,7 +189,7 @@ public class PFXManager {
                     // save your cert inside the keystore
                     ks.setCertificateEntry("YourCertAlias", cert);
                     // create the outputstream to store the keystore
-                    FileOutputStream fos = new FileOutputStream("C:\\DSKEYS\\PFX_file/" + getFileName() + ".pfx");
+                    FileOutputStream fos = new FileOutputStream("C:\\DSKEYS\\" + CERTIFICATE_NAME  + getFileName() + ".pfx");
                     // store the keystore protected with password
                     ks.store(fos, "gost".toCharArray());
                 } catch (KeyStoreException | IOException | NoSuchAlgorithmException | CertificateException e) {
@@ -215,7 +210,7 @@ public class PFXManager {
             KeyStore ks = KeyStore.getInstance("PKCS12");
             ks.load(null, null);
             CreateCertificate signedCertificate = new CreateCertificate();
-            X509Certificate cert = signedCertificate.managerCer(keyName, password);
+            X509Certificate cert = signedCertificate.managerCer(CERTIFICATE_NAME, password);
 
             ks.setKeyEntry("gost", sKey, "gost".toCharArray(), new Certificate[]{cert});
 
