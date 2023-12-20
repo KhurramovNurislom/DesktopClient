@@ -31,7 +31,7 @@ public class CreateCertificate {
     String PASSWORD;
 
     public X509Certificate managerCer(String CERTIFICATE_NAME, String PASSWORD, KeyPair keyPair) {
-        this.CERTIFICATE_NAME = "C:\\DSKEYS\\CER\\" + CERTIFICATE_NAME + ".cer";
+        this.CERTIFICATE_NAME = "C:/DSKEYS/CER/" + CERTIFICATE_NAME + ".cer";
         this.PASSWORD = PASSWORD;
         System.out.println("Your certificate => " + CERTIFICATE_NAME);
         System.out.println("Password => " + PASSWORD);
@@ -61,7 +61,9 @@ public class CreateCertificate {
     }
 
     private void saveCert(X509Certificate cert, PrivateKey key) {
-        File file = new File(".", CERTIFICATE_NAME);
+        File file = new File(CERTIFICATE_NAME);
+
+        System.out.println("kerak => " + file.getAbsoluteFile());
         try (FileOutputStream os = new FileOutputStream(file)) {
             KeyStore keyStore = KeyStore.getInstance("PKCS12");
             keyStore.load(null, null);
