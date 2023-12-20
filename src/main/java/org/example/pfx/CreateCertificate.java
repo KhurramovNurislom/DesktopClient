@@ -30,31 +30,19 @@ public class CreateCertificate {
     String CERTIFICATE_NAME;
     String PASSWORD;
 
-
-    public X509Certificate managerCer(String CERTIFICATE_NAME, String PASSWORD) {
-        this.CERTIFICATE_NAME = CERTIFICATE_NAME;
+    public X509Certificate managerCer(String CERTIFICATE_NAME, String PASSWORD, KeyPair keyPair) {
+        this.CERTIFICATE_NAME = "C:\\DSKEYS\\CER\\" + CERTIFICATE_NAME + ".cer";
         this.PASSWORD = PASSWORD;
-
-
-
-
-        CreateCertificate signedCertificate = new CreateCertificate();
-        try {
-          return signedCertificate.createCertificate();
-        } catch (Exception e) {
-            System.out.println("exception: CreateCertificate().managerCer() => " + e.getMessage());
-            throw new RuntimeException(e);
-        }
+        System.out.println("Your certificate => " + CERTIFICATE_NAME);
+        System.out.println("Password => " + PASSWORD);
+        System.out.println("kerak => " + keyPair.toString());
+        return createCertificate(keyPair);
     }
 
     @SuppressWarnings("deprecation")
-    private X509Certificate createCertificate() {
+    private X509Certificate createCertificate(KeyPair keyPair) {
         try {
-            KeyPairGenerator g = KeyPairGenerator.getInstance("ECGOST3410", "BC");
-            g.initialize(new ECNamedCurveGenParameterSpec("GostR3410-2001-CryptoPro-A"), new SecureRandom());
-            KeyPair keyPair = g.generateKeyPair();
-
-            // GENERATE THE X509 CERTIFICATE
+            /** GENERATE THE X509 CERTIFICATE */
             X509V3CertificateGenerator v3CertGen = new X509V3CertificateGenerator();
             v3CertGen.setSerialNumber(BigInteger.valueOf(System.currentTimeMillis()));
             v3CertGen.setIssuerDN(new X509Principal(CERTIFICATE_DN));
@@ -66,9 +54,8 @@ public class CreateCertificate {
             X509Certificate cert = v3CertGen.generateX509Certificate(keyPair.getPrivate());
             saveCert(cert, keyPair.getPrivate());
             return cert;
-
-        } catch (NoSuchAlgorithmException | NoSuchProviderException | InvalidAlgorithmParameterException | SignatureException | InvalidKeyException e) {
-            System.out.println("exception: CreateCertificate().createCertificate() => " + e.getMessage());
+        } catch (SignatureException | InvalidKeyException e) {
+            System.err.println("exception: CreateCertificate().createCertificate() => " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -79,9 +66,8 @@ public class CreateCertificate {
             KeyStore keyStore = KeyStore.getInstance("PKCS12");
             keyStore.load(null, null);
             keyStore.setKeyEntry(CERTIFICATE_ALIAS, key, PASSWORD.toCharArray(), new java.security.cert.Certificate[]{cert});
-            //        keyStore.store( new FileOutputStream(file), "YOUR_PASSWORD".toCharArray() );
+            keyStore.store(os, PASSWORD.toCharArray());
             os.write(cert.getEncoded());
-
         } catch (KeyStoreException | CertificateException | IOException | NoSuchAlgorithmException e) {
             System.out.println("exception: CreateCertificate().saveCert() => " + e.getMessage());
             throw new RuntimeException(e);

@@ -25,6 +25,7 @@ import org.example.utils.Requests;
 import org.example.utils.SSLClient;
 
 import java.security.KeyPair;
+import java.util.Objects;
 
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -106,6 +107,8 @@ public class Main extends Application {
         stage.setTitle("Kirish oynasi...");
         stage.getIcons().add(new Image("/images/icon.png"));
         stage.setScene(scene);
+        scene.getStylesheets().add
+                (Objects.requireNonNull(Main.class.getResource("/css/Style.css")).toExternalForm());
 //        stage.setResizable(false);
         stage.show();
 

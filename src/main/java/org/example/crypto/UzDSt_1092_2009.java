@@ -23,7 +23,6 @@ public class UzDSt_1092_2009 {
     public KeyPair generateKeyPair() {
         Security.addProvider(new BouncyCastleProvider());
         KeyPair keyPair = generationKeyPair();
-        new Requests().RequestkeysGen(Hex.toHexString(keyPair.getPrivate().getEncoded()), Hex.toHexString(keyPair.getPublic().getEncoded()), "keyName");
         return keyPair;
     }
 

@@ -48,17 +48,26 @@ public class LoginPageController implements Initializable {
             @Override
             public void handle(MouseEvent mouseEvent) {
 
+                id_tfPassword.setText(id_pfPassword.getText());
+
+                id_pfPassword.textProperty().addListener((observable, oldValue, newValue) -> {
+                    id_tfPassword.setText(newValue);
+                });
+
+                id_tfPassword.textProperty().addListener((observable, oldValue, newValue) -> {
+                    id_pfPassword.setText(newValue);
+                });
+
                 eyebool = !eyebool;
                 if (eyebool) {
                     id_ivHiddenEyes.setImage(new Image("/images/loginPage/eye-crossed.png"));
                     id_tfPassword.setVisible(true);
                     id_pfPassword.setVisible(false);
-                    id_tfPassword.setText(id_pfPassword.getText());
                 } else {
                     id_ivHiddenEyes.setImage(new Image("/images/loginPage/eye.png"));
                     id_tfPassword.setVisible(false);
                     id_pfPassword.setVisible(true);
-                    id_pfPassword.setText(id_tfPassword.getText());
+
                 }
 
             }

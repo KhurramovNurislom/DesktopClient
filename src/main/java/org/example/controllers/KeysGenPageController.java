@@ -18,6 +18,7 @@ import org.example.Main;
 import org.example.crypto.UzDSt_1092_2009;
 import org.example.pfx.PFXManager;
 import org.example.utils.Requests;
+import org.paynet.util.encoders.Hex;
 
 import java.io.File;
 import java.io.IOException;
@@ -82,28 +83,9 @@ public class KeysGenPageController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-
         addPrivateKeys();
 
-        id_ivHiddenEyes.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-
-                eyeBool = !eyeBool;
-                if (eyeBool) {
-                    id_ivHiddenEyes.setImage(new Image("/images/keysGenPage/visible.png"));
-                    id_tfPass.setVisible(true);
-                    id_pfPass.setVisible(false);
-                    id_tfPass.setText(id_pfPass.getText());
-                } else {
-                    id_ivHiddenEyes.setImage(new Image("/images/keysGenPage/show.png"));
-                    id_tfPass.setVisible(false);
-                    id_pfPass.setVisible(true);
-                    id_pfPass.setText(id_tfPass.getText());
-                }
-
-            }
-        });
+        hiddenEyes();
 
         id_ivHiddenEyesVer.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -114,12 +96,10 @@ public class KeysGenPageController implements Initializable {
                     id_ivHiddenEyesVer.setImage(new Image("/images/keysGenPage/visible.png"));
                     id_tfPassVer.setVisible(true);
                     id_pfPassVer.setVisible(false);
-                    id_tfPassVer.setText(id_pfPassVer.getText());
                 } else {
                     id_ivHiddenEyesVer.setImage(new Image("/images/keysGenPage/show.png"));
                     id_tfPassVer.setVisible(false);
                     id_pfPassVer.setVisible(true);
-                    id_pfPassVer.setText(id_tfPassVer.getText());
                 }
 
             }
@@ -137,15 +117,22 @@ public class KeysGenPageController implements Initializable {
         id_btnGenerate.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+
                 id_btnGenerate.setDisable(true);
 
-                if (!id_tfCerName.getText().isEmpty() && !id_tfPass.getText().isEmpty() && !id_tfPassVer.getText().isEmpty() && id_tfPass.getText().equals(id_tfPassVer.getText())) {
+                if (!id_tfCerName.getText().isEmpty() && !id_pfPass.getText().isEmpty() &&
+                        !id_pfPassVer.getText().isEmpty() && id_pfPass.getText().equals(id_pfPassVer.getText())) {
+
+                    UzDSt_1092_2009 uzDSt10922009 = new UzDSt_1092_2009();
+                    KeyPair keyPair = uzDSt10922009.generateKeyPair();
+
+                    new Requests().RequestkeysGen(Hex.toHexString(keyPair.getPrivate().getEncoded()),
+                            Hex.toHexString(keyPair.getPublic().getEncoded()), id_tfCerName.getText());
 
                     PFXManager pfxManager = new PFXManager();
-
-                    pfxManager.setCERTIFICATE_NAME(id_tfCerName.getText() + "_");
-                    pfxManager.generateCertificate(keyPairGenerate(), id_tfPass.getText());
-
+                    pfxManager.setNumber((long) Main.getKeysGen().getData().getId());
+                    pfxManager.setSoni(Main.getKeys().getData().getKalits().getData().length + 1);
+                    pfxManager.createPfxFile(keyPair, id_tfCerName.getText(), id_tfPass.getText());
 
                 } else {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -177,9 +164,43 @@ public class KeysGenPageController implements Initializable {
         });
     }
 
-    private KeyPair keyPairGenerate() {
-        UzDSt_1092_2009 uzDSt10922009 = new UzDSt_1092_2009();
-        return uzDSt10922009.generateKeyPair();
+    private void hiddenEyes() {
+
+        id_tfPass.setText(id_pfPass.getText());
+
+        id_pfPass.textProperty().addListener((observable, oldValue, newValue) -> {
+            id_tfPass.setText(newValue);
+        });
+
+        id_tfPass.textProperty().addListener((observable, oldValue, newValue) -> {
+            id_pfPass.setText(newValue);
+        });
+
+        id_tfPassVer.setText(id_pfPassVer.getText());
+
+        id_pfPassVer.textProperty().addListener((observable, oldValue, newValue) -> {
+            id_tfPassVer.setText(newValue);
+        });
+
+        id_tfPassVer.textProperty().addListener((observable, oldValue, newValue) -> {
+            id_pfPassVer.setText(newValue);
+        });
+
+        id_ivHiddenEyes.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                eyeBool = !eyeBool;
+                if (eyeBool) {
+                    id_ivHiddenEyes.setImage(new Image("/images/keysGenPage/visible.png"));
+                    id_tfPass.setVisible(true);
+                    id_pfPass.setVisible(false);
+                } else {
+                    id_ivHiddenEyes.setImage(new Image("/images/keysGenPage/show.png"));
+                    id_tfPass.setVisible(false);
+                    id_pfPass.setVisible(true);
+                }
+            }
+        });
     }
 
     private void addPrivateKeys() {
@@ -201,7 +222,7 @@ public class KeysGenPageController implements Initializable {
             btn.setText(Main.getKeys().getData().getKalits().getData()[i].getAttributes().getNomi());
             btn.setGraphic(ivDel);
             items.add(Main.getKeys().getData().getKalits().getData()[i].getAttributes().getNomi());
-            System.out.println("kerak: " + Main.getKeys().getData().getKalits().getData()[i].getAttributes().getNomi());
+//            System.out.println("kerak: " + Main.getKeys().getData().getKalits().getData()[i].getAttributes().getNomi());
         }
         id_lvList.setItems(items);
     }

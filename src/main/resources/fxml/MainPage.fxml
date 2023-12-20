@@ -108,21 +108,21 @@
                     </graphic>
                 </JFXButton>
 
-                <!--                <JFXButton fx:id="id_btnImzoniBoshqarish" alignment="BASELINE_LEFT" prefHeight="50.0" prefWidth="250.0"-->
-                <!--                           style="-fx-cursor: hand;" text="  Imzoni boshqarish" textAlignment="RIGHT" textFill="WHITE">-->
-                <!--                    <font>-->
-                <!--                        <Font name="Arial Bold" size="18.0"/>-->
-                <!--                    </font>-->
-                <!--                    <graphic>-->
-                <!--                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">-->
-                <!--                            <image>-->
-                <!--                                <Image url="@../images/mainPage/sign-manage.png"/>-->
-                <!--                            </image>-->
-                <!--                        </ImageView>-->
-                <!--                    </graphic>-->
-                <!--                </JFXButton>-->
+                                <JFXButton fx:id="id_btnImzoniBoshqarish" alignment="BASELINE_LEFT" prefHeight="50.0" prefWidth="250.0"
+                                           style="-fx-cursor: hand;" text="  Imzoni boshqarish" textAlignment="RIGHT" textFill="WHITE">
+                                    <font>
+                                        <Font name="Arial Bold" size="18.0"/>
+                                    </font>
+                                    <graphic>
+                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../images/mainPage/check-signature.png"/>
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </JFXButton>
 
-                <!--                <Line endX="250.0" stroke="WHITE"/>-->
+                                <Line endX="250.0" stroke="WHITE"/>
 
                 <JFXButton fx:id="id_btnChat" alignment="BASELINE_LEFT" prefHeight="50.0" prefWidth="250.0"
                            style="-fx-cursor: hand;" text="  Chat" textAlignment="CENTER" textFill="WHITE">

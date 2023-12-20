@@ -20,6 +20,7 @@ import org.example.Main;
 import org.example.utils.FXMLLoaderMade;
 import org.example.utils.SceneChooser;
 
+import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -66,6 +67,7 @@ public class MainPageController implements Initializable {
     public Label id_lblEmailMini;
     @FXML
     public JFXButton id_btnRefresh;
+    public JFXButton id_btnImzoniBoshqarish;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -107,18 +109,14 @@ public class MainPageController implements Initializable {
             }
         });
 
-//        id_btnImzoniBoshqarish.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//                id_pnUserInfo.setVisible(false);
-//                mainPane.setRight(id_vbLeft);
-//                try {
-//                    mainPane.setCenter(new FXMLLoaderMade().getPane("ManageSignPage"));
-//                } catch (IOException e) {
-//                  System.err.println("exception: MainPageController(btnImzoniBoshqarish) => " + e.getMessage());
-//                }
-//            }
-//        });
+        id_btnImzoniBoshqarish.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                id_pnUserInfo.setVisible(false);
+                mainPane.setRight(id_vbLeft);
+                mainPane.setCenter(new FXMLLoaderMade().getPane("ManageSignPage"));
+            }
+        });
 
         id_btnChat.setOnAction(new EventHandler<ActionEvent>() {
             @Override

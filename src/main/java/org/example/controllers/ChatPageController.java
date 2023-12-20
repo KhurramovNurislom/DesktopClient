@@ -304,18 +304,14 @@ public class ChatPageController implements Initializable {
         System.out.println("id => " + userId);
         System.out.println(" start => " + start);
 
-
         try {
             new Requests().RequestUserMessages(String.valueOf(userId),
                     String.valueOf(Main.getLoginData().getUser().getId()), start * limit, limit);
-
         } catch (Exception e) {
             System.out.println(" => " + e.getMessage());
         }
 
-
 //        System.out.println(Main.getUserMessages().toString());
-
 
         Label label;
         HBox hb;

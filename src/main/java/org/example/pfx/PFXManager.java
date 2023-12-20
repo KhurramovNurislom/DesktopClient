@@ -26,25 +26,28 @@ import java.util.Enumeration;
 
 public class PFXManager {
 
-    String CERTIFICATE_NAME;
-    String password;
+//    String CERTIFICATE_NAME;
+//    String password;
+//    Long number = 1L;
+
     Long number = 1L;
-    String pfxFilePath = "C:/DSKEYS/_" + getFileName() + ".pfx";
+    int soni = 1;
+    String pfxFilePath = "C:\\DSKEYS\\" + getFileName() + ".pfx";
 
 
     String getFileName() {
         if (this.number.toString().length() == 1) {
-            return "DS00000" + number;
+            return "DS" + number + "00000" + soni;
         } else if (this.number.toString().length() == 2) {
-            return "DS0000" + number;
+            return "DS" + number + "0000" + soni;
         } else if (this.number.toString().length() == 3) {
-            return "DS000" + number;
+            return "DS" + number + "000" + soni;
         } else if (this.number.toString().length() == 4) {
-            return "DS00" + number;
+            return "DS" + number + "00" + soni;
         } else if (this.number.toString().length() == 5) {
-            return "DS0" + number;
+            return "DS" + number + "0" + soni;
         } else if (this.number.toString().length() == 6) {
-            return "DS" + number;
+            return "DS" + number + soni;
         } else return null;
     }
 
@@ -57,27 +60,30 @@ public class PFXManager {
 
         PFXManager pfxManager = new PFXManager();
         pfxManager.certificate();
-        pfxManager.fileRead();
-        pfxManager.fileEdit();
+//        pfxManager.fileRead();
+//        pfxManager.fileEdit();
         pfxManager.setNumber();
 //        pfxManager.generateCertificate();
-        pfxManager.keyStore(sKey, vKey);
+//        pfxManager.keyStore(sKey, vKey);
 
     }
 
-    public void createPFX(KeyPair p, String password) {
-        generateCertificate(p, password);
+    public void createPfxFile(KeyPair p, String cerName, String password) {
+        generateCertificate(p, cerName, password);
     }
 
+    public void readPfxFile(String pathPfxFile, String passString) {
+        fileRead(pathPfxFile, passString);
+    }
 
-    private void fileEdit() {
+    public void editPfxFile(String pathPfxFile, String passString) {
+        fileEdit(pathPfxFile, passString);
+    }
 
-        char[] passwordCharArray = password.toCharArray();
-        try (FileInputStream fis = new FileInputStream(pfxFilePath)) {
-
+    private void fileEdit(String pathPfxFile, String passString) {
+        try (FileInputStream fis = new FileInputStream(pathPfxFile)) {
             KeyStore keyStore = KeyStore.getInstance("PKCS12");
-            keyStore.load(fis, passwordCharArray);
-
+            keyStore.load(fis, passString.toCharArray());
         } catch (CertificateException | NoSuchAlgorithmException | IOException | KeyStoreException e) {
 
             throw new RuntimeException(e);
@@ -85,14 +91,14 @@ public class PFXManager {
 
     }
 
-    private void fileRead() {
+    private void fileRead(String pathPfxFile, String passString) {
         // PFX faylni o'qish
-        char[] password = "24061996".toCharArray();
-        try (FileInputStream fis = new FileInputStream("C:\\DSKEYS\\DS4997124990002_Fazolat_Mukimova_24061996.pfx")) {
+        char[] password = passString.toCharArray();
+        try (FileInputStream fis = new FileInputStream(pathPfxFile)) {
             KeyStore keyStore = KeyStore.getInstance("PKCS12");
             keyStore.load(fis, password);
         } catch (IOException | CertificateException | NoSuchAlgorithmException | KeyStoreException e) {
-            System.out.println("exception: PFXManager().fileRead() => " + e.getMessage());
+            System.err.println("exception: PFXManager().fileRead() => " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -111,119 +117,111 @@ public class PFXManager {
         // PFX faylni o'qish
 
         try (FileInputStream fis = new FileInputStream(pfxFile)) {
-
             KeyStore keyStore = KeyStore.getInstance("PKCS12");
-
             keyStore.load(fis, password);
-
             // PFX fayl ichidagi kalit aliaslarini olish
             Enumeration<String> aliases = keyStore.aliases();
-
             while (aliases.hasMoreElements()) {
-
                 String alias = aliases.nextElement();
-
-                System.out.println("Alias: " + alias);
+                System.err.println("Alias: " + alias);
                 //--------------------------------------------------------------------//
-
                 try {
                     X509Certificate cert = (X509Certificate) keyStore.getCertificate(alias);
                     // save your cert inside the keystore
                     keyStore.setCertificateEntry("YourCertAlias", cert);
                 } catch (KeyStoreException e) {
-                    System.out.println("exception: PFXManager(). keyStore.store() => " + e.getMessage());
+                    System.err.println("exception: PFXManager(). keyStore.store() => " + e.getMessage());
                     throw new RuntimeException(e);
                 }
-
                 try {
                     // create the outputstream to store the keystore
                     FileOutputStream fos = new FileOutputStream(pfxFilePath);
                     // store the keystore protected with password
                     keyStore.store(fos, password);
                 } catch (KeyStoreException | NoSuchAlgorithmException | CertificateException | IOException e) {
-                    System.out.println("exception: PFXManager(). keyStore.store() => " + e.getMessage());
+                    System.err.println("exception: PFXManager(). keyStore.store() => " + e.getMessage());
                     throw new RuntimeException(e);
                 }
             }
-
         } catch (NoSuchAlgorithmException | CertificateException | IOException | KeyStoreException e) {
-            System.out.println("exception: PFXManager().certificate() => " + e.getMessage());
+            System.err.println("exception: PFXManager().certificate() => " + e.getMessage());
             throw new RuntimeException(e);
         }
-
     }
 
-
-    public void generateCertificate(KeyPair p, String password) {
+    private void generateCertificate(KeyPair p, String cerName, String password) {
 
         Security.addProvider(new BouncyCastleProvider());
 
         try {
-
             PrivateKey sKey = p.getPrivate();
-
             KeyStore ks = KeyStore.getInstance("PKCS12");
-
             ks.load(null, null);
             CreateCertificate signedCertificate = new CreateCertificate();
-            X509Certificate cert = signedCertificate.managerCer(CERTIFICATE_NAME, password);
-
-            ks.setKeyEntry("  ", sKey, "gost".toCharArray(), new Certificate[]{cert});
-
+            X509Certificate cert = signedCertificate.managerCer(cerName, password, p);
+            ks.setKeyEntry("alias", sKey, password.toCharArray(), new Certificate[]{cert});
             ByteArrayOutputStream bOut = new ByteArrayOutputStream();
-            ks.store(bOut, "gost".toCharArray());
+            ks.store(bOut, password.toCharArray());
 
             ks = KeyStore.getInstance("PKCS12");
 
-            ks.load(new ByteArrayInputStream(bOut.toByteArray()), "gost".toCharArray());
+            ks.load(new ByteArrayInputStream(bOut.toByteArray()), password.toCharArray());
 
             Enumeration<String> aliases = ks.aliases();
 
             while (aliases.hasMoreElements()) {
 
                 String alias = aliases.nextElement();
-                System.out.println("Alias: " + alias);
+                System.err.println("Alias: " + alias);
                 //--------------------------------------------------------------------//
                 try {
+
                     cert = (X509Certificate) ks.getCertificate(alias);
+
                     // save your cert inside the keystore
                     ks.setCertificateEntry("YourCertAlias", cert);
-                    // create the outputstream to store the keystore
-                    FileOutputStream fos = new FileOutputStream("C:\\DSKEYS\\" + CERTIFICATE_NAME  + getFileName() + ".pfx");
+
+                    // create a folder
+                    new File("C:\\DSKEYS").mkdir();
+
+                    // create the OutputStream to store the keystore
+                    FileOutputStream fos = new FileOutputStream("C:\\DSKEYS\\" + getFileName() + ".pfx");
+
                     // store the keystore protected with password
-                    ks.store(fos, "gost".toCharArray());
+                    ks.store(fos, password.toCharArray());
+
                 } catch (KeyStoreException | IOException | NoSuchAlgorithmException | CertificateException e) {
-                    System.out.println("exception: PFXManager().fileRead() => " + e.getMessage());
+                    System.err.println("exception: PFXManager().fileRead() => " + e.getMessage());
                 }
             }
 
         } catch (Exception e) {
-            System.out.println("exception: PFXManager().generateCertificate() => " + e.getMessage());
+            System.err.println("exception: PFXManager().generateCertificate() => " + e.getMessage());
         }
 
 
     }
 
-    private void keyStore(PrivateKey sKey, PublicKey vKey) {
+    private void keyStore(KeyPair keyPair, String cerName, String pass) {
 
         try {
             KeyStore ks = KeyStore.getInstance("PKCS12");
             ks.load(null, null);
             CreateCertificate signedCertificate = new CreateCertificate();
-            X509Certificate cert = signedCertificate.managerCer(CERTIFICATE_NAME, password);
+            X509Certificate cert = signedCertificate.managerCer(cerName, pass, keyPair);
 
-            ks.setKeyEntry("gost", sKey, "gost".toCharArray(), new Certificate[]{cert});
+            ks.setKeyEntry("gost", keyPair.getPrivate(), pass.toCharArray(), new Certificate[]{cert});
 
             ByteArrayOutputStream bOut = new ByteArrayOutputStream();
 
-            ks.store(bOut, "gost".toCharArray());
+            ks.store(bOut, pass.toCharArray());
 
             ks = KeyStore.getInstance("PKCS12");
 
-            ks.load(new ByteArrayInputStream(bOut.toByteArray()), "gost".toCharArray());
+            ks.load(new ByteArrayInputStream(bOut.toByteArray()), pass.toCharArray());
 
         } catch (Exception e) {
-            System.out.println("exception: PFXManager().generateCertificate() => " + e.getMessage());
+            System.err.println("exception: PFXManager().generateCertificate() => " + e.getMessage());
         }
 
     }
