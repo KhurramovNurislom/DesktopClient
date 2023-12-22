@@ -174,7 +174,7 @@ public class MainPageController implements Initializable {
 
     private void defaultPage() {
         mainPane.setRight(id_vbLeft);
-        mainPane.setCenter(new FXMLLoaderMade().getPane(/**"SigningPage"*/"ManageSignPage"));
+        mainPane.setCenter(new FXMLLoaderMade().getPane(/**"SigningPage"*/"SigningPage"));
     }
 
     private void timeNow() {

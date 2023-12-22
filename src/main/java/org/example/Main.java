@@ -10,6 +10,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import okhttp3.OkHttpClient;
+import org.example.modules.AliesKey.AliesKey;
+import org.example.modules.AliesKey.AliesKeys;
 import org.example.modules.Hash;
 import org.example.modules.SignedFileInfo;
 import org.example.modules.keys.Keys;
@@ -25,6 +27,9 @@ import org.example.utils.Requests;
 import org.example.utils.SSLClient;
 
 import java.security.KeyPair;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -98,6 +103,10 @@ public class Main extends Application {
     @Setter
     static UserMessages userMessages;
 
+    @Getter
+    @Setter
+    static AliesKeys aliesKeys;
+
     @Override
     public void start(Stage stage) throws Exception {
 
@@ -111,11 +120,10 @@ public class Main extends Application {
                 (Objects.requireNonNull(Main.class.getResource("/css/Style.css")).toExternalForm());
 //        stage.setResizable(false);
         stage.show();
-
-
     }
 
     public static void main(String[] args) {
         launch(args);
     }
+
 }

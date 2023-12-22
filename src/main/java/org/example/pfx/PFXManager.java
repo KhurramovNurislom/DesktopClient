@@ -53,7 +53,7 @@ public class PFXManager {
 
     public void pfxManager(KeyPair p, String password) {
 
-        Security.addProvider(new BouncyCastleProvider());
+
 
         PrivateKey sKey = p.getPrivate();
         PublicKey vKey = p.getPublic();
@@ -69,6 +69,7 @@ public class PFXManager {
     }
 
     public void createPfxFile(KeyPair p, String cerName, String password) {
+        Security.addProvider(new BouncyCastleProvider());
         generateCertificate(p, cerName, password);
     }
 
@@ -81,6 +82,7 @@ public class PFXManager {
     }
 
     private void fileEdit(String pathPfxFile, String passString) {
+        Security.addProvider(new BouncyCastleProvider());
         try (FileInputStream fis = new FileInputStream(pathPfxFile)) {
             KeyStore keyStore = KeyStore.getInstance("PKCS12");
             keyStore.load(fis, passString.toCharArray());
@@ -92,6 +94,7 @@ public class PFXManager {
     }
 
     private void fileRead(String pathPfxFile, String passString) {
+        Security.addProvider(new BouncyCastleProvider());
         // PFX faylni o'qish
         try (FileInputStream fis = new FileInputStream(pathPfxFile)) {
             KeyStore keyStore = KeyStore.getInstance("PKCS12");
@@ -107,11 +110,8 @@ public class PFXManager {
     }
 
     private void certificate( String pfxFile, String password) {
-
         Security.addProvider(new BouncyCastleProvider());
-
         // PFX faylni o'qish
-
         try (FileInputStream fis = new FileInputStream(pfxFile)) {
             KeyStore keyStore = KeyStore.getInstance("PKCS12");
             keyStore.load(fis, password.toCharArray());
@@ -146,8 +146,6 @@ public class PFXManager {
     }
 
     private void generateCertificate(KeyPair p, String cerName, String password) {
-
-        Security.addProvider(new BouncyCastleProvider());
 
         try {
             PrivateKey sKey = p.getPrivate();

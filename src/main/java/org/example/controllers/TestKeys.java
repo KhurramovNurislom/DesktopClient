@@ -22,7 +22,10 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.example.Main;
 import org.example.crypto.UzDSt_1092_2009;
-import org.example.pfx.PFXManager;
+import org.example.modules.AliesKey.AliesKey;
+import org.example.modules.AliesKey.AliesKeys;
+import org.example.pfx.AliesKeysReader;
+import org.example.pfx.ReadAliesInPFX;
 import org.example.utils.PDFWorker;
 import org.example.utils.Requests;
 
@@ -34,10 +37,7 @@ import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class TestKeys implements Initializable {
     @FXML
@@ -69,6 +69,7 @@ public class TestKeys implements Initializable {
     @FXML
     public Pane id_pnShadow;
 
+    private AliesKeys aliesKeys;
 
     private final FileChooser fileChooser = new FileChooser();
     public Pane id_pnBackground;
@@ -86,14 +87,44 @@ public class TestKeys implements Initializable {
         id_lblVerification.setVisible(false);
 
         /** kalitlar ro'yhatini to'ldirish*/
-        AddedKeysList();
+//        AddedKeysList();
 
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("pdf files", "*.pdf"),
                 new FileChooser.ExtensionFilter("all files", "*.*"));
 
 //        id_cbSignes.setItems(keysList);
 //        keys();
-        id_cbSignes.setItems(keys());
+
+//        List<String> list = keys();
+
+
+        keysList.addAll();
+
+//        for (int i = 0; i < 10; i++) {
+//
+//
+//
+//            keysList.add()
+//        }
+//        test test1 = new test();
+//        test1.setText("Assalom aleykum");
+
+//        Pane pane = new Pane(new Label("Assalom Aleykum"));
+//        keysList.add(pane);
+        id_cbSignes.setItems(keysList);
+
+//        AliesCorrect(keysList);
+
+        new AliesKeysReader().AliesCorrect();
+
+//        System.out.println(Main.getAliesKeys().getAliesKeyList()[0].getName());
+
+//        System.out.println(Main.getAliesKeys().getAliesKeyList()[1].getName());
+//        id_cbSignes.setItems();
+
+//        for (int i = 0; i < asd.size(); i++) {
+//            System.out.println(asd.get(i));
+//        }
 
         id_cbSignes.setPromptText("Kerakli yopiq kalitni tanlang...");
         id_btnChangeFile.setOnAction(new EventHandler<ActionEvent>() {
@@ -151,11 +182,10 @@ public class TestKeys implements Initializable {
                 id_btnSign.setDisable(false);
             }
         });
-
-
     }
 
     private void shadow() {
+
         if (boolPane) {
             id_pnShadow.setVisible(true);
             // Panega kursor kirganda
@@ -168,7 +198,6 @@ public class TestKeys implements Initializable {
 
             // Panedan kursor chiqqanda
             id_pnShadow.setOnMouseExited(e -> {
-
                 Timeline timeline = new Timeline(
                         new KeyFrame(duration, new KeyValue(id_pnShadow.opacityProperty(), 0.8)),
                         new KeyFrame(Duration.ZERO, new KeyValue(id_pnShadow.opacityProperty(), 0.0))
@@ -207,45 +236,15 @@ public class TestKeys implements Initializable {
     }
 
 
-    private void AddedKeysList() {
-        /** Foydalanuvchining kalitlarini serverdan olib beradi */
-        new Requests().RequestKeys();
-        /** Serverdan olingan foydalanuvchining kalitlarini keyListga yuklaydi */
-        for (int i = 0; i < Main.getKeys().getData().getKalits().getData().length; i++) {
-            keysList.add(Main.getKeys().getData().getKalits().getData()[i].getAttributes().getNomi() + "\n"
-                    + Main.getKeys().getData().getKalits().getData()[i].getAttributes().getCreatedAt());
-        }
-    }
-
-
-    private ObservableList keys() {
-        File folder = new File("C:\\DSKEYS");
-
-        List<String> list = FXCollections.observableArrayList();
-
-        PFXManager pfxManager = new PFXManager();
-
-        if (folder.exists() && folder.isDirectory()) {
-            File[] files = folder.listFiles();
-
-            if (files != null) {
-                for (File file : files) {
-                    if (file.isFile() && file.getName().toLowerCase().endsWith(".pfx")) {
-                        System.out.println("Reading PFX file: " + file.getName());
-                        list.add(file.getName());
-//                        pfxManager.readPfxFile("C:\\DSKEYS" + File.separator + file.getName(), "24061996");
-//                        System.out.println();
-
-                    }
-                }
-            } else {
-                System.out.println("Papka bo'sh");
-            }
-        } else {
-            System.out.println("Papka mavjud emas yoki direktoriya emas");
-        }
-        return (ObservableList) list;
-    }
+//    private void AddedKeysList() {
+//        /** Foydalanuvchining kalitlarini serverdan olib beradi */
+//        new Requests().RequestKeys();
+//        /** Serverdan olingan foydalanuvchining kalitlarini keyListga yuklaydi */
+//        for (int i = 0; i < Main.getKeys().getData().getKalits().getData().length; i++) {
+//            keysList.add(Main.getKeys().getData().getKalits().getData()[i].getAttributes().getNomi() + "\n"
+//                    + Main.getKeys().getData().getKalits().getData()[i].getAttributes().getCreatedAt());
+//        }
+//    }
 
 
 }
