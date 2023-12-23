@@ -26,6 +26,8 @@ import org.example.modules.AliesKey.AliesKey;
 import org.example.modules.AliesKey.AliesKeys;
 import org.example.pfx.AliesKeysReader;
 import org.example.pfx.ReadAliesInPFX;
+import org.example.utils.FXMLLoaderMade;
+import org.example.utils.FXMLLoaderWithController;
 import org.example.utils.PDFWorker;
 import org.example.utils.Requests;
 
@@ -74,7 +76,7 @@ public class TestKeys implements Initializable {
     private final FileChooser fileChooser = new FileChooser();
     public Pane id_pnBackground;
     private List<File> fileList;
-    private final ObservableList<String> keysList = FXCollections.observableArrayList();
+    private final ObservableList<Pane> keysList = FXCollections.observableArrayList();
     private String sign;
     private boolean boolPane = true;
     Duration duration = Duration.seconds(0.1);
@@ -82,6 +84,9 @@ public class TestKeys implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         shadow();
+
+        new AliesKeysReader().AliesCorrect();
+
 
         id_ivCheckSign.setVisible(false);
         id_lblVerification.setVisible(false);
@@ -100,22 +105,26 @@ public class TestKeys implements Initializable {
 
         keysList.addAll();
 
-//        for (int i = 0; i < 10; i++) {
-//
-//
-//
-//            keysList.add()
-//        }
+
+//        id_bpMessageInfo.setCenter(new FXMLLoaderMade().getPane("BtnInfo"));
+
+
 //        test test1 = new test();
 //        test1.setText("Assalom aleykum");
 
-//        Pane pane = new Pane(new Label("Assalom Aleykum"));
-//        keysList.add(pane);
+//        Pane pane = new Pane();
+//        pane.setPrefSize(400, 150);
+
+        for (int i = 0; i < Main.getAliesKeys().getAliesKeyList().length; i++) {
+            KeyInfoInPFXController keyInfoInPFXController = new KeyInfoInPFXController();
+            keyInfoInPFXController.setK(i);
+            keysList.add(new FXMLLoaderWithController().getPane("KeyInfoInPFX", keyInfoInPFXController));
+        }
+
         id_cbSignes.setItems(keysList);
 
 //        AliesCorrect(keysList);
 
-        new AliesKeysReader().AliesCorrect();
 
 //        System.out.println(Main.getAliesKeys().getAliesKeyList()[0].getName());
 

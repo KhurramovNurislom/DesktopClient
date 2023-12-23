@@ -11,109 +11,41 @@ import java.util.List;
 
 
 public class AliesKeysReader {
-
-
     public void AliesCorrect() {
-
         String[] arr = new ReadAliesInPFX().readAliesInPFX(keys());
         AliesKey[] aliesKey = new AliesKey[arr.length];
         String[] textArr;
-
+        AliesKey ak;
         for (int i = 0; i < arr.length; i++) {
+            ak = new AliesKey();
             textArr = arr[i].split(",");
-            System.out.println(textArr.length);
-//            aliesKey[i].setId(i);
-
-//            for (int j = 0; j < textArr.length; j++) {
-//                System.out.println(textArr[j]);
-//                String[] temp;
-//                temp = textArr[j].split("=");
-//                if (temp[0].equals("1.2.860.3.16.1.2")) {
-//                    temp[0] = "jshshir";
-//                }
-//
-//                if (temp[0].equals("cn")) {
-//                    aliesKey[i].setCn(temp[1]);
-//                } else if (temp[0].equals("name")) {
-//                    aliesKey[i].setName(temp[1]);
-//                } else if (temp[0].equals("surname")) {
-//                    aliesKey[i].setSurname(temp[3]);
-//                } else if (temp[0].equals("l")) {
-//                    aliesKey[i].setL(temp[4]);
-//                } else if (temp[0].equals("st")) {
-//                    aliesKey[i].setSt(temp[5]);
-//                } else if (temp[0].equals("c")) {
-//                    aliesKey[i].setC(temp[6]);
-//                } else if (temp[0].equals("o")) {
-//                    aliesKey[i].setO(temp[7]);
-//                } else if (temp[0].equals("uid")) {
-//                    aliesKey[i].setUid(temp[8]);
-//                } else if (temp[0].equals("jshshir")) {
-//                    aliesKey[i].setJshshir(temp[9]);
-//                } else if (temp[0].equals("serialnumber")) {
-//                    aliesKey[i].setSerialnumber(temp[10]);
-//                } else if (temp[0].equals("validfrom")) {
-//                    aliesKey[i].setValidfrom(temp[11]);
-//                } else if (temp[0].equals("validto")) {
-//                    aliesKey[i].setValidto(temp[12]);
-//                }
-//            }
-
-            System.out.println("\n");
+            ak.setId(i);
+            for (String s : textArr) {
+                String[] temp;
+                temp = s.split("=");
+                if (temp[0].equals("1.2.860.3.16.1.2")) {
+                    temp[0] = "jshshir";
+                }
+                switch (temp[0]) {
+                    case "cn" -> ak.setCn(temp[1]);
+                    case "name" -> ak.setName(temp[1]);
+                    case "surname" -> ak.setSurname(temp[1]);
+                    case "l" -> ak.setL(temp[1]);
+                    case "st" -> ak.setSt(temp[1]);
+                    case "c" -> ak.setC(temp[1]);
+                    case "o" -> ak.setO(temp[1]);
+                    case "uid" -> ak.setUid(temp[1]);
+                    case "jshshir" -> ak.setJshshir(temp[1]);
+                    case "serialnumber" -> ak.setSerialnumber(temp[1]);
+                    case "validfrom" -> ak.setValidfrom(temp[1]);
+                    case "validto" -> ak.setValidto(temp[1]);
+                }
+            }
+            aliesKey[i] = ak;
         }
-
-//        for (int i = 0; i < aliesKey.length; i++) {
-//            System.out.println(aliesKey[i].toString());
-//        }
-
-
-//        AliesKeys aliesKeys = new AliesKeys();
-//        aliesKeys.setAliesKeyList(aliesKey);
-//        Main.setAliesKeys(aliesKeys);
-
-//        for (int i = 0; i < text.size(); i++) {
-//            System.out.println(text.get(i));
-//
-//            textArr = text.get(i).split(",");
-//
-//
-//        }
-//
-//        for (int i = 0; i < 12; i++) {
-//            System.out.println("kerak => " + textArr[i]);
-//        }
-
-
-//            for (int j = 0; j < 12; j++) {
-//                String[] temp = new String[2];
-//                temp = text.get(j).split("=");
-//                textArr[j] = temp[1];
-//            }
-
-//            for (String s : textArr) {
-//                System.out.println("kerak => " + s);
-//            }
-
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-//        }
-//        AliesKeys aliesKeys = new AliesKeys();
-//        aliesKeys.setAliesKeyList(aliesKey);
-//        Main.setAliesKeys(aliesKeys);
+        AliesKeys aliesKeys = new AliesKeys();
+        aliesKeys.setAliesKeyList(aliesKey);
+        Main.setAliesKeys(aliesKeys);
     }
 
     private String[] keys() {
@@ -133,12 +65,10 @@ public class AliesKeysReader {
         } else {
             System.out.println("Papka mavjud emas yoki direktoriya emas");
         }
-
         String[] arrList = new String[list.size()];
         for (int i = 0; i < arrList.length; i++) {
             arrList[i] = list.get(i);
         }
         return arrList;
     }
-
 }
