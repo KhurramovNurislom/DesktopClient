@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import org.example.Main;
 import org.example.utils.Requests;
 import org.example.utils.SSLClient;
@@ -39,10 +40,12 @@ public class LoginPageController implements Initializable {
 
     public boolean eyebool = false;
 
+
     Requests requests = new Requests();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         id_tfPassword.setVisible(false);
         id_ivHiddenEyes.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override

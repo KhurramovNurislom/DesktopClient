@@ -1,8 +1,6 @@
 package org.example.utils;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import org.example.Main;
 
@@ -21,18 +19,10 @@ public class FXMLLoaderWithController {
             }
         }
         try {
-//            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(String.valueOf(fileURL)));
-
-
-            FXMLLoader fxmlLoader = new FXMLLoader();
+            FXMLLoader fxmlLoader = new FXMLLoader(fileURL);
             fxmlLoader.setController(object);
-
-//
-//            Pane pane = new Pane();
-
-            return fxmlLoader.load(fileURL);
+            return fxmlLoader.load();
         } catch (IOException e) {
-            System.err.println("exception : FXMLLoaderMade().getPane() => " + e.getCause());
             throw new RuntimeException(e);
         }
     }

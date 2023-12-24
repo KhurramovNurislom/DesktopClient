@@ -107,8 +107,21 @@ public class Main extends Application {
     @Setter
     static AliesKeys aliesKeys;
 
+
+    /**
+     * Displaynign o'lchamlari
+     */
+    @Getter
+    @Setter
+    static int X;
+
+    @Getter
+    @Setter
+    static int Y;
+
     @Override
     public void start(Stage stage) throws Exception {
+
 
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/LoginPage.fxml"));
         Scene scene = new Scene(fxmlLoader.load());

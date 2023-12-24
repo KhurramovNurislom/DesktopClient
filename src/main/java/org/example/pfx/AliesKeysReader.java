@@ -46,6 +46,7 @@ public class AliesKeysReader {
         AliesKeys aliesKeys = new AliesKeys();
         aliesKeys.setAliesKeyList(aliesKey);
         Main.setAliesKeys(aliesKeys);
+        System.out.println(aliesKeys);
     }
 
     private String[] keys() {

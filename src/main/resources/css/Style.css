@@ -1,52 +1,58 @@
-.dark-gray-background{
--fx-background-color: #46474A;
+.dark-gray-background {
+    -fx-background-color: #46474A;
 }
 
 .pagination {
     -fx-background-color: red;
 }
 
-.text-field{
-   -fx-font-family: "Arial";
-   -fx-font-size: 14;
-   -fx-padding: 5,1,1,1;
-   -fx-border-color: #568199;
-   -fx-border-width: 0.8;
-   -fx-border-radius: 3;
-   -fx-text-fill: #0F2A62;
-   -fx-prompt-text-fill: #426283;
+.text-field {
+    -fx-font-family: "Arial";
+    -fx-font-size: 14;
+    -fx-padding: 5, 1, 1, 1;
+    -fx-border-color: #568199;
+    -fx-border-width: 0.8;
+    -fx-border-radius: 3;
+    -fx-text-fill: #0F2A62;
+    -fx-prompt-text-fill: #426283;
 }
 
-.table-view{
-   -fx-font-family: "Arial";
-   -fx-font-size: 11;
-   -fx-padding: 1,1,1,1;
-   -fx-border-color: #568199;
-   -fx-border-width: 0.8;
-   -fx-border-radius: 3;
-   -fx-text-fill: #0F2A62;
-   -fx-prompt-text-fill: #426283;
-   -fx-background-color: #e4eadf;
+.table-view {
+    -fx-font-family: "Arial";
+    -fx-font-size: 11;
+    -fx-padding: 1, 1, 1, 1;
+    -fx-border-color: #568199;
+    -fx-border-width: 0.8;
+    -fx-border-radius: 3;
+    -fx-text-fill: #0F2A62;
+    -fx-prompt-text-fill: #426283;
+    -fx-background-color: #e4eadf;
 }
 
-#id_lvList{
-   -fx-font-family: "Arial";
-   -fx-font-size: 14;
-   -fx-padding: 1,1,1,1;
-   -fx-border-color: #568199;
-   -fx-border-width: 0.8;
-   -fx-border-radius: 3;
-   -fx-text-fill: #0F2A62;
-   -fx-prompt-text-fill: #426283;
-   -fx-background-color: #e4eadf;
+#id_lvList {
+    -fx-font-family: "Arial";
+    -fx-font-size: 14;
+    -fx-padding: 1, 1, 1, 1;
+    -fx-border-color: #568199;
+    -fx-border-width: 0.8;
+    -fx-border-radius: 3;
+    -fx-text-fill: #0F2A62;
+    -fx-prompt-text-fill: #426283;
+    -fx-background-color: #e4eadf;
 
 }
 
-#id_pnBackground{
-   -fx-border-color: #0F2A62;
-   -fx-border-width: 0.2;
-   -fx-border-radius: 3;
+#id_pnBackground {
+    -fx-border-color: #0F2A62;
+    -fx-border-width: 0.2;
+    -fx-border-radius: 3;
+
 }
 
-
-
+.style-Pane {
+    -fx-font-family: "Arial-bold";
+        -fx-font-size: 14;
+        -fx-border-color: BLACk;
+        -fx-border-width: 1.0;
+        -fx-border-radius: 5;
+}

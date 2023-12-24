@@ -12,11 +12,15 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -41,6 +45,9 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import static javafx.scene.paint.Color.RED;
+import static javafx.scene.paint.Color.VIOLET;
+
 public class TestKeys implements Initializable {
     @FXML
     public JFXButton id_btnChangeFile;
@@ -48,12 +55,12 @@ public class TestKeys implements Initializable {
     public JFXButton id_btnSign;
     @FXML
     public TextField id_tfFilePath;
-    @FXML
-    public ImageView id_ivCheckSign;
+    //    @FXML
+//    public ImageView id_ivCheckSign;
     @FXML
     public Label id_lblVerification;
     @FXML
-    public JFXComboBox id_cbSignes;
+    public ComboBox id_cbSignes;
     @FXML
     public ImageView id_ivUserImage;
     @FXML
@@ -76,7 +83,7 @@ public class TestKeys implements Initializable {
     private final FileChooser fileChooser = new FileChooser();
     public Pane id_pnBackground;
     private List<File> fileList;
-    private final ObservableList<Pane> keysList = FXCollections.observableArrayList();
+    private final ObservableList keysList = FXCollections.observableArrayList();
     private String sign;
     private boolean boolPane = true;
     Duration duration = Duration.seconds(0.1);
@@ -88,8 +95,8 @@ public class TestKeys implements Initializable {
         new AliesKeysReader().AliesCorrect();
 
 
-        id_ivCheckSign.setVisible(false);
-        id_lblVerification.setVisible(false);
+//        id_ivCheckSign.setVisible(false);
+//        id_lblVerification.setVisible(false);
 
         /** kalitlar ro'yhatini to'ldirish*/
 //        AddedKeysList();
@@ -97,23 +104,9 @@ public class TestKeys implements Initializable {
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("pdf files", "*.pdf"),
                 new FileChooser.ExtensionFilter("all files", "*.*"));
 
-//        id_cbSignes.setItems(keysList);
-//        keys();
-
-//        List<String> list = keys();
-
-
         keysList.addAll();
 
-
-//        id_bpMessageInfo.setCenter(new FXMLLoaderMade().getPane("BtnInfo"));
-
-
-//        test test1 = new test();
-//        test1.setText("Assalom aleykum");
-
-//        Pane pane = new Pane();
-//        pane.setPrefSize(400, 150);
+//        id_cbSignes.setStyle("-fx-text-fill: #123321");
 
         for (int i = 0; i < Main.getAliesKeys().getAliesKeyList().length; i++) {
             KeyInfoInPFXController keyInfoInPFXController = new KeyInfoInPFXController();
@@ -121,19 +114,21 @@ public class TestKeys implements Initializable {
             keysList.add(new FXMLLoaderWithController().getPane("KeyInfoInPFX", keyInfoInPFXController));
         }
 
-        id_cbSignes.setItems(keysList);
-
-//        AliesCorrect(keysList);
+        System.out.println(id_cbSignes.getSelectionModel().getSelectedIndex());
 
 
-//        System.out.println(Main.getAliesKeys().getAliesKeyList()[0].getName());
 
-//        System.out.println(Main.getAliesKeys().getAliesKeyList()[1].getName());
-//        id_cbSignes.setItems();
 
-//        for (int i = 0; i < asd.size(); i++) {
-//            System.out.println(asd.get(i));
-//        }
+
+
+
+
+
+
+
+
+
+
 
         id_cbSignes.setPromptText("Kerakli yopiq kalitni tanlang...");
         id_btnChangeFile.setOnAction(new EventHandler<ActionEvent>() {
@@ -182,8 +177,8 @@ public class TestKeys implements Initializable {
                     alert.setContentText("Imzolanadigan faylni tanlang");
                     alert.show();
                 }
-                id_ivCheckSign.setVisible(true);
-                id_ivCheckSign.setImage(new Image("/images/signedPage/check.png"));
+//                id_ivCheckSign.setVisible(true);
+//                id_ivCheckSign.setImage(new Image("/images/signedPage/check.png"));
                 boolPane = false;
                 shadow();
                 id_lblVerification.setVisible(true);
