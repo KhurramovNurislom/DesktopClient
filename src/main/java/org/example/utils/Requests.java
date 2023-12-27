@@ -69,7 +69,7 @@ public class Requests {
     public void RequestkeysGen(String privateKey, String publicKey, String keyName) {
         /** Kalit generatsiya qilish */
         MediaType mediaType = MediaType.parse("application/json");
-        RequestBody body = RequestBody.create(mediaType, "{\"data\":{\"privkey\":\"" + privateKey +
+        RequestBody body = RequestBody.create(mediaType, "{\"data\":{\"privkey\":\"" + "privateKey" +
                 "\"," + "\"pubkey\":\"" + publicKey + "\",\"user\":" + Main.getLoginData().getUser().getId() +
                 ",\"nomi\": \"" + keyName + "\" } }");
         Request request = new Request.Builder().url(Main.getUrl() + "/api/kalits").method("POST", body)

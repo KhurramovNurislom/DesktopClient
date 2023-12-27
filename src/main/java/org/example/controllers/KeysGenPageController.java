@@ -124,7 +124,7 @@ public class KeysGenPageController implements Initializable {
                     UzDSt_1092_2009 uzDSt10922009 = new UzDSt_1092_2009();
                     KeyPair keyPair = uzDSt10922009.generateKeyPair();
 
-                    new Requests().RequestkeysGen(Hex.toHexString(keyPair.getPrivate().getEncoded()),
+                    new Requests().RequestkeysGen("Hex.toHexString(keyPair.getPrivate().getEncoded())",
                             Hex.toHexString(keyPair.getPublic().getEncoded()), id_tfCerName.getText());
 
                     PFXManager pfxManager = new PFXManager();
