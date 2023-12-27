@@ -2,150 +2,131 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
-<?import javafx.geometry.Point3D?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.Blend?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.control.ComboBox?>
-<Pane prefHeight="720.0" prefWidth="750.0" style="-fx-background-color: #e4eaff;" xmlns="http://javafx.com/javafx/19"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.TestKeys">
+<Pane prefHeight="720.0" prefWidth="750.0" style="-fx-background-color: #e4eaff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.TestKeys">
 
-    <JFXButton fx:id="id_btnChangeFile" layoutX="600.0" layoutY="75.0" prefHeight="30.0" prefWidth="110.0"
-               style="-fx-background-color: #0F2A62;" text="Fayl tanlash" textFill="WHITE">
+    <JFXButton fx:id="id_btnChangeFile" buttonType="RAISED" layoutX="600.0" layoutY="75.0" prefHeight="30.0" prefWidth="110.0" style="-fx-background-color: #0F2A62;" text="Fayl tanlash" textFill="WHITE">
         <font>
-            <Font name="Arial Bold" size="14.0"/>
+            <Font name="Arial Bold" size="14.0" />
         </font>
     </JFXButton>
 
-    <ComboBox fx:id="id_cbSignes" layoutX="80.0" layoutY="150.0" maxWidth="500.0" prefHeight="130.0" prefWidth="500.0"
-              promptText="Kerakli yopiq kalit" viewOrder="4.0" visibleRowCount="4"/>
 
-
-    <JFXButton fx:id="id_btnSign" layoutX="600.0" layoutY="150.0" prefHeight="30.0" prefWidth="110.0"
-               style="-fx-background-color: #0F2A62;" text="Imzolash" textFill="#fff6f6">
+    <JFXButton fx:id="id_btnSign" buttonType="RAISED" layoutX="600.0" layoutY="150.0" prefHeight="30.0" prefWidth="110.0" style="-fx-background-color: #0F2A62;" text="Imzolash" textFill="#fff6f6">
         <font>
-            <Font name="Arial Bold" size="14.0"/>
+            <Font name="Arial Bold" size="14.0" />
         </font>
     </JFXButton>
 
-    <TextField fx:id="id_tfFilePath" layoutX="80.0" layoutY="75.0" prefHeight="30.0" prefWidth="500.0"
-               promptText="Imzolanadigan fayl yo'li"/>
+    <TextField fx:id="id_tfFilePath" layoutX="80.0" layoutY="75.0" prefHeight="30.0" prefWidth="500.0" promptText="Imzolanadigan fayl yo'li" />
 
-    <Label contentDisplay="CENTER" layoutX="100.0" layoutY="45.0" text="Imzolanadigan faylni tanlang"
-           textFill="#0f2a62">
+    <Label contentDisplay="CENTER" layoutX="100.0" layoutY="45.0" text="Imzolanadigan faylni tanlang" textFill="#0f2a62">
         <font>
-            <Font name="Arial" size="18.0"/>
+            <Font name="Arial" size="18.0" />
         </font>
     </Label>
 
 
     <Label contentDisplay="CENTER" layoutX="100.0" layoutY="120.0" text="Imzoni tanlang" textFill="#0f2a62">
         <font>
-            <Font size="18.0"/>
+            <Font size="18.0" />
         </font>
     </Label>
 
     <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="40.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
-        <Image url="@../images/signedPage/file-pdf.png"/>
+        <Image url="@../images/signedPage/file-pdf.png" />
     </ImageView>
 
     <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="40.0" layoutY="155.0" pickOnBounds="true" preserveRatio="true">
-        <Image url="@../images/signedPage/keys.png"/>
+        <Image url="@../images/signedPage/keys.png" />
     </ImageView>
 
-    <ImageView fx:id="id_ivUserImage" fitHeight="300.0" fitWidth="300.0" layoutX="435.0" layoutY="307.0"
-               pickOnBounds="true" preserveRatio="true">
-        <Image url="@../images/signedPage/user-blue.png"/>
+    <ImageView fx:id="id_ivUserImage" fitHeight="300.0" fitWidth="300.0" layoutX="435.0" layoutY="305.0" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../images/signedPage/user-blue.png" />
     </ImageView>
 
-    <Label layoutX="20.0" layoutY="477.0" prefHeight="30.0" prefWidth="92.0" text="Fayl nomi:" textFill="#063970"
-           wrapText="true">
+    <Label layoutX="20.0" layoutY="475.0" prefHeight="30.0" prefWidth="92.0" text="Fayl nomi:" textFill="#063970" wrapText="true">
         <font>
-            <Font name="Arial Bold" size="18.0"/>
+            <Font name="Arial Bold" size="18.0" />
         </font>
     </Label>
 
-    <Label layoutX="20.0" layoutY="527.0" prefHeight="30.0" prefWidth="92.0" text="Fayl yo'li:" textFill="#063970"
-           wrapText="true">
+    <Label layoutX="20.0" layoutY="525.0" prefHeight="30.0" prefWidth="92.0" text="Fayl yo'li:" textFill="#063970" wrapText="true">
         <font>
-            <Font name="Arial Bold" size="18.0"/>
+            <Font name="Arial Bold" size="18.0" />
         </font>
     </Label>
 
-    <Label layoutX="20.0" layoutY="577.0" prefHeight="30.0" prefWidth="100.0" text="Fayl hajmi:" textFill="#063970"
-           wrapText="true">
+    <Label layoutX="20.0" layoutY="575.0" prefHeight="30.0" prefWidth="100.0" text="Fayl hajmi:" textFill="#063970" wrapText="true">
         <font>
-            <Font name="Arial Bold" size="18.0"/>
+            <Font name="Arial Bold" size="18.0" />
         </font>
     </Label>
 
-    <Label alignment="TOP_LEFT" contentDisplay="CENTER" layoutX="80.0" layoutY="257.0" prefHeight="27.0"
-           prefWidth="310.0" text="IMZO EGASINING MA'LUMOTLARI:" textFill="#063970" wrapText="true">
+    <Label alignment="TOP_LEFT" contentDisplay="CENTER" layoutX="80.0" layoutY="255.0" prefHeight="27.0" prefWidth="310.0" text="IMZO EGASINING MA'LUMOTLARI:" textFill="#063970" wrapText="true">
         <font>
-            <Font name="Arial Bold" size="18.0"/>
+            <Font name="Arial Bold" size="18.0" />
         </font>
     </Label>
 
-    <Label contentDisplay="CENTER" layoutX="40.0" layoutY="310.0" prefHeight="25.0" prefWidth="63.0" text="Login:"
-           textFill="#063970" wrapText="true">
+    <Label contentDisplay="CENTER" layoutX="40.0" layoutY="308.0" prefHeight="25.0" prefWidth="63.0" text="Login:" textFill="#063970" wrapText="true">
         <font>
-            <Font name="Arial Bold" size="18.0"/>
+            <Font name="Arial Bold" size="18.0" />
         </font>
     </Label>
 
-    <Label alignment="TOP_LEFT" contentDisplay="RIGHT" layoutX="80.0" layoutY="427.0" prefHeight="30.0"
-           prefWidth="335.0" text="IMZOLANGAN FAYL MA'LUMOTLARI:" textFill="#063970" wrapText="true">
+    <Label alignment="TOP_LEFT" contentDisplay="RIGHT" layoutX="80.0" layoutY="425.0" prefHeight="30.0" prefWidth="335.0" text="IMZOLANGAN FAYL MA'LUMOTLARI:" textFill="#063970" wrapText="true">
         <font>
-            <Font name="Arial Bold" size="18.0"/>
+            <Font name="Arial Bold" size="18.0" />
         </font>
     </Label>
 
-    <Label contentDisplay="CENTER" layoutX="40.0" layoutY="360.0" prefHeight="27.0" prefWidth="63.0" text="e-mail:"
-           textFill="#063970" wrapText="true">
+    <Label contentDisplay="CENTER" layoutX="40.0" layoutY="358.0" prefHeight="27.0" prefWidth="63.0" text="e-mail:" textFill="#063970" wrapText="true">
         <font>
-            <Font name="Arial Bold" size="18.0"/>
+            <Font name="Arial Bold" size="18.0" />
         </font>
     </Label>
 
-    <Label layoutX="20.0" layoutY="627.0" prefHeight="30.0" prefWidth="200.0" text="Fayl imzolangan vaqti:"
-           textFill="#063970" wrapText="true">
+    <Label layoutX="20.0" layoutY="625.0" prefHeight="30.0" prefWidth="200.0" text="Fayl imzolangan vaqti:" textFill="#063970" wrapText="true">
         <font>
-            <Font name="Arial Bold" size="18.0"/>
+            <Font name="Arial Bold" size="18.0" />
         </font>
     </Label>
 
-    <TextField fx:id="id_tfLogin" layoutX="120.0" layoutY="307.0" prefHeight="30.0" prefWidth="300.0"
-               promptText="Login"/>
+    <TextField fx:id="id_tfLogin" layoutX="120.0" layoutY="305.0" prefHeight="30.0" prefWidth="300.0" promptText="Login" />
 
-    <TextField fx:id="id_tfEmail" layoutX="120.0" layoutY="357.0" prefHeight="30.0" prefWidth="300.0"
-               promptText="e-mail"/>
+    <TextField fx:id="id_tfEmail" layoutX="120.0" layoutY="355.0" prefHeight="30.0" prefWidth="300.0" promptText="e-mail" />
 
-    <TextField fx:id="id_tfSignedFileName" layoutX="120.0" layoutY="477.0" prefHeight="30.0" prefWidth="300.0"
-               promptText="Fayl nomi"/>
+    <TextField fx:id="id_tfSignedFileName" layoutX="120.0" layoutY="475.0" prefHeight="30.0" prefWidth="300.0" promptText="Fayl nomi" />
 
-    <TextField fx:id="id_tfSignedFilePath" layoutX="120.0" layoutY="527.0" prefHeight="30.0" prefWidth="300.0"
-               promptText="Fayl yo'li"/>
+    <TextField fx:id="id_tfSignedFilePath" layoutX="120.0" layoutY="525.0" prefHeight="30.0" prefWidth="300.0" promptText="Fayl yo'li" />
 
-    <TextField fx:id="id_tfSignedFileVolume" layoutX="120.0" layoutY="577.0" prefHeight="30.0" prefWidth="300.0"
-               promptText="Fayl hajmi"/>
+    <TextField fx:id="id_tfSignedFileVolume" layoutX="120.0" layoutY="575.0" prefHeight="30.0" prefWidth="300.0" promptText="Fayl hajmi" />
 
-    <TextField fx:id="id_tfFileSignedTime" layoutX="220.0" layoutY="627.0" prefHeight="30.0" prefWidth="200.0"
-               promptText="Imzolangan vaqti"/>
+    <TextField fx:id="id_tfFileSignedTime" layoutX="220.0" layoutY="625.0" prefHeight="30.0" prefWidth="200.0" promptText="Imzolangan vaqti" />
 
-    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="40.0" layoutY="255.0" pickOnBounds="true" preserveRatio="true">
-        <Image url="@../images/signedPage/circle-user.png"/>
+    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="40.0" layoutY="253.0" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../images/signedPage/circle-user.png" />
     </ImageView>
 
-    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="40.0" layoutY="425.0" pickOnBounds="true" preserveRatio="true">
-        <Image url="@../images/signedPage/file-invoice.png"/>
+    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="40.0" layoutY="423.0" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../images/signedPage/file-invoice.png" />
     </ImageView>
 
-    <Pane fx:id="id_pnShadow" layoutY="200.0" opacity="0.8" prefHeight="520.0" prefWidth="750.0"
-          style="-fx-background-color: #e4eaff;" visible="false"/>
+    <Pane fx:id="id_pnShadow" layoutY="220.0" opacity="0.8" prefHeight="500.0" prefWidth="750.0" style="-fx-background-color: #e4eaff;" visible="false" />
+
+    <JFXComboBox fx:id="id_cbSignes" layoutX="80.0" layoutY="150.0" maxWidth="500.0" prefHeight="30.0" prefWidth="500.0" viewOrder="4.0" visibleRowCount="4" />
+
+    <Label fx:id="id_lblKeysName" layoutX="90.0" layoutY="150.0" prefHeight="30.0" prefWidth="450.0" style="-fx-background-color: #e4eaff;" textFill="#063970">
+        <font>
+            <Font name="Arial" size="14.0" />
+        </font>
+    </Label>
 
 </Pane>

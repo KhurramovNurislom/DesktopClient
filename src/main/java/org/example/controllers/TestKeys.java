@@ -11,26 +11,18 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.example.Main;
 import org.example.crypto.UzDSt_1092_2009;
-import org.example.modules.AliesKey.AliesKey;
 import org.example.modules.AliesKey.AliesKeys;
 import org.example.pfx.AliesKeysReader;
-import org.example.pfx.ReadAliesInPFX;
-import org.example.utils.FXMLLoaderMade;
 import org.example.utils.FXMLLoaderWithController;
 import org.example.utils.PDFWorker;
 import org.example.utils.Requests;
@@ -45,8 +37,6 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static javafx.scene.paint.Color.RED;
-import static javafx.scene.paint.Color.VIOLET;
 
 public class TestKeys implements Initializable {
     @FXML
@@ -60,7 +50,7 @@ public class TestKeys implements Initializable {
     @FXML
     public Label id_lblVerification;
     @FXML
-    public ComboBox id_cbSignes;
+    public JFXComboBox<Pane> id_cbSignes;
     @FXML
     public ImageView id_ivUserImage;
     @FXML
@@ -77,13 +67,15 @@ public class TestKeys implements Initializable {
     public TextField id_tfFileSignedTime;
     @FXML
     public Pane id_pnShadow;
+    @FXML
+    public Label id_lblKeysName;
 
     private AliesKeys aliesKeys;
 
     private final FileChooser fileChooser = new FileChooser();
     public Pane id_pnBackground;
     private List<File> fileList;
-    private final ObservableList keysList = FXCollections.observableArrayList();
+    private final ObservableList<Pane> keysList = FXCollections.observableArrayList();
     private String sign;
     private boolean boolPane = true;
     Duration duration = Duration.seconds(0.1);
@@ -114,23 +106,26 @@ public class TestKeys implements Initializable {
             keysList.add(new FXMLLoaderWithController().getPane("KeyInfoInPFX", keyInfoInPFXController));
         }
 
-        System.out.println(id_cbSignes.getSelectionModel().getSelectedIndex());
+        id_cbSignes.setItems(keysList);
+
+        isEmptyKeys();
+
+        id_cbSignes.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                id_lblKeysName.setText(Main.getListPaths().get(id_cbSignes.getSelectionModel().getSelectedIndex()));
+                isEmptyKeys();
+            }
+        });
+
+        id_lblKeysName.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                id_cbSignes.show();
+            }
+        });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-        id_cbSignes.setPromptText("Kerakli yopiq kalitni tanlang...");
         id_btnChangeFile.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -144,7 +139,6 @@ public class TestKeys implements Initializable {
                 id_btnChangeFile.setDisable(false);
             }
         });
-
         id_btnSign.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -186,6 +180,14 @@ public class TestKeys implements Initializable {
                 id_btnSign.setDisable(false);
             }
         });
+    }
+
+    private void isEmptyKeys() {
+        if (id_cbSignes.getSelectionModel().isEmpty() & Main.getListPaths().get(0).isEmpty()) {
+            id_lblKeysName.setText("C:\\DSKEYS papkada kalit mavjud emas");
+        } else if (id_cbSignes.getSelectionModel().isEmpty() & !Main.getListPaths().get(0).isEmpty()) {
+            id_lblKeysName.setText(Main.getListPaths().get(0));
+        }
     }
 
     private void shadow() {

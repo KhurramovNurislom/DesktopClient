@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="720.0" prefWidth="750.0" style="-fx-background-color: #e4eaff;" xmlns="http://javafx.com/javafx/19"
+<Pane prefHeight="720.0" prefWidth="750.0" style="-fx-background-color: #e4eaff;" xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.KeysGenPageController">
     <TextField fx:id="id_tfCerName" layoutX="50.0" layoutY="110.0" prefHeight="35.0" prefWidth="650.0"
                promptText="kalit nomi">

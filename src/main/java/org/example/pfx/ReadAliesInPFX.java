@@ -11,13 +11,13 @@ import java.security.NoSuchAlgorithmException;
 import java.security.Security;
 import java.security.cert.CertificateException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 
 public class ReadAliesInPFX {
 
     public String[] readAliesInPFX(String[] listPath) {
-
         Security.addProvider(new BouncyCastleProvider());
         List<String> listAlies = new ArrayList<>();
         try {

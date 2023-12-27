@@ -2,7 +2,6 @@ package org.example.controllers;
 
 
 import com.jfoenix.controls.JFXButton;
-import com.sun.jna.platform.unix.X11;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
@@ -48,7 +47,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static org.bouncycastle.asn1.x500.style.RFC4519Style.o;
 
 
 public class ChatPageController implements Initializable {

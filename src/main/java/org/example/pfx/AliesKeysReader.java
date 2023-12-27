@@ -70,6 +70,7 @@ public class AliesKeysReader {
         for (int i = 0; i < arrList.length; i++) {
             arrList[i] = list.get(i);
         }
+        Main.setListPaths(list);
         return arrList;
     }
 }

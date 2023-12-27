@@ -107,6 +107,9 @@ public class Main extends Application {
     @Setter
     static AliesKeys aliesKeys;
 
+    @Getter
+    @Setter
+    static List<String> listPaths;
 
     /**
      * Displaynign o'lchamlari

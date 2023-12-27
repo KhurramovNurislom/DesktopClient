@@ -1,5 +1,6 @@
 package org.example.controllers;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -33,18 +34,29 @@ public class KeyInfoInPFXController implements Initializable {
     @Setter
     private int k;
 
+    @JsonIgnoreProperties
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        id_lblSurName.setText(Main.getAliesKeys().getAliesKeyList()[k].getCn().toUpperCase());
-        id_lblJSHSHIR.setText(Main.getAliesKeys().getAliesKeyList()[k].getJshshir());
 
-        id_lblSTIR.setText(Main.getAliesKeys().getAliesKeyList()[k].getUid());
-        id_lblSerNumber.setText(Main.getAliesKeys().getAliesKeyList()[k].getSerialnumber());
-        id_lblFromToDate.setText(Main.getAliesKeys().getAliesKeyList()[k].getValidfrom() + Main.getAliesKeys().getAliesKeyList()[k].getValidto());
+
+        if (Main.getAliesKeys().getAliesKeyList()[k].getCn().isEmpty()) {
+            id_lblSurName.setText("Null");
+        } else {
+            id_lblSurName.setText(Main.getAliesKeys().getAliesKeyList()[k].getCn().toUpperCase());
+        }
+
+//
+//        id_lblJSHSHIR.setText(Main.getAliesKeys().getAliesKeyList()[k].getJshshir());
+//
+//        id_lblSTIR.setText(Main.getAliesKeys().getAliesKeyList()[k].getUid());
+//        id_lblSerNumber.setText(Main.getAliesKeys().getAliesKeyList()[k].getSerialnumber());
+//        id_lblFromToDate.setText(Main.getAliesKeys().getAliesKeyList()[k].getValidfrom() + Main.getAliesKeys().getAliesKeyList()[k].getValidto());
+
+
         id_btnSign.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                System.out.println(k);
+                System.out.println("Assalom qaleysan => " + k);
             }
         });
     }

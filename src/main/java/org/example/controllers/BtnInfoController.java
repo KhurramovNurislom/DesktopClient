@@ -13,6 +13,5 @@ public class BtnInfoController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
 
-
     }
 }

@@ -74,7 +74,7 @@ public class KeysGenPageController implements Initializable {
 
     private int items;
 
-    private static final int ITEMS_PER_PAGE = 10;
+    //    private static final int ITEMS_PER_PAGE = 10;
     public boolean eyeBool = false;
 
     public boolean eyeBoolVer = false;
@@ -90,7 +90,6 @@ public class KeysGenPageController implements Initializable {
         id_ivHiddenEyesVer.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-
                 eyeBoolVer = !eyeBoolVer;
                 if (eyeBoolVer) {
                     id_ivHiddenEyesVer.setImage(new Image("/images/keysGenPage/visible.png"));
@@ -101,7 +100,6 @@ public class KeysGenPageController implements Initializable {
                     id_tfPassVer.setVisible(false);
                     id_pfPassVer.setVisible(true);
                 }
-
             }
         });
 
@@ -153,7 +151,6 @@ public class KeysGenPageController implements Initializable {
                 id_btnGenerate.setDisable(false);
             }
         });
-
 
         id_btnDel.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -207,20 +204,20 @@ public class KeysGenPageController implements Initializable {
 
         new Requests().RequestKeys();
 
-        ImageView ivPrivKey = new ImageView(new Image("\\images\\keysGenPage\\key.png"));
-        ivPrivKey.setFitWidth(30);
-        ivPrivKey.setFitHeight(30);
+//       ImageView ivPrivKey = new ImageView(new Image("\\images\\keysGenPage\\key.png"));
+//       ivPrivKey.setFitWidth(30);
+//       ivPrivKey.setFitHeight(30);
 
         ObservableList<String> items = FXCollections.observableArrayList();
 
         for (int i = 0; i < Main.getKeys().getData().getKalits().getData().length; i++) {
-            ImageView ivDel = new ImageView(new Image(new File("\\images\\keyGenPage\\del.png").toURI().toString()));
-            ivDel.setFitHeight(30);
-            ivDel.setFitWidth(30);
-            JFXButton btn = new JFXButton();
-            btn.setGraphic(ivPrivKey);
-            btn.setText(Main.getKeys().getData().getKalits().getData()[i].getAttributes().getNomi());
-            btn.setGraphic(ivDel);
+//            ImageView ivDel = new ImageView(new Image(new File("\\images\\keyGenPage\\del.png").toURI().toString()));
+//            ivDel.setFitHeight(30);
+//            ivDel.setFitWidth(30);
+//            JFXButton btn = new JFXButton();
+//            btn.setGraphic(ivPrivKey);
+//            btn.setText(Main.getKeys().getData().getKalits().getData()[i].getAttributes().getNomi());
+//            btn.setGraphic(ivDel);
             items.add(Main.getKeys().getData().getKalits().getData()[i].getAttributes().getNomi());
 //            System.out.println("kerak: " + Main.getKeys().getData().getKalits().getData()[i].getAttributes().getNomi());
         }
