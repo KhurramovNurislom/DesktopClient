@@ -2,6 +2,7 @@ package org.example.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -10,19 +11,27 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import org.example.Main;
 import org.example.crypto.UzDSt_1092_2009;
 import org.example.modules.AliesKey.AliesKeys;
 import org.example.pfx.AliesKeysReader;
+import org.example.utils.FXMLLoaderMade;
 import org.example.utils.FXMLLoaderWithController;
 import org.example.utils.PDFWorker;
 import org.example.utils.Requests;
@@ -39,36 +48,27 @@ import java.util.*;
 
 
 public class TestKeys implements Initializable {
-    @FXML
+
     public JFXButton id_btnChangeFile;
-    @FXML
     public JFXButton id_btnSign;
-    @FXML
     public TextField id_tfFilePath;
     //    @FXML
 //    public ImageView id_ivCheckSign;
-    @FXML
+
     public Label id_lblVerification;
-    @FXML
     public JFXComboBox<Pane> id_cbSignes;
-    @FXML
     public ImageView id_ivUserImage;
-    @FXML
     public TextField id_tfLogin;
-    @FXML
     public TextField id_tfEmail;
-    @FXML
     public TextField id_tfSignedFileName;
-    @FXML
     public TextField id_tfSignedFilePath;
-    @FXML
     public TextField id_tfSignedFileVolume;
-    @FXML
     public TextField id_tfFileSignedTime;
-    @FXML
     public Pane id_pnShadow;
-    @FXML
     public Label id_lblKeysName;
+
+    public Pane id_pnAllShadow;
+    public Pane id_pnView;
 
     private AliesKeys aliesKeys;
 
@@ -85,7 +85,6 @@ public class TestKeys implements Initializable {
         shadow();
 
         new AliesKeysReader().AliesCorrect();
-
 
 //        id_ivCheckSign.setVisible(false);
 //        id_lblVerification.setVisible(false);
@@ -114,6 +113,7 @@ public class TestKeys implements Initializable {
             @Override
             public void handle(ActionEvent actionEvent) {
                 id_lblKeysName.setText(Main.getListPaths().get(id_cbSignes.getSelectionModel().getSelectedIndex()));
+                Main.setIndexPFXFilePath(id_cbSignes.getSelectionModel().getSelectedIndex());
                 isEmptyKeys();
             }
         });
@@ -143,43 +143,57 @@ public class TestKeys implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 id_btnSign.setDisable(true);
-                /** Imzolanadigan pdf filelarni ajratib oladi */
-                String[] temp = id_tfFilePath.getText().replaceAll(", ", ",").split(",");
-                if (!id_tfFilePath.getText().isEmpty()) {
-                    /**  Fayllar tanlanganda imzo qo'yish */
-                    for (String s : temp) {
-                        if (new File(s).isFile() && new File(s).getName().toLowerCase().endsWith(".pdf")) {
-                            /** PDF document ga link yuklangan qrcode yuklash */
-                            new PDFWorker().PasteSignLink(s, signLink());
-                            /** Imzolangan, QRCode qo'yilgan faylni qrcode dagi link ka yuklash */
-                            new Requests().RequestUpload(Main.getSignedFileInfo().getFilePath());
-                            sign = new UzDSt_1092_2009().signGenerate(Main.getKeys().getData().getKalits().
-                                            getData()[id_cbSignes.getSelectionModel().getSelectedIndex()].getAttributes().getPrivkey(),
-                                    Main.getSignedFileInfo().getFilePath());
-                            /** Messages fayl va imzo haqidagi ma'lumotlar yuklanadi */
-                            new Requests().ResponseMessage(Main.getLoginData().getUser().getId(),
-                                    sign,
-                                    Main.getKeys().getData().getKalits().getData()[id_cbSignes.getSelectionModel().getSelectedIndex()].getId(),
-                                    null,
-                                    null);
-                            PaneSingerInfo();
-                        }
-                    }
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setHeaderText("Fayl tanlanmagan");
-                    alert.setContentText("Imzolanadigan faylni tanlang");
-                    alert.show();
-                }
-//                id_ivCheckSign.setVisible(true);
-//                id_ivCheckSign.setImage(new Image("/images/signedPage/check.png"));
-                boolPane = false;
-                shadow();
-                id_lblVerification.setVisible(true);
-                id_lblVerification.setText("Fayl imzolandi");
+                getPass();
+//                /** Imzolanadigan pdf filelarni ajratib oladi */
+//                String[] temp = id_tfFilePath.getText().replaceAll(", ", ",").split(",");
+//                if (!id_tfFilePath.getText().isEmpty()) {
+//                    /**  Fayllar tanlanganda imzo qo'yish */
+//                    for (String s : temp) {
+//                        if (new File(s).isFile() && new File(s).getName().toLowerCase().endsWith(".pdf")) {
+//                            /** PDF document ga link yuklangan qrcode yuklash */
+//                            new PDFWorker().PasteSignLink(s, signLink());
+//                            /** Imzolangan, QRCode qo'yilgan faylni qrcode dagi link ka yuklash */
+//                            new Requests().RequestUpload(Main.getSignedFileInfo().getFilePath());
+//                            sign = new UzDSt_1092_2009().signGenerate(Main.getKeys().getData().getKalits().
+//                                            getData()[id_cbSignes.getSelectionModel().getSelectedIndex()].getAttributes().getPrivkey(),
+//                                    Main.getSignedFileInfo().getFilePath());
+//                            /** Messages fayl va imzo haqidagi ma'lumotlar yuklanadi */
+//                            new Requests().ResponseMessage(Main.getLoginData().getUser().getId(),
+//                                    sign,
+//                                    Main.getKeys().getData().getKalits().getData()[id_cbSignes.getSelectionModel().getSelectedIndex()].getId(),
+//                                    null,
+//                                    null);
+//                            PaneSingerInfo();
+//                        }
+//                    }
+//                } else {
+//                    Alert alert = new Alert(Alert.AlertType.ERROR);
+//                    alert.setHeaderText("Fayl tanlanmagan");
+//                    alert.setContentText("Imzolanadigan faylni tanlang");
+//                    alert.show();
+//                }
+////                id_ivCheckSign.setVisible(true);
+////                id_ivCheckSign.setImage(new Image("/images/signedPage/check.png"));
+//                boolPane = false;
+//                shadow();
+//                id_lblVerification.setVisible(true);
+//                id_lblVerification.setText("Fayl imzolandi");
+
+
                 id_btnSign.setDisable(false);
             }
+
+
         });
+    }
+
+    private void getPass() {
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.15), id_pnAllShadow);
+        id_pnAllShadow.setVisible(true);
+        fadeTransition.setFromValue(0.0);
+        fadeTransition.setToValue(0.5);
+        fadeTransition.play();
+        Main.showPassStage(true);
     }
 
     private void isEmptyKeys() {
@@ -219,6 +233,35 @@ public class TestKeys implements Initializable {
         }
     }
 
+    private void allShadow() {
+
+
+        if (boolPane) {
+            id_pnShadow.setVisible(true);
+            // Panega kursor kirganda
+            id_pnShadow.setOnMouseEntered(e -> {
+                Timeline timeline = new Timeline(
+                        new KeyFrame(duration, new KeyValue(id_pnShadow.opacityProperty(), 0.0)),
+                        new KeyFrame(Duration.ZERO, new KeyValue(id_pnShadow.opacityProperty(), 0.8)));
+                timeline.play();
+            });
+
+            // Panedan kursor chiqqanda
+            id_pnShadow.setOnMouseExited(e -> {
+                Timeline timeline = new Timeline(
+                        new KeyFrame(duration, new KeyValue(id_pnShadow.opacityProperty(), 0.8)),
+                        new KeyFrame(Duration.ZERO, new KeyValue(id_pnShadow.opacityProperty(), 0.0))
+                );
+                timeline.play();
+            });
+        } else {
+            Timeline timeline = new Timeline(
+                    new KeyFrame(duration, new KeyValue(id_pnShadow.opacityProperty(), 0.0)),
+                    new KeyFrame(Duration.ZERO, new KeyValue(id_pnShadow.opacityProperty(), 0.8)));
+            timeline.play();
+            id_pnShadow.setVisible(false);
+        }
+    }
 
     private String signLink() {
         new Requests().RequestSignLink();

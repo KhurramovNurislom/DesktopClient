@@ -44,13 +44,11 @@ public class KeyInfoInPFXController implements Initializable {
         } else {
             id_lblSurName.setText(Main.getAliesKeys().getAliesKeyList()[k].getCn().toUpperCase());
         }
+        id_lblJSHSHIR.setText(Main.getAliesKeys().getAliesKeyList()[k].getJshshir());
 
-//
-//        id_lblJSHSHIR.setText(Main.getAliesKeys().getAliesKeyList()[k].getJshshir());
-//
-//        id_lblSTIR.setText(Main.getAliesKeys().getAliesKeyList()[k].getUid());
-//        id_lblSerNumber.setText(Main.getAliesKeys().getAliesKeyList()[k].getSerialnumber());
-//        id_lblFromToDate.setText(Main.getAliesKeys().getAliesKeyList()[k].getValidfrom() + Main.getAliesKeys().getAliesKeyList()[k].getValidto());
+        id_lblSTIR.setText(Main.getAliesKeys().getAliesKeyList()[k].getUid());
+        id_lblSerNumber.setText(Main.getAliesKeys().getAliesKeyList()[k].getSerialnumber());
+        id_lblFromToDate.setText(Main.getAliesKeys().getAliesKeyList()[k].getValidfrom() + Main.getAliesKeys().getAliesKeyList()[k].getValidto());
 
 
         id_btnSign.setOnAction(new EventHandler<ActionEvent>() {

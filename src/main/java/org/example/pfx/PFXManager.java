@@ -54,7 +54,6 @@ public class PFXManager {
     public void pfxManager(KeyPair p, String password) {
 
 
-
         PrivateKey sKey = p.getPrivate();
         PublicKey vKey = p.getPublic();
 
@@ -109,7 +108,7 @@ public class PFXManager {
         this.number += 1;
     }
 
-    private void certificate( String pfxFile, String password) {
+    private void certificate(String pfxFile, String password) {
         Security.addProvider(new BouncyCastleProvider());
         // PFX faylni o'qish
         try (FileInputStream fis = new FileInputStream(pfxFile)) {
@@ -153,7 +152,8 @@ public class PFXManager {
             ks.load(null, null);
             CreateCertificate signedCertificate = new CreateCertificate();
             X509Certificate cert = signedCertificate.managerCer(cerName, password, p);
-            ks.setKeyEntry("alias", sKey, password.toCharArray(), new Certificate[]{cert});
+            ks.setKeyEntry("cn=xurramov nurislom parda o‘g‘li,name=nurislom,surname=xurramov,l=юнусобод тумани,st=тошкент ш.,c=uz,o=не указано,uid=563714282,1.2.860.3.16.1.2=32406966220011,serialnumber=77c7d9a1,validfrom=2022.08.22 14:51:25,validto=2024.08.22 23:59:59",
+                    sKey, password.toCharArray(), new Certificate[]{cert});
             ByteArrayOutputStream bOut = new ByteArrayOutputStream();
             ks.store(bOut, password.toCharArray());
 

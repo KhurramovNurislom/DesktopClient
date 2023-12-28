@@ -119,7 +119,7 @@
         <Image url="@../images/signedPage/file-invoice.png" />
     </ImageView>
 
-    <Pane fx:id="id_pnShadow" layoutY="220.0" opacity="0.8" prefHeight="500.0" prefWidth="750.0" style="-fx-background-color: #e4eaff;" visible="false" />
+    <Pane fx:id="id_pnShadow" layoutX="5.0" layoutY="215.0" opacity="0.8" prefHeight="500.0" prefWidth="740.0" style="-fx-background-color: #e4eaff;" visible="false" />
 
     <JFXComboBox fx:id="id_cbSignes" layoutX="80.0" layoutY="150.0" maxWidth="500.0" prefHeight="30.0" prefWidth="500.0" viewOrder="4.0" visibleRowCount="4" />
 
@@ -128,5 +128,6 @@
             <Font name="Arial" size="14.0" />
         </font>
     </Label>
+    <Pane fx:id="id_pnAllShadow" prefHeight="720.0" prefWidth="750.0" style="-fx-background-color: #000000;" visible="false" />
 
 </Pane>

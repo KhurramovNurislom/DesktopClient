@@ -46,13 +46,16 @@
     -fx-border-color: #0F2A62;
     -fx-border-width: 0.2;
     -fx-border-radius: 3;
-
 }
 
 .style-Pane {
     -fx-font-family: "Arial-bold";
         -fx-font-size: 14;
-        -fx-border-color: BLACk;
-        -fx-border-width: 1.0;
+        -fx-border-color: #063970;
+        -fx-border-width: 2.0;
         -fx-border-radius: 5;
+}
+
+.button:hover{
+    -fx-background-color: #375594
 }

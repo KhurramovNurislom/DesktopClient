@@ -12,142 +12,126 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #e4eaff;"
-            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="org.example.controllers.MainPageController">
+<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #e4eaff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.MainPageController">
 
     <right>
 
-        <VBox fx:id="id_vbLeft" alignment="TOP_CENTER" prefHeight="720.0" prefWidth="200.0"
-              style="-fx-background-color: #0F2A62;" BorderPane.alignment="CENTER">
-            <Line endX="200.0" stroke="WHITE"/>
+        <VBox fx:id="id_vbLeft" alignment="TOP_CENTER" prefHeight="720.0" prefWidth="200.0" style="-fx-background-color: #0F2A62;" BorderPane.alignment="CENTER">
+            <Line endX="200.0" stroke="WHITE" />
 
             <Circle fx:id="id_Circle" fill="#e4eaff" radius="85.0" stroke="BLACK" strokeType="INSIDE">
                 <VBox.margin>
-                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                 </VBox.margin>
             </Circle>
 
-            <Line endX="200.0" stroke="WHITE"/>
+            <Line endX="200.0" stroke="WHITE" />
 
-            <Label fx:id="id_lblUserName" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0"
-                   prefWidth="200.0" text="UserName" textAlignment="CENTER" textFill="WHITE"
-                   textOverrun="CENTER_ELLIPSIS">
+            <Label fx:id="id_lblUserName" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="200.0" text="UserName" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
                 <font>
-                    <Font name="System Bold" size="14.0"/>
+                    <Font name="System Bold" size="14.0" />
                 </font>
                 <VBox.margin>
-                    <Insets bottom="5.0" top="10.0"/>
+                    <Insets bottom="5.0" top="10.0" />
                 </VBox.margin>
             </Label>
 
-            <Label fx:id="id_lblEmail" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0"
-                   prefWidth="200.0" text="e-mail" textAlignment="CENTER" textFill="WHITE"
-                   textOverrun="CENTER_ELLIPSIS">
+            <Label fx:id="id_lblEmail" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="200.0" text="e-mail" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
                 <font>
-                    <Font name="System Bold" size="14.0"/>
+                    <Font name="System Bold" size="14.0" />
                 </font>
                 <VBox.margin>
-                    <Insets bottom="10.0" top="5.0"/>
+                    <Insets bottom="10.0" top="5.0" />
                 </VBox.margin>
             </Label>
-            <Line endX="200.0" stroke="WHITE"/>
+            <Line endX="200.0" stroke="WHITE" />
         </VBox>
     </right>
 
     <left>
         <VBox prefHeight="720.0" prefWidth="250.0" style="-fx-background-color: #0F2A62;" BorderPane.alignment="CENTER">
-            <VBox prefHeight="670.0" prefWidth="250.0" style="-fx-background-color: #0F2A62;"
-                  BorderPane.alignment="CENTER">
-                <Line endX="250.0" stroke="WHITE"/>
+            <VBox prefHeight="670.0" prefWidth="250.0" style="-fx-background-color: #0F2A62;" BorderPane.alignment="CENTER">
+                <Line endX="250.0" stroke="WHITE" />
 
                 <ImageView fitHeight="170.0" fitWidth="170.0" pickOnBounds="true" preserveRatio="true">
                     <VBox.margin>
-                        <Insets bottom="15.0" left="40.0" right="15.0" top="15.0"/>
+                        <Insets bottom="15.0" left="40.0" right="15.0" top="15.0" />
                     </VBox.margin>
-                    <Image url="@../images/mudofaa.png"/>
+                    <Image url="@../images/mudofaa.png" />
                 </ImageView>
 
-                <Line endX="250.0" stroke="WHITE"/>
+                <Line endX="250.0" stroke="WHITE" />
 
-                <JFXButton fx:id="id_btnGetKeyPair" alignment="BASELINE_LEFT" prefHeight="50.0" prefWidth="250.0"
-                           style="-fx-cursor: hand;" text="  Kalit olish" textFill="WHITE">
+                <JFXButton fx:id="id_btnGetKeyPair" alignment="BASELINE_LEFT" prefHeight="50.0" prefWidth="250.0" style="-fx-cursor: hand; -fx-background-color: #0F2A62;" text="  Kalit olish" textFill="WHITE">
                     <font>
-                        <Font name="Arial Bold" size="18.0"/>
+                        <Font name="Arial Bold" size="18.0" />
                     </font>
                     <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../images/mainPage/key.png"/>
+                            <Image url="@../images/mainPage/key.png" />
                         </ImageView>
                     </graphic>
                 </JFXButton>
 
-                <JFXButton fx:id="id_btnImzoQoyish" alignment="BASELINE_LEFT" prefHeight="50.0"
-                           prefWidth="250.0" style="-fx-cursor: hand;" text="  Imzo qo'yish" textFill="WHITE">
+                <JFXButton fx:id="id_btnImzoQoyish" alignment="BASELINE_LEFT" prefHeight="50.0" prefWidth="250.0" style="-fx-cursor: hand;" text="  Imzo qo'yish" textFill="WHITE">
                     <font>
-                        <Font name="Arial Bold" size="18.0"/>
+                        <Font name="Arial Bold" size="18.0" />
                     </font>
                     <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../images/mainPage/file-signature.png"/>
+                            <Image url="@../images/mainPage/file-signature.png" />
                         </ImageView>
                     </graphic>
                 </JFXButton>
 
-                <JFXButton fx:id="id_btnImzoniTekshirish" alignment="BASELINE_LEFT" prefHeight="50.0"
-                           prefWidth="250.0" style="-fx-cursor: hand;" text="  Imzoni tekshirish"
-                           textFill="WHITE">
+                <JFXButton fx:id="id_btnImzoniTekshirish" alignment="BASELINE_LEFT" prefHeight="50.0" prefWidth="250.0" style="-fx-cursor: hand;" text="  Imzoni tekshirish" textFill="WHITE">
                     <font>
-                        <Font name="Arial Bold" size="18.0"/>
+                        <Font name="Arial Bold" size="18.0" />
                     </font>
                     <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../images/mainPage/check-signature.png"/>
+                            <Image url="@../images/mainPage/check-signature.png" />
                         </ImageView>
                     </graphic>
                 </JFXButton>
 
-                                <JFXButton fx:id="id_btnImzoniBoshqarish" alignment="BASELINE_LEFT" prefHeight="50.0" prefWidth="250.0"
-                                           style="-fx-cursor: hand;" text="  Imzoni boshqarish" textAlignment="RIGHT" textFill="WHITE">
+                                <JFXButton fx:id="id_btnImzoniBoshqarish" alignment="BASELINE_LEFT" prefHeight="50.0" prefWidth="250.0" style="-fx-cursor: hand;" text="  Imzoni boshqarish" textAlignment="RIGHT" textFill="WHITE">
                                     <font>
-                                        <Font name="Arial Bold" size="18.0"/>
+                                        <Font name="Arial Bold" size="18.0" />
                                     </font>
                                     <graphic>
                                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
-                                                <Image url="@../images/mainPage/check-signature.png"/>
+                                                <Image url="@../images/mainPage/check-signature.png" />
                                             </image>
                                         </ImageView>
                                     </graphic>
                                 </JFXButton>
 
-                                <Line endX="250.0" stroke="WHITE"/>
+                                <Line endX="250.0" stroke="WHITE" />
 
-                <JFXButton fx:id="id_btnChat" alignment="BASELINE_LEFT" prefHeight="50.0" prefWidth="250.0"
-                           style="-fx-cursor: hand;" text="  Chat" textAlignment="CENTER" textFill="WHITE">
+                <JFXButton fx:id="id_btnChat" alignment="BASELINE_LEFT" prefHeight="50.0" prefWidth="250.0" style="-fx-cursor: hand;" text="  Chat" textAlignment="CENTER" textFill="WHITE">
                     <font>
-                        <Font name="Arial Bold" size="18.0"/>
+                        <Font name="Arial Bold" size="18.0" />
                     </font>
                     <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../images/mainPage/messages.png"/>
+                            <Image url="@../images/mainPage/messages.png" />
                         </ImageView>
                     </graphic>
                 </JFXButton>
-                <JFXButton fx:id="id_btnDocs" alignment="BASELINE_LEFT" prefHeight="50.0" prefWidth="250.0"
-                           style="-fx-cursor: hand;" text="  Hujjatlar" textAlignment="CENTER" textFill="WHITE">
+                <JFXButton fx:id="id_btnDocs" alignment="BASELINE_LEFT" prefHeight="50.0" prefWidth="250.0" style="-fx-cursor: hand;" text="  Hujjatlar" textAlignment="CENTER" textFill="WHITE">
                     <font>
-                        <Font name="Arial Bold" size="18.0"/>
+                        <Font name="Arial Bold" size="18.0" />
                     </font>
                     <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../images/mainPage/docs.png"/>
+                            <Image url="@../images/mainPage/docs.png" />
                         </ImageView>
                     </graphic>
                 </JFXButton>
 
-                <Line endX="250.0" stroke="WHITE"/>
+                <Line endX="250.0" stroke="WHITE" />
 
 
                 <!--                <JFXButton fx:id="id_btnYoriqnoma" alignment="BASELINE_LEFT" prefHeight="50.0" prefWidth="250.0"-->
@@ -178,92 +162,75 @@
 
     <top>
         <Pane prefHeight="80.0" prefWidth="1000.0" style="-fx-background-color: #0F2A62;" BorderPane.alignment="CENTER">
-            <Label layoutX="101.0" layoutY="13.0" prefHeight="53.0" prefWidth="150.0" style="-fx-text-fill: ffffff;"
-                   text="E-Imzo">
+            <Label layoutX="101.0" layoutY="13.0" prefHeight="53.0" prefWidth="150.0" style="-fx-text-fill: ffffff;" text="E-Imzo">
                 <font>
-                    <Font name="System Bold" size="36.0"/>
+                    <Font name="System Bold" size="36.0" />
                 </font>
             </Label>
 
 
-            <JFXButton fx:id="id_btnRefresh" alignment="CENTER" contentDisplay="CENTER" layoutX="1040.0"
-                       layoutY="19.0" prefHeight="30.0" prefWidth="30.0" ripplerFill="WHITE"
-                       style="-fx-cursor: hand;" textFill="WHITE">
+            <JFXButton fx:id="id_btnRefresh" alignment="CENTER" contentDisplay="CENTER" layoutX="1040.0" layoutY="19.0" prefHeight="30.0" prefWidth="30.0" ripplerFill="WHITE" style="-fx-cursor: hand;" textFill="WHITE">
                 <font>
-                    <Font name="Arial Bold" size="14.0"/>
+                    <Font name="Arial Bold" size="14.0" />
                 </font>
                 <graphic>
                     <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../images/mainPage/refresh.png"/>
+                        <Image url="@../images/mainPage/refresh.png" />
                     </ImageView>
                 </graphic>
             </JFXButton>
 
-            <JFXButton fx:id="id_btnChiqish" alignment="CENTER" contentDisplay="CENTER" layoutX="1095.0"
-                       layoutY="19.0" prefHeight="30.0" prefWidth="30.0" ripplerFill="WHITE"
-                       style="-fx-cursor: hand;" textFill="WHITE">
+            <JFXButton fx:id="id_btnChiqish" alignment="CENTER" contentDisplay="CENTER" layoutX="1095.0" layoutY="19.0" prefHeight="30.0" prefWidth="30.0" ripplerFill="WHITE" style="-fx-cursor: hand;" textFill="WHITE">
                 <font>
-                    <Font name="Arial Bold" size="14.0"/>
+                    <Font name="Arial Bold" size="14.0" />
                 </font>
                 <graphic>
                     <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../images/mainPage/exit.png"/>
+                        <Image url="@../images/mainPage/exit.png" />
                     </ImageView>
                 </graphic>
             </JFXButton>
 
-            <JFXButton fx:id="id_btnPowerOff" alignment="CENTER" contentDisplay="CENTER" layoutX="1140.0"
-                       layoutY="15.0" prefHeight="40.0" prefWidth="40.0" ripplerFill="WHITE"
-                       style="-fx-cursor: hand;" textFill="WHITE">
+            <JFXButton fx:id="id_btnPowerOff" alignment="CENTER" contentDisplay="CENTER" layoutX="1140.0" layoutY="15.0" prefHeight="40.0" prefWidth="40.0" ripplerFill="WHITE" style="-fx-cursor: hand;" textFill="WHITE">
                 <font>
-                    <Font name="Arial Bold" size="14.0"/>
+                    <Font name="Arial Bold" size="14.0" />
                 </font>
                 <graphic>
                     <ImageView fitHeight="33.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../images/mainPage/power-off.png"/>
+                        <Image url="@../images/mainPage/power-off.png" />
                     </ImageView>
                 </graphic>
             </JFXButton>
 
 
             <Pane fx:id="id_pnUserInfo" layoutX="249.0" layoutY="10.0" prefHeight="61.0" prefWidth="289.0">
-                <Circle fx:id="id_CircleMini" fill="#e4eaff" layoutX="28.0" layoutY="30.0" radius="22.0"
-                        stroke="BLACK" strokeType="INSIDE"/>
+                <Circle fx:id="id_CircleMini" fill="#e4eaff" layoutX="28.0" layoutY="30.0" radius="22.0" stroke="BLACK" strokeType="INSIDE" />
 
-                <Label fx:id="id_lblUserNameMini" contentDisplay="CENTER" layoutX="66.0" layoutY="6.0"
-                       prefHeight="25.0" prefWidth="190.0" text="UserName" textAlignment="CENTER"
-                       textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+                <Label fx:id="id_lblUserNameMini" contentDisplay="CENTER" layoutX="66.0" layoutY="6.0" prefHeight="25.0" prefWidth="190.0" text="UserName" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
                     <font>
-                        <Font name="System Bold" size="14.0"/>
+                        <Font name="System Bold" size="14.0" />
                     </font>
                 </Label>
 
-                <Label fx:id="id_lblEmailMini" contentDisplay="CENTER" layoutX="66.0" layoutY="29.0"
-                       prefHeight="25.0" prefWidth="190.0" text="e-mail" textAlignment="CENTER" textFill="WHITE"
-                       textOverrun="CENTER_ELLIPSIS">
+                <Label fx:id="id_lblEmailMini" contentDisplay="CENTER" layoutX="66.0" layoutY="29.0" prefHeight="25.0" prefWidth="190.0" text="e-mail" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
                     <font>
-                        <Font name="System Bold" size="14.0"/>
+                        <Font name="System Bold" size="14.0" />
                     </font>
                 </Label>
 
             </Pane>
 
-            <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="20.0" layoutY="5.0" pickOnBounds="true"
-                       preserveRatio="true">
-                <Image url="@../images/icon.png"/>
+            <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="20.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../images/icon.png" />
             </ImageView>
-            <Pane layoutX="825.0" layoutY="12.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="50.0"
-                  prefWidth="176.0">
-                <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="55.0" layoutY="13.0" pickOnBounds="true"
-                           preserveRatio="true">
-                    <Image url="@../images/mainPage/alarm-clock.png"/>
+            <Pane layoutX="825.0" layoutY="12.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="50.0" prefWidth="176.0">
+                <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="55.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@../images/mainPage/alarm-clock.png" />
                 </ImageView>
 
-                <Label fx:id="id_lblVaqt" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="85.0"
-                       prefHeight="50.0" prefWidth="89.0" style="-fx-text-fill: ffffff;" text="Time"
-                       textFill="WHITE">
+                <Label fx:id="id_lblVaqt" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="85.0" prefHeight="50.0" prefWidth="89.0" style="-fx-text-fill: ffffff;" text="Time" textFill="WHITE">
                     <font>
-                        <Font name="Arial Bold" size="18.0"/>
+                        <Font name="Arial Bold" size="18.0" />
                     </font>
                 </Label>
             </Pane>

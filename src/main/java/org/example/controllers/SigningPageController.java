@@ -5,7 +5,6 @@ import com.jfoenix.controls.JFXComboBox;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -37,8 +36,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import static java.lang.Thread.sleep;
 
 public class SigningPageController implements Initializable {
 
@@ -111,6 +108,7 @@ public class SigningPageController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 id_btnSign.setDisable(true);
+
                 /** Imzolanadigan pdf filelarni ajratib oladi */
                 String[] temp = id_tfFilePath.getText().replaceAll(", ", ",").split(",");
                 if (!id_tfFilePath.getText().isEmpty()) {
@@ -145,6 +143,7 @@ public class SigningPageController implements Initializable {
                 shadow();
                 id_lblVerification.setVisible(true);
                 id_lblVerification.setText("Fayl imzolandi");
+
                 id_btnSign.setDisable(false);
             }
         });

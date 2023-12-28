@@ -43,83 +43,46 @@ import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
 
-
 public class ChatPageController implements Initializable {
-    @FXML
     public TextField id_tfFindAbonent;
-    @FXML
     public VBox id_vbAbonents;
-    @FXML
     public Label id_lblAbonentName;
-    @FXML
     public JFXButton id_btnIconSearch;
-    @FXML
     public JFXButton id_btnUserInfo;
-    @FXML
     public JFXButton id_btnChatSetting;
-    @FXML
     public JFXButton id_btnAddDoc;
-    @FXML
     public JFXButton id_btnSendMessage;
-    @FXML
     public TextField id_tfMessage;
-    @FXML
     public ScrollPane id_spAbonents;
-    @FXML
     public ScrollPane id_spMessages;
-    @FXML
     public VBox id_vbMessages;
-    @FXML
     public Pagination id_Pagination;
-    @FXML
     public BorderPane id_bpChat;
-    @FXML
     public HBox id_hbPagination;
-    @FXML
     public JFXButton id_btnPaneClose;
-    @FXML
     public Circle id_crAbonent;
-    @FXML
     public Pane id_pnShadow;
-    @FXML
     public Label id_lblPaneInfoLabel;
-    @FXML
     public Pane id_pnDocInfo;
-    @FXML
     public JFXButton id_btnDocInfoClose;
-    @FXML
     public Pane id_pnDocTitle;
-    @FXML
     public VBox id_vbDocSend;
-    @FXML
     public JFXButton id_btnSendDoc;
-    @FXML
     public JFXButton id_btnPlusDoc;
-    @FXML
     public Pane id_pnDocSend;
-    @FXML
     public VBox id_vbFiles;
-    @FXML
     public ScrollPane id_spFiles;
-    @FXML
     public VBox id_vbFilesMessagesPane;
     public BorderPane id_bpMessageInfo;
-    @FXML
     private HBox hBox;
-    @FXML
     private Label lbl;
-    @FXML
     private Label lblSize;
-    @FXML
     private VBox vBox;
-    @FXML
     private JFXButton btnRef;
-    @FXML
     private JFXButton btnDel;
 
     private FileChooser fileChooser;
@@ -461,7 +424,7 @@ public class ChatPageController implements Initializable {
 
                 id_bpMessageInfo.setTranslateX(700);
 
-                slide.setDuration(Duration.seconds(0.5));
+                slide.setDuration(Duration.seconds(0.4));
                 slide.setNode(id_bpMessageInfo);
 
                 /** Bu narsa har bitta messagega beriladi */

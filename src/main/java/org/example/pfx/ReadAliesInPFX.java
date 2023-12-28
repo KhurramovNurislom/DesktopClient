@@ -19,7 +19,7 @@ public class ReadAliesInPFX {
 
     public String[] readAliesInPFX(String[] listPath) {
         Security.addProvider(new BouncyCastleProvider());
-        List<String> listAlies = new ArrayList<>();
+        List<String> listAlias = new ArrayList<>();
         try {
             for (String pfxFile : listPath) {
                 KeyStore keyStore = KeyStore.getInstance("PKCS12");
@@ -28,17 +28,18 @@ public class ReadAliesInPFX {
                 Enumeration<String> aliases = keyStore.aliases();
                 while (aliases.hasMoreElements()) {
                     String alias = aliases.nextElement();
-                    listAlies.add(alias);
+                    System.out.println(alias);
+                    listAlias.add(alias);
                 }
             }
         } catch (KeyStoreException | CertificateException | IOException | NoSuchAlgorithmException e) {
             System.out.println("exception : ReadAliesInPFX().readAliesInPFX() => " + e.getMessage());
             throw new RuntimeException(e);
         }
-        String[] arrList = new String[listAlies.size()];
+        String[] arrList = new String[listAlias.size()];
 
-        for (int i = 0; i < listAlies.size(); i++) {
-            arrList[i] = listAlies.get(i);
+        for (int i = 0; i < listAlias.size(); i++) {
+            arrList[i] = listAlias.get(i);
         }
 
         return arrList;
