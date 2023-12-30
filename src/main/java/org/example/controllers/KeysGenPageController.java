@@ -126,7 +126,6 @@ public class KeysGenPageController implements Initializable {
 
                     new Requests().RequestkeysGen("Hex.toHexString(keyPair.getPrivate().getEncoded())",
                             Hex.toHexString(keyPair.getPublic().getEncoded()), id_tfCerName.getText());
-
                     PFXManager pfxManager = new PFXManager();
                     pfxManager.setNumber((long) Main.getKeysGen().getData().getId());
                     pfxManager.setSoni(Main.getKeys().getData().getKalits().getData().length + 1);

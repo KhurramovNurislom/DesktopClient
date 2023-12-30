@@ -19,7 +19,6 @@ public class ByteEncode {
 
     public static byte[] decodeHexString(String hexString) {
         if (hexString.length() % 2 == 1) {
-
             throw new IllegalArgumentException(
                     "Invalid hexadecimal String supplied.");
         }

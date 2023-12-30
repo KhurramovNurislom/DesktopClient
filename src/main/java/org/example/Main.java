@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import okhttp3.OkHttpClient;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.example.modules.AliesKey.AliesKeys;
 import org.example.modules.Hash;
 import org.example.modules.SignedFileInfo;
@@ -28,6 +29,7 @@ import org.example.utils.FXMLLoaderMade;
 import org.example.utils.SSLClient;
 
 import java.security.KeyPair;
+import java.security.Security;
 import java.util.*;
 
 
@@ -109,6 +111,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
+        Security.addProvider(new BouncyCastleProvider());
 
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/LoginPage.fxml"));
         Scene scene = new Scene(fxmlLoader.load());

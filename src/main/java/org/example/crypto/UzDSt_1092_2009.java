@@ -19,16 +19,15 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
 
 public class UzDSt_1092_2009 {
-
     public KeyPair generateKeyPair() {
-        Security.addProvider(new BouncyCastleProvider());
-        KeyPair keyPair = generationKeyPair();
-        return keyPair;
+        return generationKeyPair();
     }
 
-    public String signGenerate(String privKey, String filePath) {
+    public String signGenerate(String privKey, String path) {
+        System.out.println(path);
+
         try {
-            return ByteEncode.encodeHexString(signGeneration(readPrivateKey(privKey), Files.readAllBytes(Paths.get(filePath))));
+            return ByteEncode.encodeHexString(signGeneration(readPrivateKey(privKey), Files.readAllBytes(Paths.get(path))));
         } catch (IOException e) {
             System.err.println("exception : UzDSt_1092_2009().signGenerate() => " + e.getCause());
             throw new RuntimeException(e);
@@ -36,6 +35,7 @@ public class UzDSt_1092_2009 {
     }
 
     public boolean verifySignature(String pubKey, String path, String sign) {
+        System.out.println(path);
         try {
             return verification(readPublicKey(pubKey), Files.readAllBytes(Paths.get(path)), ByteEncode.decodeHexString(sign));
         } catch (IOException e) {
@@ -56,7 +56,6 @@ public class UzDSt_1092_2009 {
     }
 
     private byte[] signGeneration(PrivateKey privateKey, byte[] message) {
-        Security.addProvider(new BouncyCastleProvider());
         try {
             Signature sgr = Signature.getInstance("ECGOST3410", "BC");
             sgr.initSign(privateKey, new SecureRandom());
@@ -69,7 +68,6 @@ public class UzDSt_1092_2009 {
     }
 
     private boolean verification(PublicKey publicKey, byte[] message, byte[] sign) {
-        Security.addProvider(new BouncyCastleProvider());
         try {
             Signature sgr = Signature.getInstance("ECGOST3410", "BC");
             sgr.initVerify(publicKey);
@@ -88,7 +86,6 @@ public class UzDSt_1092_2009 {
     }
 
     private PrivateKey readPrivateKey(String privateKey) {
-        Security.addProvider(new BouncyCastleProvider());
         try {
             KeyFactory keyFactory = KeyFactory.getInstance("ECGOST3410", "BC");
             PKCS8EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(ByteEncode.decodeHexString(privateKey));
@@ -100,7 +97,6 @@ public class UzDSt_1092_2009 {
     }
 
     private PublicKey readPublicKey(String publicKey) {
-        Security.addProvider(new BouncyCastleProvider());
         try {
             KeyFactory keyFactory = KeyFactory.getInstance("ECGOST3410", "BC");
             X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(ByteEncode.decodeHexString(publicKey));
