@@ -56,6 +56,10 @@
         -fx-border-radius: 5;
 }
 
-.button:hover{
-    -fx-background-color: #375594
-}
+/*.button:hover{*/
+/*    -fx-background-color: #375594*/
+/*}*/
+
+/*.button:selected{*/
+/*    -fx-background-color: RED*/
+/*}*/

@@ -61,6 +61,7 @@ public class MainPageController implements Initializable {
         defaultPage();
         timeNow();
         pageInfo();
+//        btnHover();
 
 //        id_btnImzoniBoshqarish.setVisible(false);
 //        id_btnYangilash.setVisible(false);
@@ -74,7 +75,7 @@ public class MainPageController implements Initializable {
         id_btnGetKeyPair.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                clickedBtn(id_btnGetKeyPair);
+                clickBtn(id_btnGetKeyPair);
                 mainPane.setRight(id_vbLeft);
                 id_pnUserInfo.setVisible(false);
                 mainPane.setCenter(new FXMLLoaderMade().getPane("KeysGenPage"));
@@ -83,7 +84,7 @@ public class MainPageController implements Initializable {
         id_btnImzoQoyish.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                clickedBtn(id_btnImzoQoyish);
+                clickBtn(id_btnImzoQoyish);
                 mainPane.setRight(id_vbLeft);
                 id_pnUserInfo.setVisible(false);
                 mainPane.setCenter(new FXMLLoaderMade().getPane("SigningPage"));
@@ -92,7 +93,7 @@ public class MainPageController implements Initializable {
         id_btnImzoniTekshirish.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                clickedBtn(id_btnImzoniTekshirish);
+                clickBtn(id_btnImzoniTekshirish);
                 mainPane.setRight(id_vbLeft);
                 id_pnUserInfo.setVisible(false);
                 mainPane.setCenter(new FXMLLoaderMade().getPane("SignVerPage"));
@@ -102,7 +103,7 @@ public class MainPageController implements Initializable {
         id_btnImzoniBoshqarish.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                clickedBtn(id_btnImzoniBoshqarish);
+                clickBtn(id_btnImzoniBoshqarish);
                 id_pnUserInfo.setVisible(false);
                 mainPane.setRight(id_vbLeft);
                 mainPane.setCenter(new FXMLLoaderMade().getPane("ManageSignPage"));
@@ -112,10 +113,7 @@ public class MainPageController implements Initializable {
         id_btnChat.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
-//                btnTemp.setUserData(id_btnChat);
-                clickedBtn(id_btnChat);
-
+                clickBtn(id_btnChat);
                 mainPane.setRight(null);
                 mainPane.setCenter(new FXMLLoaderMade().getPane("ChatPage"));
             }
@@ -123,7 +121,8 @@ public class MainPageController implements Initializable {
         id_btnDocs.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                btnTemp = id_btnDocs;
+                clickBtn(id_btnDocs);
+
             }
         });
 
@@ -206,17 +205,10 @@ public class MainPageController implements Initializable {
         id_Circle.setFill(new ImagePattern(image));
     }
 
-    private void clickedBtn(JFXButton btn) {
-        id_btnGetKeyPair.setStyle("-fx-background-color: #0F2A62");
-        id_btnImzoQoyish.setStyle("-fx-background-color: #0F2A62");
-        id_btnImzoniTekshirish.setStyle("-fx-background-color: #0F2A62");
-        id_btnImzoniBoshqarish.setStyle("-fx-background-color: #0F2A62");
-        id_btnChat.setStyle("-fx-background-color: #0F2A62");
-        id_btnDocs.setStyle("-fx-background-color: #0F2A62");
+    private void clickBtn(JFXButton btn){
+        fullColor();
+        btn.setStyle("-fx-background-color: red");
 
-        btn.setStyle("-fx-background-color: #1c49a6");
-//        btnTemp.setStyle("-fx-background-color: #0F2A62");
-//        btnTemp = btn;
     }
 
 
@@ -228,4 +220,124 @@ public class MainPageController implements Initializable {
         id_btnChat.setStyle("-fx-background-color: #0F2A62");
         id_btnDocs.setStyle("-fx-background-color: #0F2A62");
     }
+
+
+    private void btnSwitch(int k) {
+
+        switch (k) {
+            case 0 -> {
+//kalit gen
+                System.out.println(k);
+                id_btnGetKeyPair.setStyle("-fx-background-color: red");
+                btnHover();
+            }
+            case 1 -> {
+//imzo qo'yish
+                id_btnImzoQoyish.setStyle("-fx-background-color: red");
+            }
+            case 2 -> {
+//imzoni tekshirish
+                id_btnImzoniTekshirish.setStyle("-fx-background-color: red");
+            }
+            case 3 -> {
+//kalitni boshqarish
+                id_btnImzoniBoshqarish.setStyle("-fx-background-color: red");
+            }
+            case 4 -> {
+//chat
+                id_btnChat.setStyle("-fx-background-color: red");
+            }
+            case 5 -> {
+//docs
+                id_btnChat.setStyle("-fx-background-color: red");
+            }
+
+        }
+
+    }
+
+    private void btnHover() {
+        //with hoverProperty
+        id_btnGetKeyPair.hoverProperty().addListener(l -> {
+            id_btnGetKeyPair.setStyle("-fx-background-color: #0F2A62;");
+        });
+
+        //or with mouseMoved
+        id_btnGetKeyPair.setOnMouseMoved(m -> {
+            id_btnGetKeyPair.setStyle("-fx-background-color: #375594;");
+        });
+
+
+        //with hoverProperty
+        id_btnImzoQoyish.hoverProperty().addListener(l -> {
+            id_btnImzoQoyish.setStyle("-fx-background-color: #0F2A62;");
+        });
+
+        //or with mouseMoved
+        id_btnImzoQoyish.setOnMouseMoved(m -> {
+            id_btnImzoQoyish.setStyle("-fx-background-color: #375594;");
+        });
+
+
+        //with hoverProperty
+        id_btnImzoniTekshirish.hoverProperty().addListener(l -> {
+            id_btnImzoniTekshirish.setStyle("-fx-background-color: #0F2A62;");
+        });
+
+        //or with mouseMoved
+        id_btnImzoniTekshirish.setOnMouseMoved(m -> {
+            id_btnImzoniTekshirish.setStyle("-fx-background-color: #375594;");
+        });
+
+        //with hoverProperty
+        id_btnImzoniBoshqarish.hoverProperty().addListener(l -> {
+            id_btnImzoniBoshqarish.setStyle("-fx-background-color: #0F2A62;");
+        });
+
+        //or with mouseMoved
+        id_btnImzoniBoshqarish.setOnMouseMoved(m -> {
+            id_btnImzoniBoshqarish.setStyle("-fx-background-color: #375594;");
+        });
+
+
+
+        //with hoverProperty
+        id_btnImzoniBoshqarish.hoverProperty().addListener(l -> {
+            id_btnImzoniBoshqarish.setStyle("-fx-background-color: #0F2A62;");
+        });
+
+        //or with mouseMoved
+        id_btnChat.setOnMouseMoved(m -> {
+            id_btnChat.setStyle("-fx-background-color: #375594;");
+        });
+
+
+
+        //with hoverProperty
+        id_btnDocs.hoverProperty().addListener(l -> {
+            id_btnDocs.setStyle("-fx-background-color: #0F2A62;");
+        });
+
+        //or with mouseMoved
+        id_btnDocs.setOnMouseMoved(m -> {
+            id_btnDocs.setStyle("-fx-background-color: #375594;");
+        });
+
+
+
+
+
+//        //with hoverProperty
+//        id_btnImzoQoyish.hoverProperty().addListener(l -> {
+//            id_btnImzoQoyish.setStyle("-fx-background-color: #0F2A62;");
+//        });
+//
+//        //or with mouseMoved
+//        id_btnImzoQoyish.setOnMouseMoved(m -> {
+//            id_btnImzoQoyish.setStyle("-fx-background-color: #375594;");
+//        });
+
+    }
+
+
 }

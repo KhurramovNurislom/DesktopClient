@@ -76,6 +76,29 @@ public class LoginPageController implements Initializable {
             }
         });
 
+
+
+        id_btnTizimgaKirish.hoverProperty().addListener(l -> {
+            id_btnTizimgaKirish.setStyle("-fx-background-color: #0F2A62;");
+        });
+
+        //or with mouseMoved
+        id_btnTizimgaKirish.setOnMouseMoved(m -> {
+            id_btnTizimgaKirish.setStyle("-fx-background-color: #375594;");
+        });
+
+        id_btnRoyhatdanOtish.hoverProperty().addListener(l -> {
+            id_btnRoyhatdanOtish.setStyle("-fx-background-color: #0F2A62;");
+        });
+
+        //or with mouseMoved
+        id_btnRoyhatdanOtish.setOnMouseMoved(m -> {
+            id_btnRoyhatdanOtish.setStyle("-fx-background-color: #375594;");
+        });
+
+
+
+
         id_btnTizimgaKirish.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {

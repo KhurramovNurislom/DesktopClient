@@ -106,8 +106,6 @@ public class Main extends Application {
 
     static Stage passStage;
 
-    static int seconds = 0;
-
     @Override
     public void start(Stage stage) throws Exception {
 
@@ -126,7 +124,6 @@ public class Main extends Application {
         stage.show();
     }
 
-
     public static void showPassStage(boolean bool) {
         if (bool) {
             passStage = new Stage();
@@ -134,26 +131,12 @@ public class Main extends Application {
             Scene scene = new Scene(new FXMLLoaderMade().getPane("PasswordKey"));
             passStage.setScene(scene);
             passStage.initModality(Modality.APPLICATION_MODAL);
-            passStage.initStyle(StageStyle.TRANSPARENT);
+//            passStage.initStyle(StageStyle.TRANSPARENT);
             passStage.centerOnScreen();
             passStage.show();
 
-            Timer timer = new Timer();
-            timer.scheduleAtFixedRate(new closePassStage(), 10000, 1000);
 
         } else passStage.close();
-    }
-
-    static class closePassStage extends TimerTask {
-        @Override
-        public void run() {
-
-            updateTimer();
-            passStage.close();
-        }
-        private void updateTimer() {
-            seconds++;
-        }
     }
 
     public static void main(String[] args) {

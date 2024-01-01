@@ -212,14 +212,14 @@ public class TestKeys implements Initializable {
             id_pnShadow.setOnMouseEntered(e -> {
                 Timeline timeline = new Timeline(
                         new KeyFrame(duration, new KeyValue(id_pnShadow.opacityProperty(), 0.0)),
-                        new KeyFrame(Duration.ZERO, new KeyValue(id_pnShadow.opacityProperty(), 0.8)));
+                        new KeyFrame(Duration.ZERO, new KeyValue(id_pnShadow.opacityProperty(), 0.6)));
                 timeline.play();
             });
 
             // Panedan kursor chiqqanda
             id_pnShadow.setOnMouseExited(e -> {
                 Timeline timeline = new Timeline(
-                        new KeyFrame(duration, new KeyValue(id_pnShadow.opacityProperty(), 0.8)),
+                        new KeyFrame(duration, new KeyValue(id_pnShadow.opacityProperty(), 0.6)),
                         new KeyFrame(Duration.ZERO, new KeyValue(id_pnShadow.opacityProperty(), 0.0))
                 );
                 timeline.play();
@@ -227,7 +227,7 @@ public class TestKeys implements Initializable {
         } else {
             Timeline timeline = new Timeline(
                     new KeyFrame(duration, new KeyValue(id_pnShadow.opacityProperty(), 0.0)),
-                    new KeyFrame(Duration.ZERO, new KeyValue(id_pnShadow.opacityProperty(), 0.8)));
+                    new KeyFrame(Duration.ZERO, new KeyValue(id_pnShadow.opacityProperty(), 0.6)));
             timeline.play();
             id_pnShadow.setVisible(false);
         }

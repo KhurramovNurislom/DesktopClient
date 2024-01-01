@@ -40,9 +40,9 @@ public class PassKeyController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        timer();
         hiddenEyes();
 
-        timer();
         id_ivEye.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
