@@ -1,9 +1,13 @@
 package org.example;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -97,13 +101,16 @@ public class Main extends Application {
     @Getter
     @Setter
     static int indexPFXFilePath;
+    @Getter
+    @Setter
+    static Pane pane;
 
     /**
      * Displaynign o'lchamlari
      */
     static int X;
     static int Y;
-
+    static double x = 0, y = 0;
     static Stage passStage;
 
     @Override
@@ -120,27 +127,37 @@ public class Main extends Application {
         stage.setScene(scene);
         scene.getStylesheets().add
                 (Objects.requireNonNull(Main.class.getResource("/css/Style.css")).toExternalForm());
-//        stage.setResizable(false);
+        stage.setResizable(false);
         stage.show();
     }
 
     public static void showPassStage(boolean bool) {
         if (bool) {
             passStage = new Stage();
-            passStage.setTitle("");
             Scene scene = new Scene(new FXMLLoaderMade().getPane("PasswordKey"));
+            pane.setOnMousePressed(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    x = event.getSceneX();
+                    y = event.getSceneY();
+                }
+            });
+            pane.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    passStage.setX(event.getScreenX() - x);
+                    passStage.setY(event.getScreenY() - y);
+                }
+            });
             passStage.setScene(scene);
             passStage.initModality(Modality.APPLICATION_MODAL);
-//            passStage.initStyle(StageStyle.TRANSPARENT);
+            passStage.initStyle(StageStyle.TRANSPARENT);
             passStage.centerOnScreen();
             passStage.show();
-
-
         } else passStage.close();
     }
 
     public static void main(String[] args) {
         launch(args);
     }
-
 }

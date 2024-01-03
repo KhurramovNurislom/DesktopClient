@@ -3,10 +3,8 @@ package org.example.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -21,12 +19,9 @@ import org.example.Main;
 import org.example.utils.FXMLLoaderMade;
 import org.example.utils.SceneChooser;
 
-import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainPageController implements Initializable {
@@ -122,7 +117,6 @@ public class MainPageController implements Initializable {
             @Override
             public void handle(ActionEvent actionEvent) {
                 clickBtn(id_btnDocs);
-
             }
         });
 
@@ -173,7 +167,7 @@ public class MainPageController implements Initializable {
     }
 
     private void defaultPage() {
-//        clickedBtn(id_btnImzoQoyish);
+        clickBtn(id_btnImzoQoyish);
         mainPane.setRight(id_vbLeft);
         mainPane.setCenter(new FXMLLoaderMade().getPane(/**"SigningPage"*/"SigningPage"));
     }
@@ -196,7 +190,6 @@ public class MainPageController implements Initializable {
         thread.start();
     }
 
-
     private void pageInfo() {
         id_lblUserName.setText(Main.getLoginData().getUser().getUsername());
         id_lblEmail.setText(Main.getLoginData().getUser().getEmail());
@@ -205,12 +198,11 @@ public class MainPageController implements Initializable {
         id_Circle.setFill(new ImagePattern(image));
     }
 
-    private void clickBtn(JFXButton btn){
+    private void clickBtn(JFXButton btn) {
         fullColor();
-        btn.setStyle("-fx-background-color: red");
+        btn.setStyle("-fx-background-color: #375594");
 
     }
-
 
     private void fullColor() {
         id_btnGetKeyPair.setStyle("-fx-background-color: #0F2A62");
@@ -221,112 +213,18 @@ public class MainPageController implements Initializable {
         id_btnDocs.setStyle("-fx-background-color: #0F2A62");
     }
 
-
-    private void btnSwitch(int k) {
-
-        switch (k) {
-            case 0 -> {
-//kalit gen
-                System.out.println(k);
-                id_btnGetKeyPair.setStyle("-fx-background-color: red");
-                btnHover();
-            }
-            case 1 -> {
-//imzo qo'yish
-                id_btnImzoQoyish.setStyle("-fx-background-color: red");
-            }
-            case 2 -> {
-//imzoni tekshirish
-                id_btnImzoniTekshirish.setStyle("-fx-background-color: red");
-            }
-            case 3 -> {
-//kalitni boshqarish
-                id_btnImzoniBoshqarish.setStyle("-fx-background-color: red");
-            }
-            case 4 -> {
-//chat
-                id_btnChat.setStyle("-fx-background-color: red");
-            }
-            case 5 -> {
-//docs
-                id_btnChat.setStyle("-fx-background-color: red");
-            }
-
-        }
-
-    }
-
-    private void btnHover() {
-        //with hoverProperty
-        id_btnGetKeyPair.hoverProperty().addListener(l -> {
-            id_btnGetKeyPair.setStyle("-fx-background-color: #0F2A62;");
-        });
-
-        //or with mouseMoved
-        id_btnGetKeyPair.setOnMouseMoved(m -> {
-            id_btnGetKeyPair.setStyle("-fx-background-color: #375594;");
-        });
-
-
-        //with hoverProperty
-        id_btnImzoQoyish.hoverProperty().addListener(l -> {
-            id_btnImzoQoyish.setStyle("-fx-background-color: #0F2A62;");
-        });
-
-        //or with mouseMoved
-        id_btnImzoQoyish.setOnMouseMoved(m -> {
-            id_btnImzoQoyish.setStyle("-fx-background-color: #375594;");
-        });
-
-
-        //with hoverProperty
-        id_btnImzoniTekshirish.hoverProperty().addListener(l -> {
-            id_btnImzoniTekshirish.setStyle("-fx-background-color: #0F2A62;");
-        });
-
-        //or with mouseMoved
-        id_btnImzoniTekshirish.setOnMouseMoved(m -> {
-            id_btnImzoniTekshirish.setStyle("-fx-background-color: #375594;");
-        });
-
-        //with hoverProperty
-        id_btnImzoniBoshqarish.hoverProperty().addListener(l -> {
-            id_btnImzoniBoshqarish.setStyle("-fx-background-color: #0F2A62;");
-        });
-
-        //or with mouseMoved
-        id_btnImzoniBoshqarish.setOnMouseMoved(m -> {
-            id_btnImzoniBoshqarish.setStyle("-fx-background-color: #375594;");
-        });
-
-
-
-        //with hoverProperty
-        id_btnImzoniBoshqarish.hoverProperty().addListener(l -> {
-            id_btnImzoniBoshqarish.setStyle("-fx-background-color: #0F2A62;");
-        });
-
-        //or with mouseMoved
-        id_btnChat.setOnMouseMoved(m -> {
-            id_btnChat.setStyle("-fx-background-color: #375594;");
-        });
-
-
-
-        //with hoverProperty
-        id_btnDocs.hoverProperty().addListener(l -> {
-            id_btnDocs.setStyle("-fx-background-color: #0F2A62;");
-        });
-
-        //or with mouseMoved
-        id_btnDocs.setOnMouseMoved(m -> {
-            id_btnDocs.setStyle("-fx-background-color: #375594;");
-        });
-
-
-
-
-
+//    private void btnHover() {
+//        //with hoverProperty
+//        id_btnGetKeyPair.hoverProperty().addListener(l -> {
+//            id_btnGetKeyPair.setStyle("-fx-background-color: #0F2A62;");
+//        });
+//
+//        //or with mouseMoved
+//        id_btnGetKeyPair.setOnMouseMoved(m -> {
+//            id_btnGetKeyPair.setStyle("-fx-background-color: #375594;");
+//        });
+//
+//
 //        //with hoverProperty
 //        id_btnImzoQoyish.hoverProperty().addListener(l -> {
 //            id_btnImzoQoyish.setStyle("-fx-background-color: #0F2A62;");
@@ -336,8 +234,67 @@ public class MainPageController implements Initializable {
 //        id_btnImzoQoyish.setOnMouseMoved(m -> {
 //            id_btnImzoQoyish.setStyle("-fx-background-color: #375594;");
 //        });
-
-    }
+//
+//
+//        //with hoverProperty
+//        id_btnImzoniTekshirish.hoverProperty().addListener(l -> {
+//            id_btnImzoniTekshirish.setStyle("-fx-background-color: #0F2A62;");
+//        });
+//
+//        //or with mouseMoved
+//        id_btnImzoniTekshirish.setOnMouseMoved(m -> {
+//            id_btnImzoniTekshirish.setStyle("-fx-background-color: #375594;");
+//        });
+//
+//        //with hoverProperty
+//        id_btnImzoniBoshqarish.hoverProperty().addListener(l -> {
+//            id_btnImzoniBoshqarish.setStyle("-fx-background-color: #0F2A62;");
+//        });
+//
+//        //or with mouseMoved
+//        id_btnImzoniBoshqarish.setOnMouseMoved(m -> {
+//            id_btnImzoniBoshqarish.setStyle("-fx-background-color: #375594;");
+//        });
+//
+//
+//
+//        //with hoverProperty
+//        id_btnImzoniBoshqarish.hoverProperty().addListener(l -> {
+//            id_btnImzoniBoshqarish.setStyle("-fx-background-color: #0F2A62;");
+//        });
+//
+//        //or with mouseMoved
+//        id_btnChat.setOnMouseMoved(m -> {
+//            id_btnChat.setStyle("-fx-background-color: #375594;");
+//        });
+//
+//
+//
+//        //with hoverProperty
+//        id_btnDocs.hoverProperty().addListener(l -> {
+//            id_btnDocs.setStyle("-fx-background-color: #0F2A62;");
+//        });
+//
+//        //or with mouseMoved
+//        id_btnDocs.setOnMouseMoved(m -> {
+//            id_btnDocs.setStyle("-fx-background-color: #375594;");
+//        });
+//
+//
+//
+//
+//
+////        //with hoverProperty
+////        id_btnImzoQoyish.hoverProperty().addListener(l -> {
+////            id_btnImzoQoyish.setStyle("-fx-background-color: #0F2A62;");
+////        });
+////
+////        //or with mouseMoved
+////        id_btnImzoQoyish.setOnMouseMoved(m -> {
+////            id_btnImzoQoyish.setStyle("-fx-background-color: #375594;");
+////        });
+//
+//    }
 
 
 }

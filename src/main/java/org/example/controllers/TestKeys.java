@@ -69,23 +69,27 @@ public class TestKeys implements Initializable {
 
     public Pane id_pnAllShadow;
     public Pane id_pnView;
+    public ImageView id_ivFileChooserKey;
 
     private AliesKeys aliesKeys;
 
     private final FileChooser fileChooser = new FileChooser();
+    private final FileChooser fileChooserKey = new FileChooser();
+
     public Pane id_pnBackground;
     private List<File> fileList;
+    private File file;
     private final ObservableList<Pane> keysList = FXCollections.observableArrayList();
     private String sign;
-    private boolean boolPane = true;
+    private final boolean boolPane = true;
+
+
     Duration duration = Duration.seconds(0.1);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         shadow();
-
         new AliesKeysReader().AliesCorrect();
-
 //        id_ivCheckSign.setVisible(false);
 //        id_lblVerification.setVisible(false);
 
@@ -124,7 +128,6 @@ public class TestKeys implements Initializable {
                 id_cbSignes.show();
             }
         });
-
 
         id_btnChangeFile.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -179,12 +182,24 @@ public class TestKeys implements Initializable {
 //                id_lblVerification.setVisible(true);
 //                id_lblVerification.setText("Fayl imzolandi");
 
-
                 id_btnSign.setDisable(false);
             }
-
-
         });
+
+        fileChooserKey.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PFX files", "*.pfx"),
+                new FileChooser.ExtensionFilter("all files", "*.*"));
+
+        id_ivFileChooserKey.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                file = fileChooserKey.showOpenDialog(new Stage());
+                if (file != null) {
+                    id_lblKeysName.setText(file.getAbsolutePath());
+                }
+            }
+        });
+
+
     }
 
     private void getPass() {
@@ -205,7 +220,6 @@ public class TestKeys implements Initializable {
     }
 
     private void shadow() {
-
         if (boolPane) {
             id_pnShadow.setVisible(true);
             // Panega kursor kirganda
@@ -237,7 +251,9 @@ public class TestKeys implements Initializable {
 
 
         if (boolPane) {
+
             id_pnShadow.setVisible(true);
+
             // Panega kursor kirganda
             id_pnShadow.setOnMouseEntered(e -> {
                 Timeline timeline = new Timeline(
@@ -254,7 +270,9 @@ public class TestKeys implements Initializable {
                 );
                 timeline.play();
             });
+
         } else {
+
             Timeline timeline = new Timeline(
                     new KeyFrame(duration, new KeyValue(id_pnShadow.opacityProperty(), 0.0)),
                     new KeyFrame(Duration.ZERO, new KeyValue(id_pnShadow.opacityProperty(), 0.8)));
@@ -284,7 +302,6 @@ public class TestKeys implements Initializable {
         }
     }
 
-
 //    private void AddedKeysList() {
 //        /** Foydalanuvchining kalitlarini serverdan olib beradi */
 //        new Requests().RequestKeys();
@@ -294,6 +311,5 @@ public class TestKeys implements Initializable {
 //                    + Main.getKeys().getData().getKalits().getData()[i].getAttributes().getCreatedAt());
 //        }
 //    }
-
 
 }

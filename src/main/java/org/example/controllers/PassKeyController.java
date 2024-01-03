@@ -14,7 +14,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
@@ -22,8 +21,6 @@ import org.example.Main;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import static org.bouncycastle.oer.its.ieee1609dot2.basetypes.Duration.seconds;
 
 public class PassKeyController implements Initializable {
     public Label id_lblKeyPath;
@@ -34,6 +31,7 @@ public class PassKeyController implements Initializable {
     public ImageView id_ivClose;
     public Pane id_pnPane;
     public JFXButton id_btnExit;
+    public Pane id_pnTitle;
     private boolean eyeBool = true;
 
     private int seconds = 60;
@@ -42,7 +40,7 @@ public class PassKeyController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         timer();
         hiddenEyes();
-
+        Main.setPane(id_pnTitle);
         id_ivEye.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -146,7 +144,6 @@ public class PassKeyController implements Initializable {
 //        if (formattedTime.equals("00:00:00 sekund"))
 //        if (formattedTime.equals("00:00:00 sekund"))
 //            System.exit(-1);
-
 
     }
 
