@@ -108,6 +108,6 @@
     <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="45.0" layoutY="427.0" pickOnBounds="true" preserveRatio="true">
         <Image url="@../images/signedPage/file-invoice.png" />
     </ImageView>
-    <Pane fx:id="id_pnShadow" layoutY="200.0" opacity="0.8" prefHeight="520.0" prefWidth="750.0" style="-fx-background-color: #e4eaff;" visible="false" />
+    <Pane fx:id="id_pnShadow" layoutY="200.0" opacity="0.6" prefHeight="520.0" prefWidth="748.0" style="-fx-background-color: #111111;" />
 
 </Pane>

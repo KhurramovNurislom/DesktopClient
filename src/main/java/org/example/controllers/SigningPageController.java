@@ -2,6 +2,7 @@ package org.example.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -10,18 +11,31 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import lombok.Getter;
+import lombok.Setter;
 import org.example.Main;
 import org.example.crypto.UzDSt_1092_2009;
+import org.example.modules.AliesKey.AliesKeys;
+import org.example.pfx.AliesKeysReader;
+import org.example.utils.FXMLLoaderMade;
+import org.example.utils.FXMLLoaderWithController;
 import org.example.utils.PDFWorker;
 import org.example.utils.Requests;
 
@@ -33,63 +47,110 @@ import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
+
 
 public class SigningPageController implements Initializable {
 
-    @FXML
     public JFXButton id_btnChangeFile;
-    @FXML
     public JFXButton id_btnSign;
-    @FXML
-    public JFXComboBox id_cbSignes;
-    @FXML
     public TextField id_tfFilePath;
-    @FXML
-    public ImageView id_ivUserImage;
-    @FXML
-    public TextField id_tfLogin;
-    @FXML
-    public TextField id_tfEmail;
-    @FXML
-    public TextField id_tfSignedFileName;
-    @FXML
-    public TextField id_tfSignedFilePath;
-    @FXML
-    public TextField id_tfSignedFileVolume;
-    @FXML
-    public TextField id_tfFileSignedTime;
-    @FXML
-    public ImageView id_ivCheckSign;
-    @FXML
+    //    @FXML
+//    public ImageView id_ivCheckSign;
+
     public Label id_lblVerification;
-    @FXML
+    public JFXComboBox<Pane> id_cbSignes;
+    public ImageView id_ivUserImage;
+    public TextField id_tfLogin;
+    public TextField id_tfEmail;
+    public TextField id_tfSignedFileName;
+    public TextField id_tfSignedFilePath;
+    public TextField id_tfSignedFileVolume;
+    public TextField id_tfFileSignedTime;
     public Pane id_pnShadow;
+    public Label id_lblKeysName;
+
+    public Pane id_pnAllShadow;
+    public Pane id_pnView;
+    public ImageView id_ivFileChooserKey;
+    public JFXButton id_btnKeyFileChooser;
+    public Pane id_pnSign;
+    public ImageView id_ivLogo;
+
+    private AliesKeys aliesKeys;
 
     private final FileChooser fileChooser = new FileChooser();
+    private final FileChooser fileChooserKey = new FileChooser();
+
     public Pane id_pnBackground;
     private List<File> fileList;
-    private final ObservableList<String> keysList = FXCollections.observableArrayList();
+    private File file;
+    private final ObservableList<Pane> keysList = FXCollections.observableArrayList();
     private String sign;
-    private boolean boolPane = true;
+    private final boolean boolPane = true;
+
+
     Duration duration = Duration.seconds(0.1);
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        shadow();
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("pdf files", "*.pdf"), new FileChooser.ExtensionFilter("all files", "*.*"));
+        fileChooserKey.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PFX files", "*.pfx"), new FileChooser.ExtensionFilter("all files", "*.*"));
 
-        id_ivCheckSign.setVisible(false);
-        id_lblVerification.setVisible(false);
+        Tooltip tooltip = new Tooltip("Yopiq kalitni tanlash");
+        tooltip.setShowDelay(Duration.millis(100));
+        tooltip.setFont(Font.font(14));
+        id_btnKeyFileChooser.setTooltip(tooltip);
 
-        /** kalitlar ro'yhatini to'ldirish*/
-        AddedKeysList();
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("pdf files", "*.pdf"),
-                new FileChooser.ExtensionFilter("all files", "*.*"));
-        id_cbSignes.setItems(keysList);
-        id_cbSignes.setPromptText("Kerakli yopiq kalitni tanlang...");
+        new AliesKeysReader().AliesCorrect();
+
+        if (Main.getAliesKeys().getAliesKeyList().length == 0) {
+
+            id_lblKeysName.setText("C:\\DSKEYS papkada kalit mavjud emas, kalitni tanlang");
+            id_lblKeysName.setOnMousePressed(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    KeyFileChooser();
+                }
+            });
+
+            id_cbSignes.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    KeyFileChooser();
+                }
+            });
+
+        } else {
+
+            for (int i = 0; i < Main.getAliesKeys().getAliesKeyList().length; i++) {
+                KeyInfoInPFXController keyInfoInPFXController = new KeyInfoInPFXController();
+                keyInfoInPFXController.setK(i);
+                keysList.add(new FXMLLoaderWithController().getPane("KeyInfoInPFX", keyInfoInPFXController));
+            }
+
+            id_cbSignes.setItems(keysList);
+
+            id_lblKeysName.setText(Main.getListPaths().get(0));
+
+            id_lblKeysName.setOnMousePressed(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    id_cbSignes.show();
+                }
+            });
+
+            id_cbSignes.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    id_lblKeysName.setText(Main.getListPaths().get(id_cbSignes.getSelectionModel().getSelectedIndex()));
+                    Main.setIndexPFXFilePath(id_cbSignes.getSelectionModel().getSelectedIndex());
+                }
+            });
+        }
+
+
         id_btnChangeFile.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -104,76 +165,153 @@ public class SigningPageController implements Initializable {
             }
         });
 
-        id_btnSign.setOnAction(new EventHandler<ActionEvent>() {
+
+//        id_btnSign.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent event) {
+//                id_btnSign.setDisable(true);
+////                if (new File(id_lblKeysName.getText()).isFile() && new File(id_tfFilePath.getText()).isFile() && id_tfFilePath.getText().endsWith(".pdf")) {
+//                passShadow(true);
+//                Main.showPassStage(true);
+//                Main.setKeyFilePath(id_lblKeysName.getText());
+//
+////                } else {
+////                    Alert alert = new Alert(Alert.AlertType.ERROR);
+////                    alert.setTitle("title");
+////                    alert.setHeaderText("HeaderText");
+////                    alert.setContentText("ContentText");
+////                    alert.show();
+////                }
+//
+//
+//                //                /** Imzolanadigan pdf filelarni ajratib oladi */
+////                String[] temp = id_tfFilePath.getText().replaceAll(", ", ",").split(",");
+////                if (!id_tfFilePath.getText().isEmpty()) {
+////                    /**  Fayllar tanlanganda imzo qo'yish */
+////                    for (String s : temp) {
+////                        if (new File(s).isFile() && new File(s).getName().toLowerCase().endsWith(".pdf")) {
+////                            /** PDF document ga link yuklangan qrcode yuklash */
+////                            new PDFWorker().PasteSignLink(s, signLink());
+////                            /** Imzolangan, QRCode qo'yilgan faylni qrcode dagi link ka yuklash */
+////                            new Requests().RequestUpload(Main.getSignedFileInfo().getFilePath());
+////                            sign = new UzDSt_1092_2009().signGenerate(Main.getKeys().getData().getKalits().
+////                                            getData()[id_cbSignes.getSelectionModel().getSelectedIndex()].getAttributes().getPrivkey(),
+////                                    Main.getSignedFileInfo().getFilePath());
+////                            /** Messages fayl va imzo haqidagi ma'lumotlar yuklanadi */
+////                            new Requests().ResponseMessage(Main.getLoginData().getUser().getId(),
+////                                    sign,
+////                                    Main.getKeys().getData().getKalits().getData()[id_cbSignes.getSelectionModel().getSelectedIndex()].getId(),
+////                                    null,
+////                                    null);
+////                            PaneSingerInfo();
+////                        }
+////                    }
+////                } else {
+////                    Alert alert = new Alert(Alert.AlertType.ERROR);
+////                    alert.setHeaderText("Fayl tanlanmagan");
+////                    alert.setContentText("Imzolanadigan faylni tanlang");
+////                    alert.show();
+////                }
+//////                id_ivCheckSign.setVisible(true);
+//////                id_ivCheckSign.setImage(new Image("/images/signedPage/check.png"));
+////                boolPane = false;
+////                shadow();
+////                id_lblVerification.setVisible(true);
+////                id_lblVerification.setText("Fayl imzolandi");
+//
+//                id_btnSign.setDisable(false);
+//            }
+//        });
+//
+
+
+        id_btnKeyFileChooser.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent event) {
-                id_btnSign.setDisable(true);
-
-                /** Imzolanadigan pdf filelarni ajratib oladi */
-                String[] temp = id_tfFilePath.getText().replaceAll(", ", ",").split(",");
-                if (!id_tfFilePath.getText().isEmpty()) {
-                    /**  Fayllar tanlanganda imzo qo'yish */
-                    for (String s : temp) {
-                        if (new File(s).isFile() && new File(s).getName().toLowerCase().endsWith(".pdf")) {
-                            /** PDF document ga link yuklangan qrcode yuklash */
-                            new PDFWorker().PasteSignLink(s, signLink());
-                            /** Imzolangan, QRCode qo'yilgan faylni qrcode dagi link ka yuklash */
-                            new Requests().RequestUpload(Main.getSignedFileInfo().getFilePath());
-                            sign = new UzDSt_1092_2009().signGenerate(Main.getKeys().getData().getKalits().
-                                            getData()[id_cbSignes.getSelectionModel().getSelectedIndex()].getAttributes().getPrivkey(),
-                                    Main.getSignedFileInfo().getFilePath());
-                            /** Messages fayl va imzo haqidagi ma'lumotlar yuklanadi */
-                            new Requests().ResponseMessage(Main.getLoginData().getUser().getId(),
-                                    sign,
-                                    Main.getKeys().getData().getKalits().getData()[id_cbSignes.getSelectionModel().getSelectedIndex()].getId(),
-                                    null,
-                                    null);
-                            PaneSingerInfo();
-                        }
-                    }
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setHeaderText("Fayl tanlanmagan");
-                    alert.setContentText("Imzolanadigan faylni tanlang");
-                    alert.show();
-                }
-                id_ivCheckSign.setVisible(true);
-                id_ivCheckSign.setImage(new Image("/images/signedPage/check.png"));
-                boolPane = false;
-                shadow();
-                id_lblVerification.setVisible(true);
-                id_lblVerification.setText("Fayl imzolandi");
-
-                id_btnSign.setDisable(false);
+            public void handle(ActionEvent actionEvent) {
+                KeyFileChooser();
             }
         });
+
+
+    }
+
+    private void KeyFileChooser() {
+        file = fileChooserKey.showOpenDialog(new Stage());
+        if (file != null) {
+            id_lblKeysName.setText(file.getAbsolutePath());
+        }
+    }
+
+    private void passShadow(boolean bool) {
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.15), id_pnAllShadow);
+        if (bool) {
+            id_pnAllShadow.setVisible(true);
+            fadeTransition.setFromValue(0.0);
+            fadeTransition.setToValue(0.5);
+            fadeTransition.play();
+        } else {
+            fadeTransition.setFromValue(0.5);
+            fadeTransition.setToValue(0.0);
+            fadeTransition.play();
+            id_pnAllShadow.setVisible(false);
+        }
+
 
     }
 
     private void shadow() {
+
         if (boolPane) {
+
             id_pnShadow.setVisible(true);
+
             // Panega kursor kirganda
             id_pnShadow.setOnMouseEntered(e -> {
-                Timeline timeline = new Timeline(
-                        new KeyFrame(duration, new KeyValue(id_pnShadow.opacityProperty(), 0.0)),
-                        new KeyFrame(Duration.ZERO, new KeyValue(id_pnShadow.opacityProperty(), 0.8)));
+
+                Timeline timeline = new Timeline(new KeyFrame(duration, new KeyValue(id_pnShadow.opacityProperty(), 0.0)), new KeyFrame(Duration.ZERO, new KeyValue(id_pnShadow.opacityProperty(), 0.6)));
                 timeline.play();
+
             });
 
             // Panedan kursor chiqqanda
             id_pnShadow.setOnMouseExited(e -> {
 
-                Timeline timeline = new Timeline(
-                        new KeyFrame(duration, new KeyValue(id_pnShadow.opacityProperty(), 0.8)),
-                        new KeyFrame(Duration.ZERO, new KeyValue(id_pnShadow.opacityProperty(), 0.0))
-                );
+                Timeline timeline = new Timeline(new KeyFrame(duration, new KeyValue(id_pnShadow.opacityProperty(), 0.6)), new KeyFrame(Duration.ZERO, new KeyValue(id_pnShadow.opacityProperty(), 0.0)));
+                timeline.play();
+
+            });
+
+        } else {
+
+            Timeline timeline = new Timeline(new KeyFrame(duration, new KeyValue(id_pnShadow.opacityProperty(), 0.0)), new KeyFrame(Duration.ZERO, new KeyValue(id_pnShadow.opacityProperty(), 0.6)));
+            timeline.play();
+
+            id_pnShadow.setVisible(false);
+        }
+    }
+
+    private void allShadow() {
+
+
+        if (boolPane) {
+
+            id_pnShadow.setVisible(true);
+
+            // Panega kursor kirganda
+            id_pnShadow.setOnMouseEntered(e -> {
+                Timeline timeline = new Timeline(new KeyFrame(duration, new KeyValue(id_pnShadow.opacityProperty(), 0.0)), new KeyFrame(Duration.ZERO, new KeyValue(id_pnShadow.opacityProperty(), 0.8)));
                 timeline.play();
             });
+
+            // Panedan kursor chiqqanda
+            id_pnShadow.setOnMouseExited(e -> {
+                Timeline timeline = new Timeline(new KeyFrame(duration, new KeyValue(id_pnShadow.opacityProperty(), 0.8)), new KeyFrame(Duration.ZERO, new KeyValue(id_pnShadow.opacityProperty(), 0.0)));
+                timeline.play();
+            });
+
         } else {
-            Timeline timeline = new Timeline(
-                    new KeyFrame(duration, new KeyValue(id_pnShadow.opacityProperty(), 0.0)),
-                    new KeyFrame(Duration.ZERO, new KeyValue(id_pnShadow.opacityProperty(), 0.8)));
+
+            Timeline timeline = new Timeline(new KeyFrame(duration, new KeyValue(id_pnShadow.opacityProperty(), 0.0)), new KeyFrame(Duration.ZERO, new KeyValue(id_pnShadow.opacityProperty(), 0.8)));
             timeline.play();
             id_pnShadow.setVisible(false);
         }
@@ -184,6 +322,7 @@ public class SigningPageController implements Initializable {
         return Main.getUrl() + "/api/imzo/link/fayl/" + Main.getHash().getHash();
     }
 
+
     private void PaneSingerInfo() {
         id_tfLogin.setText(Main.getLoginData().getUser().getUsername());
         id_tfEmail.setText(Main.getLoginData().getUser().getEmail());
@@ -192,20 +331,20 @@ public class SigningPageController implements Initializable {
         id_tfSignedFilePath.setText(Main.getSignedFileInfo().getFilePath());
         try {
             id_tfSignedFileVolume.setText(new DecimalFormat("#.##").format((double) Files.size(Path.of(Main.getSignedFileInfo().getFilePath())) / (1024 * 1024)) + " Mb");
-            id_tfFileSignedTime.setText(new SimpleDateFormat("HH:mm:ss dd.MM.yyyy").format(new Date(Files.readAttributes(Path.of(Main.getSignedFileInfo().getFilePath()),
-                    BasicFileAttributes.class).creationTime().toMillis())));
+            id_tfFileSignedTime.setText(new SimpleDateFormat("HH:mm:ss dd.MM.yyyy").format(new Date(Files.readAttributes(Path.of(Main.getSignedFileInfo().getFilePath()), BasicFileAttributes.class).creationTime().toMillis())));
         } catch (IOException e) {
             System.err.println("exception : SigningPageController().PaneSingerInfo => " + e.getCause());
         }
     }
 
-    private void AddedKeysList() {
-        /** Foydalanuvchining kalitlarini serverdan olib beradi */
-        new Requests().RequestKeys();
-        /** Serverdan olingan foydalanuvchining kalitlarini keyListga yuklaydi */
-        for (int i = 0; i < Main.getKeys().getData().getKalits().getData().length; i++) {
-            keysList.add(Main.getKeys().getData().getKalits().getData()[i].getAttributes().getNomi() + "\n"
-                    + Main.getKeys().getData().getKalits().getData()[i].getAttributes().getCreatedAt());
-        }
-    }
+//    private void AddedKeysList() {
+//        /** Foydalanuvchining kalitlarini serverdan olib beradi */
+//        new Requests().RequestKeys();
+//        /** Serverdan olingan foydalanuvchining kalitlarini keyListga yuklaydi */
+//        for (int i = 0; i < Main.getKeys().getData().getKalits().getData().length; i++) {
+//            keysList.add(Main.getKeys().getData().getKalits().getData()[i].getAttributes().getNomi() + "\n"
+//                    + Main.getKeys().getData().getKalits().getData()[i].getAttributes().getCreatedAt());
+//        }
+//    }
+
 }

@@ -18,7 +18,6 @@ import java.util.List;
 public class ReadAliesInPFX {
 
     public String[] readAliesInPFX(String[] listPath) {
-        Security.addProvider(new BouncyCastleProvider());
         List<String> listAlias = new ArrayList<>();
         try {
             for (String pfxFile : listPath) {
@@ -28,7 +27,7 @@ public class ReadAliesInPFX {
                 Enumeration<String> aliases = keyStore.aliases();
                 while (aliases.hasMoreElements()) {
                     String alias = aliases.nextElement();
-                    System.out.println(alias);
+//                    System.out.println(alias);
                     listAlias.add(alias);
                 }
             }

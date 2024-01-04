@@ -76,8 +76,6 @@ public class LoginPageController implements Initializable {
             }
         });
 
-
-
         id_btnTizimgaKirish.hoverProperty().addListener(l -> {
             id_btnTizimgaKirish.setStyle("-fx-background-color: #0F2A62;");
         });
@@ -96,9 +94,6 @@ public class LoginPageController implements Initializable {
             id_btnRoyhatdanOtish.setStyle("-fx-background-color: #375594;");
         });
 
-
-
-
         id_btnTizimgaKirish.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -116,7 +111,7 @@ public class LoginPageController implements Initializable {
                                 /** Userlarni serverdan oladi */
                                 requests.RequestUsers();
                                 /** Foydalanuvchining kalitlarini olib beradi */
-//                                requests.RequestKeys();
+                                requests.RequestKeys();
                             }
                         };
                         thread.start();

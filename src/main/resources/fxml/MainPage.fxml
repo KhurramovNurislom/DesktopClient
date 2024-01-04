@@ -54,7 +54,7 @@
             <VBox prefHeight="670.0" prefWidth="250.0" style="-fx-background-color: #0F2A62;" BorderPane.alignment="CENTER">
                 <Line endX="250.0" stroke="WHITE" />
 
-                <ImageView fitHeight="170.0" fitWidth="170.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView disable="true" fitHeight="170.0" fitWidth="170.0" pickOnBounds="true" preserveRatio="true">
                     <VBox.margin>
                         <Insets bottom="15.0" left="40.0" right="15.0" top="15.0" />
                     </VBox.margin>
@@ -63,7 +63,7 @@
 
                 <Line endX="250.0" stroke="WHITE" />
 
-                <JFXButton fx:id="id_btnGetKeyPair" alignment="BASELINE_LEFT" prefHeight="50.0" prefWidth="250.0" style="-fx-cursor: hand; -fx-background-color: #0F2A62;" text="  Kalit olish" textFill="WHITE">
+                <JFXButton fx:id="id_btnGetKeyPair" alignment="BASELINE_LEFT" buttonType="RAISED" prefHeight="50.0" prefWidth="250.0" style="-fx-cursor: hand; -fx-background-color: #0F2A62;" text="  Kalit olish" textFill="WHITE">
                     <font>
                         <Font name="Arial Bold" size="18.0" />
                     </font>
@@ -77,7 +77,7 @@
                </cursor>
                 </JFXButton>
 
-                <JFXButton fx:id="id_btnImzoQoyish" alignment="BASELINE_LEFT" prefHeight="50.0" prefWidth="250.0" style="-fx-cursor: hand;" text="  Imzo qo'yish" textFill="WHITE">
+                <JFXButton fx:id="id_btnImzoQoyish" alignment="BASELINE_LEFT" buttonType="RAISED" prefHeight="50.0" prefWidth="250.0" style="-fx-cursor: hand;" text="  Imzo qo'yish" textFill="WHITE">
                     <font>
                         <Font name="Arial Bold" size="18.0" />
                     </font>
@@ -91,7 +91,7 @@
                </cursor>
                 </JFXButton>
 
-                <JFXButton fx:id="id_btnImzoniTekshirish" alignment="BASELINE_LEFT" prefHeight="50.0" prefWidth="250.0" style="-fx-cursor: hand;" text="  Imzoni tekshirish" textFill="WHITE">
+                <JFXButton fx:id="id_btnImzoniTekshirish" alignment="BASELINE_LEFT" buttonType="RAISED" prefHeight="50.0" prefWidth="250.0" style="-fx-cursor: hand;" text="  Imzoni tekshirish" textFill="WHITE">
                     <font>
                         <Font name="Arial Bold" size="18.0" />
                     </font>
@@ -105,14 +105,14 @@
                </cursor>
                 </JFXButton>
 
-                                <JFXButton fx:id="id_btnImzoniBoshqarish" alignment="BASELINE_LEFT" prefHeight="50.0" prefWidth="250.0" style="-fx-cursor: hand;" text="  Imzoni boshqarish" textAlignment="RIGHT" textFill="WHITE">
+                                <JFXButton fx:id="id_btnImzoniBoshqarish" alignment="BASELINE_LEFT" buttonType="RAISED" disable="true" prefHeight="50.0" prefWidth="250.0" style="-fx-cursor: hand;" text="  Kalitni boshqarish" textAlignment="RIGHT" textFill="WHITE">
                                     <font>
                                         <Font name="Arial Bold" size="18.0" />
                                     </font>
                                     <graphic>
                                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
-                                                <Image url="@../images/mainPage/check-signature.png" />
+                                                <Image url="@../images/mainPage/process.png" />
                                             </image>
                                         </ImageView>
                                     </graphic>
@@ -123,7 +123,7 @@
 
                                 <Line endX="250.0" stroke="WHITE" />
 
-                <JFXButton fx:id="id_btnChat" alignment="BASELINE_LEFT" prefHeight="50.0" prefWidth="250.0" style="-fx-cursor: hand;" text="  Chat" textAlignment="CENTER" textFill="WHITE">
+                <JFXButton fx:id="id_btnChat" alignment="BASELINE_LEFT" buttonType="RAISED" disable="true" prefHeight="50.0" prefWidth="250.0" style="-fx-cursor: hand;" text="  Chat" textAlignment="CENTER" textFill="WHITE">
                     <font>
                         <Font name="Arial Bold" size="18.0" />
                     </font>
@@ -136,7 +136,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
                 </JFXButton>
-                <JFXButton fx:id="id_btnDocs" alignment="BASELINE_LEFT" prefHeight="50.0" prefWidth="250.0" style="-fx-cursor: hand;" text="  Hujjatlar" textAlignment="CENTER" textFill="WHITE">
+                <JFXButton fx:id="id_btnDocs" alignment="BASELINE_LEFT" buttonType="RAISED" disable="true" prefHeight="50.0" prefWidth="250.0" style="-fx-cursor: hand;" text="  Hujjatlar" textAlignment="CENTER" textFill="WHITE">
                     <font>
                         <Font name="Arial Bold" size="18.0" />
                     </font>
@@ -151,6 +151,52 @@
                 </JFXButton>
 
                 <Line endX="250.0" stroke="WHITE" />
+            <JFXButton fx:id="id_btnDocs11" alignment="BASELINE_LEFT" buttonType="RAISED" disable="true" prefHeight="50.0" prefWidth="250.0" style="-fx-cursor: hand;" text="  Sozlash" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/mainPage/settings.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="id_btnChat1" alignment="BASELINE_LEFT" buttonType="RAISED" disable="true" prefHeight="50.0" prefWidth="250.0" style="-fx-cursor: hand;" text="  Yo'riqnoma" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/mainPage/book.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="id_btnDocs1" alignment="BASELINE_LEFT" buttonType="RAISED" disable="true" prefHeight="50.0" prefWidth="250.0" style="-fx-cursor: hand;" text="  Yangilash" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/mainPage/refresh_2.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <Line endX="250.0" stroke="WHITE" />
 
 
                 <!--                <JFXButton fx:id="id_btnYoriqnoma" alignment="BASELINE_LEFT" prefHeight="50.0" prefWidth="250.0"-->

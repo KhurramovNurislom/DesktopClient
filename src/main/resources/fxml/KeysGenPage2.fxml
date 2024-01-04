@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<Pane prefHeight="720.0" prefWidth="750.0" style="-fx-background-color: #e4eaff;" xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.KeysGenPageController">
+    <TextField fx:id="id_tfCerName" layoutX="50.0" layoutY="110.0" prefHeight="35.0" prefWidth="650.0"
+               promptText="kalit nomi">
+        <font>
+            <Font name="System Italic" size="14.0"/>
+        </font>
+    </TextField>
+
+    <TextField fx:id="id_tfPass" layoutX="50.0" layoutY="210.0" prefHeight="35.0" prefWidth="280.0"
+               promptText="Parolni kiriting">
+        <font>
+            <Font name="System Italic" size="14.0"/>
+        </font>
+    </TextField>
+
+    <Label layoutX="80.0" layoutY="80.0" text="Kalit nomi tahrirlang:" textFill="#0f2a62">
+        <font>
+            <Font name="Arial" size="18.0"/>
+        </font>
+    </Label>
+
+    <Label layoutX="80.0" layoutY="280.0" text="Parolni takrorlang" textFill="#0f2a62">
+        <font>
+            <Font size="18.0"/>
+        </font>
+    </Label>
+
+    <Label layoutX="80.0" layoutY="180.0" text="Yopiq kalit uchun parol" textFill="#0f2a62">
+        <font>
+            <Font size="18.0"/>
+        </font>
+    </Label>
+
+    <TextField fx:id="id_tfPassVer" layoutX="50.0" layoutY="310.0" prefHeight="35.0" prefWidth="280.0"
+               promptText="Parolni tasdiqlang">
+        <font>
+            <Font name="System Italic" size="14.0"/>
+        </font>
+    </TextField>
+
+    <JFXButton fx:id="id_btnGenerate" layoutX="50.0" layoutY="375.0" prefHeight="30.0" prefWidth="160.0"
+               style="-fx-background-color: #0F2A62;" text="   Ariza qoldirish" textFill="WHITE">
+        <graphic>
+            <ImageView fitHeight="20.0" fitWidth="20.0" style="-fx-background-color: #ffffff;">
+                <Image url="@../images/keysGenPage/Check_green_icon.png"/>
+            </ImageView>
+        </graphic>
+        <font>
+            <Font name="Arial Bold" size="14.0"/>
+        </font>
+    </JFXButton>
+
+    <Label layoutX="183.0" layoutY="33.0" prefHeight="30.0" prefWidth="350.0" text="Kalit olish uchun ariza qoldiring:"
+           textFill="#0f2a62">
+        <font>
+            <Font name="Arial Bold" size="18.0"/>
+        </font>
+    </Label>
+
+    <VBox layoutX="350.0" layoutY="200.0" prefHeight="210.0" prefWidth="350.0">
+
+        <JFXListView fx:id="id_lvList" prefHeight="200.0" prefWidth="300.0">
+            <VBox.margin>
+                <Insets bottom="20.0"/>
+            </VBox.margin>
+            <opaqueInsets>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+            </opaqueInsets>
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+        </JFXListView>
+
+        <JFXButton fx:id="id_btnDel" alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="30.0"
+                   prefWidth="160.0" style="-fx-background-color: #0F2A62;" text="  O'chirish" textFill="WHITE"
+                   textOverrun="CENTER_ELLIPSIS">
+            <graphic>
+                <ImageView fitHeight="20.0" fitWidth="20.0" mouseTransparent="true">
+                    <cursor>
+                        <Cursor fx:constant="DEFAULT"/>
+                    </cursor>
+                    <Image url="@../images/keysGenPage/del.png"/>
+                </ImageView>
+            </graphic>
+            <font>
+                <Font name="Arial Bold" size="14.0"/>
+            </font>
+        </JFXButton>
+
+    </VBox>
+    <PasswordField fx:id="id_pfPass" layoutX="50.0" layoutY="210.0" prefHeight="35.0" prefWidth="280.0"
+                   promptText="Parolni kiriting">
+        <font>
+            <Font name="Arial Italic" size="14.0"/>
+        </font>
+    </PasswordField>
+
+    <PasswordField fx:id="id_pfPassVer" layoutX="50.0" layoutY="310.0" prefHeight="35.0" prefWidth="280.0"
+                   promptText="Parolni tasdiqlang">
+        <font>
+            <Font name="Arial Italic" size="14.0"/>
+        </font>
+    </PasswordField>
+
+    <ImageView fx:id="id_ivHiddenEyesVer" fitHeight="20.0" fitWidth="20.0" layoutX="300.0" layoutY="318.0"
+               pickOnBounds="true" preserveRatio="true">
+        <Image url="@../images/keysGenPage/show.png"/>
+    </ImageView>
+
+    <ImageView fx:id="id_ivHiddenEyes" fitHeight="20.0" fitWidth="20.0" layoutX="300.0" layoutY="218.0"
+               pickOnBounds="true" preserveRatio="true">
+        <Image url="@../images/keysGenPage/show.png"/>
+    </ImageView>
+
+    <Label layoutX="360.0" layoutY="170.0" text="Mavjud kalitlar ro'yhati:" textFill="#0f2a62">
+        <font>
+            <Font name="Arial Bold" size="18.0"/>
+        </font>
+    </Label>
+
+    <Label layoutX="80.0" layoutY="420.0" text="Arizalar tarixi:" textFill="#0f2a62">
+        <font>
+            <Font name="Arial Bold" size="18.0"/>
+        </font>
+    </Label>
+
+    <TableView fx:id="id_tvApplication" fixedCellSize="6.0" layoutX="50.0" layoutY="450.0" prefHeight="250.0"
+               prefWidth="650.0">
+        <columns>
+            <TableColumn fx:id="id_tcNumber" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" sortable="false"
+                         text="№"/>
+            <TableColumn fx:id="id_tcServiceName" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" sortable="false"
+                         text="Xizmat nomi"/>
+            <TableColumn fx:id="id_tcDate" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" sortable="false"
+                         text="Berilgan sanasi"/>
+            <TableColumn fx:id="id_tcStatus" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" sortable="false"
+                         text="Holati"/>
+            <TableColumn fx:id="id_tcComment" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" sortable="false"
+                         text="Izoh"/>
+            <TableColumn fx:id="id_tcDownloads" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false"
+                         sortable="false" text="Yuklash"/>
+        </columns>
+        <effect>
+            <Blend/>
+        </effect>
+    </TableView>
+
+</Pane>

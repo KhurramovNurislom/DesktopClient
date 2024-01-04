@@ -73,7 +73,7 @@ public class MainPageController implements Initializable {
                 clickBtn(id_btnGetKeyPair);
                 mainPane.setRight(id_vbLeft);
                 id_pnUserInfo.setVisible(false);
-                mainPane.setCenter(new FXMLLoaderMade().getPane("KeysGenPage"));
+                mainPane.setCenter(new FXMLLoaderMade().getPane("KeysGenPage2"));
             }
         });
         id_btnImzoQoyish.setOnAction(new EventHandler<ActionEvent>() {
@@ -201,7 +201,6 @@ public class MainPageController implements Initializable {
     private void clickBtn(JFXButton btn) {
         fullColor();
         btn.setStyle("-fx-background-color: #375594");
-
     }
 
     private void fullColor() {
@@ -213,7 +212,9 @@ public class MainPageController implements Initializable {
         id_btnDocs.setStyle("-fx-background-color: #0F2A62");
     }
 
-//    private void btnHover() {
+
+//    private void btnHover(JFXButton btn) {
+//        btn.setStyle("-fx-background-color: #375594");
 //        //with hoverProperty
 //        id_btnGetKeyPair.hoverProperty().addListener(l -> {
 //            id_btnGetKeyPair.setStyle("-fx-background-color: #0F2A62;");
@@ -256,8 +257,6 @@ public class MainPageController implements Initializable {
 //            id_btnImzoniBoshqarish.setStyle("-fx-background-color: #375594;");
 //        });
 //
-//
-//
 //        //with hoverProperty
 //        id_btnImzoniBoshqarish.hoverProperty().addListener(l -> {
 //            id_btnImzoniBoshqarish.setStyle("-fx-background-color: #0F2A62;");
@@ -268,8 +267,6 @@ public class MainPageController implements Initializable {
 //            id_btnChat.setStyle("-fx-background-color: #375594;");
 //        });
 //
-//
-//
 //        //with hoverProperty
 //        id_btnDocs.hoverProperty().addListener(l -> {
 //            id_btnDocs.setStyle("-fx-background-color: #0F2A62;");
@@ -279,21 +276,16 @@ public class MainPageController implements Initializable {
 //        id_btnDocs.setOnMouseMoved(m -> {
 //            id_btnDocs.setStyle("-fx-background-color: #375594;");
 //        });
+
+//        //with hoverProperty
+//        id_btnImzoQoyish.hoverProperty().addListener(l -> {
+//            id_btnImzoQoyish.setStyle("-fx-background-color: #0F2A62;");
+//        });
 //
-//
-//
-//
-//
-////        //with hoverProperty
-////        id_btnImzoQoyish.hoverProperty().addListener(l -> {
-////            id_btnImzoQoyish.setStyle("-fx-background-color: #0F2A62;");
-////        });
-////
-////        //or with mouseMoved
-////        id_btnImzoQoyish.setOnMouseMoved(m -> {
-////            id_btnImzoQoyish.setStyle("-fx-background-color: #375594;");
-////        });
-//
+//        //or with mouseMoved
+//        id_btnImzoQoyish.setOnMouseMoved(m -> {
+//            id_btnImzoQoyish.setStyle("-fx-background-color: #375594;");
+//        });
 //    }
 
 

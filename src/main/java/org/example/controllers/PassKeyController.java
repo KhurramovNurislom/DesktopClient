@@ -12,12 +12,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import org.example.Main;
+import org.example.pfx.PFXManager;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -32,18 +36,60 @@ public class PassKeyController implements Initializable {
     public Pane id_pnPane;
     public JFXButton id_btnExit;
     public Pane id_pnTitle;
-    private boolean eyeBool = true;
+    public JFXButton id_btnOk;
+    public JFXButton id_btnEye;
+    private boolean eyeBool = false;
 
     private int seconds = 60;
 
+    private String passOld = "";
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Main.setPassVerify(false);
         timer();
         hiddenEyes();
         Main.setPane(id_pnTitle);
-        id_ivEye.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+        Tooltip tooltip = new Tooltip("matn ustiga bit marta bosib va nusxa oling");
+        tooltip.setShowDelay(Duration.millis(100));
+        id_lblKeyPath.setTooltip(tooltip);
+        id_btnOk.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+
+//                new PFXManager().readPfxFile(Main.getKeyFilePath(), id_pfPass.getText());
+//
+//                if (true) {
+
+
+                    Main.setPassVerify(true);
+                    Main.showPassStage(false);
+
+//                } else {
+//
+//                }
+
+            }
+        });
+        id_lblKeyPath.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+                String labelText = id_lblKeyPath.getText();
+
+                // ClipboardContent yaratish
+                ClipboardContent clipboardContent = new ClipboardContent();
+                clipboardContent.putString(labelText);
+
+                // Clipboardga ma'lumotni joylash
+                Clipboard.getSystemClipboard().setContent(clipboardContent);
+
+            }
+        });
+
+        id_btnEye.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
                 eyeBool = !eyeBool;
                 if (eyeBool) {
                     id_ivEye.setImage(new Image("/images/passKeys/visible.png"));
@@ -57,31 +103,43 @@ public class PassKeyController implements Initializable {
             }
         });
 
-        id_lblKeyPath.setText(Main.getListPaths().get(Main.getIndexPFXFilePath()));
-
-        id_tfPass.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                // Yangi belgi qo'shilganida uzunlikni ko'rsatish
-                System.out.println("Belgi Uzunligi: " + newValue.length());
-                if (newValue.length() < 8 || newValue.length() > 24) {
-                    id_tfPass.setStyle("-fx-text-fill:  RED");
-                    id_pfPass.setStyle("-fx-text-fill:  RED");
-                } else {
-                    id_tfPass.setStyle("-fx-text-fill:  #0F2A62");
-                    id_pfPass.setStyle("-fx-text-fill:  #0F2A62");
-                }
-
-
-            }
-        });
-
         id_btnExit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 Main.showPassStage(false);
             }
         });
+
+        id_ivClose.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent e) {
+                Main.showPassStage(false);
+            }
+        });
+
+
+        id_lblKeyPath.setText(Main.getListPaths().get(Main.getIndexPFXFilePath()));
+
+
+        id_tfPass.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (newValue.length() < 8) {
+                    id_tfPass.setStyle("-fx-text-fill:  RED");
+                    id_pfPass.setStyle("-fx-text-fill:  RED");
+                } else if (newValue.length() < 17) {
+                    passOld = newValue;
+                    id_tfPass.setStyle("-fx-text-fill:  #0F2A62");
+                    id_pfPass.setStyle("-fx-text-fill:  #0F2A62");
+                } else {
+                    id_tfPass.setText(passOld);
+                    id_pfPass.setText(passOld);
+                    id_tfPass.setStyle("-fx-text-fill:  RED");
+                    id_pfPass.setStyle("-fx-text-fill:  RED");
+                }
+            }
+        });
+
         id_ivClose.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -96,15 +154,7 @@ public class PassKeyController implements Initializable {
             }
         });
 
-        id_ivClose.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent e) {
-                Main.showPassStage(false);
-            }
-        });
-
     }
-
 
     private void hiddenEyes() {
         id_tfPass.setText(id_pfPass.getText());
@@ -114,8 +164,6 @@ public class PassKeyController implements Initializable {
         id_tfPass.textProperty().addListener((observable, oldValue, newValue) -> {
             id_pfPass.setText(newValue);
         });
-
-
     }
 
     private void timer() {
@@ -130,21 +178,9 @@ public class PassKeyController implements Initializable {
     }
 
     private void updateTimerLabel() {
-//        int hours = seconds / 3600;
-//        int minutes = (seconds % 3600) / 60;
-//        int remainingSeconds = seconds % 60;
-
         id_lblTitle.setText("Oyna yopilgunicha " + seconds + " sekund");
-
         if (seconds == 0) {
             Main.showPassStage(false);
         }
-//        String formattedTime = String.format("%02d:%02d:%02d sekund", hours, minutes, remainingSeconds);
-//        id_lblTitle.setText(formattedTime);
-//        if (formattedTime.equals("00:00:00 sekund"))
-//        if (formattedTime.equals("00:00:00 sekund"))
-//            System.exit(-1);
-
     }
-
 }

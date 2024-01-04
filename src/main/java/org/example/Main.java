@@ -104,12 +104,16 @@ public class Main extends Application {
     @Getter
     @Setter
     static Pane pane;
-
+    @Getter
+    @Setter
+    static boolean passVerify = false;
+    @Getter
+    @Setter
+    static String keyFilePath;
     /**
      * Displaynign o'lchamlari
      */
-    static int X;
-    static int Y;
+
     static double x = 0, y = 0;
     static Stage passStage;
 
