@@ -21,7 +21,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import org.example.Main;
-import org.example.pfx.PFXManager;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -44,8 +43,10 @@ public class PassKeyController implements Initializable {
 
     private String passOld = "";
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         Main.setPassVerify(false);
         timer();
         hiddenEyes();
@@ -62,9 +63,9 @@ public class PassKeyController implements Initializable {
 //
 //                if (true) {
 
+                Main.setPassVerify(true);
+                Main.showPassStage(false);
 
-                    Main.setPassVerify(true);
-                    Main.showPassStage(false);
 
 //                } else {
 //
@@ -75,15 +76,9 @@ public class PassKeyController implements Initializable {
         id_lblKeyPath.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                String labelText = id_lblKeyPath.getText();
-
-                // ClipboardContent yaratish
                 ClipboardContent clipboardContent = new ClipboardContent();
-                clipboardContent.putString(labelText);
-
-                // Clipboardga ma'lumotni joylash
+                clipboardContent.putString(id_lblKeyPath.getText());
                 Clipboard.getSystemClipboard().setContent(clipboardContent);
-
             }
         });
 
@@ -183,4 +178,6 @@ public class PassKeyController implements Initializable {
             Main.showPassStage(false);
         }
     }
+
+
 }

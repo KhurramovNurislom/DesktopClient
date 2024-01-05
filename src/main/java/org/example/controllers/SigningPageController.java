@@ -76,6 +76,7 @@ public class SigningPageController implements Initializable {
     public JFXButton id_btnKeyFileChooser;
     public Pane id_pnSign;
     public ImageView id_ivLogo;
+    public Pane id_pnFund;
 
     private AliesKeys aliesKeys;
 
@@ -94,7 +95,7 @@ public class SigningPageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+//        Main.setPaneShadow(id_pnAllShadow);
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("pdf files", "*.pdf"), new FileChooser.ExtensionFilter("all files", "*.*"));
         fileChooserKey.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PFX files", "*.pfx"), new FileChooser.ExtensionFilter("all files", "*.*"));
 
@@ -106,7 +107,6 @@ public class SigningPageController implements Initializable {
         new AliesKeysReader().AliesCorrect();
 
         if (Main.getAliesKeys().getAliesKeyList().length == 0) {
-
             id_lblKeysName.setText("C:\\DSKEYS papkada kalit mavjud emas, kalitni tanlang");
             id_lblKeysName.setOnMousePressed(new EventHandler<MouseEvent>() {
                 @Override
@@ -114,33 +114,26 @@ public class SigningPageController implements Initializable {
                     KeyFileChooser();
                 }
             });
-
             id_cbSignes.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     KeyFileChooser();
                 }
             });
-
         } else {
-
             for (int i = 0; i < Main.getAliesKeys().getAliesKeyList().length; i++) {
                 KeyInfoInPFXController keyInfoInPFXController = new KeyInfoInPFXController();
                 keyInfoInPFXController.setK(i);
                 keysList.add(new FXMLLoaderWithController().getPane("KeyInfoInPFX", keyInfoInPFXController));
             }
-
             id_cbSignes.setItems(keysList);
-
             id_lblKeysName.setText(Main.getListPaths().get(0));
-
             id_lblKeysName.setOnMousePressed(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     id_cbSignes.show();
                 }
             });
-
             id_cbSignes.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
@@ -149,8 +142,6 @@ public class SigningPageController implements Initializable {
                 }
             });
         }
-
-
         id_btnChangeFile.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -164,67 +155,6 @@ public class SigningPageController implements Initializable {
                 id_btnChangeFile.setDisable(false);
             }
         });
-
-
-//        id_btnSign.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//                id_btnSign.setDisable(true);
-////                if (new File(id_lblKeysName.getText()).isFile() && new File(id_tfFilePath.getText()).isFile() && id_tfFilePath.getText().endsWith(".pdf")) {
-//                passShadow(true);
-//                Main.showPassStage(true);
-//                Main.setKeyFilePath(id_lblKeysName.getText());
-//
-////                } else {
-////                    Alert alert = new Alert(Alert.AlertType.ERROR);
-////                    alert.setTitle("title");
-////                    alert.setHeaderText("HeaderText");
-////                    alert.setContentText("ContentText");
-////                    alert.show();
-////                }
-//
-//
-//                //                /** Imzolanadigan pdf filelarni ajratib oladi */
-////                String[] temp = id_tfFilePath.getText().replaceAll(", ", ",").split(",");
-////                if (!id_tfFilePath.getText().isEmpty()) {
-////                    /**  Fayllar tanlanganda imzo qo'yish */
-////                    for (String s : temp) {
-////                        if (new File(s).isFile() && new File(s).getName().toLowerCase().endsWith(".pdf")) {
-////                            /** PDF document ga link yuklangan qrcode yuklash */
-////                            new PDFWorker().PasteSignLink(s, signLink());
-////                            /** Imzolangan, QRCode qo'yilgan faylni qrcode dagi link ka yuklash */
-////                            new Requests().RequestUpload(Main.getSignedFileInfo().getFilePath());
-////                            sign = new UzDSt_1092_2009().signGenerate(Main.getKeys().getData().getKalits().
-////                                            getData()[id_cbSignes.getSelectionModel().getSelectedIndex()].getAttributes().getPrivkey(),
-////                                    Main.getSignedFileInfo().getFilePath());
-////                            /** Messages fayl va imzo haqidagi ma'lumotlar yuklanadi */
-////                            new Requests().ResponseMessage(Main.getLoginData().getUser().getId(),
-////                                    sign,
-////                                    Main.getKeys().getData().getKalits().getData()[id_cbSignes.getSelectionModel().getSelectedIndex()].getId(),
-////                                    null,
-////                                    null);
-////                            PaneSingerInfo();
-////                        }
-////                    }
-////                } else {
-////                    Alert alert = new Alert(Alert.AlertType.ERROR);
-////                    alert.setHeaderText("Fayl tanlanmagan");
-////                    alert.setContentText("Imzolanadigan faylni tanlang");
-////                    alert.show();
-////                }
-//////                id_ivCheckSign.setVisible(true);
-//////                id_ivCheckSign.setImage(new Image("/images/signedPage/check.png"));
-////                boolPane = false;
-////                shadow();
-////                id_lblVerification.setVisible(true);
-////                id_lblVerification.setText("Fayl imzolandi");
-//
-//                id_btnSign.setDisable(false);
-//            }
-//        });
-//
-
-
         id_btnKeyFileChooser.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -232,6 +162,62 @@ public class SigningPageController implements Initializable {
             }
         });
 
+
+        id_btnSign.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                id_btnSign.setDisable(true);
+                if (new File(id_lblKeysName.getText()).isFile() && new File(id_tfFilePath.getText()).isFile() && id_tfFilePath.getText().endsWith(".pdf")) {
+                Main.setPaneShadow(id_pnAllShadow);
+                Main.showPassStage(true);
+                Main.setKeyFilePath(id_lblKeysName.getText());
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("title");
+                    alert.setHeaderText("HeaderText");
+                    alert.setContentText("ContentText");
+                    alert.show();
+                }
+
+
+                //                /** Imzolanadigan pdf filelarni ajratib oladi */
+//                String[] temp = id_tfFilePath.getText().replaceAll(", ", ",").split(",");
+//                if (!id_tfFilePath.getText().isEmpty()) {
+//                    /**  Fayllar tanlanganda imzo qo'yish */
+//                    for (String s : temp) {
+//                        if (new File(s).isFile() && new File(s).getName().toLowerCase().endsWith(".pdf")) {
+//                            /** PDF document ga link yuklangan qrcode yuklash */
+//                            new PDFWorker().PasteSignLink(s, signLink());
+//                            /** Imzolangan, QRCode qo'yilgan faylni qrcode dagi link ka yuklash */
+//                            new Requests().RequestUpload(Main.getSignedFileInfo().getFilePath());
+//                            sign = new UzDSt_1092_2009().signGenerate(Main.getKeys().getData().getKalits().
+//                                            getData()[id_cbSignes.getSelectionModel().getSelectedIndex()].getAttributes().getPrivkey(),
+//                                    Main.getSignedFileInfo().getFilePath());
+//                            /** Messages fayl va imzo haqidagi ma'lumotlar yuklanadi */
+//                            new Requests().ResponseMessage(Main.getLoginData().getUser().getId(),
+//                                    sign,
+//                                    Main.getKeys().getData().getKalits().getData()[id_cbSignes.getSelectionModel().getSelectedIndex()].getId(),
+//                                    null,
+//                                    null);
+//                            PaneSingerInfo();
+//                        }
+//                    }
+//                } else {
+//                    Alert alert = new Alert(Alert.AlertType.ERROR);
+//                    alert.setHeaderText("Fayl tanlanmagan");
+//                    alert.setContentText("Imzolanadigan faylni tanlang");
+//                    alert.show();
+//                }
+////                id_ivCheckSign.setVisible(true);
+////                id_ivCheckSign.setImage(new Image("/images/signedPage/check.png"));
+//                boolPane = false;
+//                shadow();
+//                id_lblVerification.setVisible(true);
+//                id_lblVerification.setText("Fayl imzolandi");
+
+                id_btnSign.setDisable(false);
+            }
+        });
 
     }
 
@@ -242,22 +228,6 @@ public class SigningPageController implements Initializable {
         }
     }
 
-    private void passShadow(boolean bool) {
-        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.15), id_pnAllShadow);
-        if (bool) {
-            id_pnAllShadow.setVisible(true);
-            fadeTransition.setFromValue(0.0);
-            fadeTransition.setToValue(0.5);
-            fadeTransition.play();
-        } else {
-            fadeTransition.setFromValue(0.5);
-            fadeTransition.setToValue(0.0);
-            fadeTransition.play();
-            id_pnAllShadow.setVisible(false);
-        }
-
-
-    }
 
     private void shadow() {
 
@@ -290,32 +260,6 @@ public class SigningPageController implements Initializable {
         }
     }
 
-    private void allShadow() {
-
-
-        if (boolPane) {
-
-            id_pnShadow.setVisible(true);
-
-            // Panega kursor kirganda
-            id_pnShadow.setOnMouseEntered(e -> {
-                Timeline timeline = new Timeline(new KeyFrame(duration, new KeyValue(id_pnShadow.opacityProperty(), 0.0)), new KeyFrame(Duration.ZERO, new KeyValue(id_pnShadow.opacityProperty(), 0.8)));
-                timeline.play();
-            });
-
-            // Panedan kursor chiqqanda
-            id_pnShadow.setOnMouseExited(e -> {
-                Timeline timeline = new Timeline(new KeyFrame(duration, new KeyValue(id_pnShadow.opacityProperty(), 0.8)), new KeyFrame(Duration.ZERO, new KeyValue(id_pnShadow.opacityProperty(), 0.0)));
-                timeline.play();
-            });
-
-        } else {
-
-            Timeline timeline = new Timeline(new KeyFrame(duration, new KeyValue(id_pnShadow.opacityProperty(), 0.0)), new KeyFrame(Duration.ZERO, new KeyValue(id_pnShadow.opacityProperty(), 0.8)));
-            timeline.play();
-            id_pnShadow.setVisible(false);
-        }
-    }
 
     private String signLink() {
         new Requests().RequestSignLink();
@@ -345,6 +289,24 @@ public class SigningPageController implements Initializable {
 //            keysList.add(Main.getKeys().getData().getKalits().getData()[i].getAttributes().getNomi() + "\n"
 //                    + Main.getKeys().getData().getKalits().getData()[i].getAttributes().getCreatedAt());
 //        }
+//    }
+
+
+//    private void passShadow(boolean bool) {
+//
+//        if (bool) {
+////            id_pnAllShadow.setVisible(true);
+//            fadeTransition.setFromValue(0.0);
+//            fadeTransition.setToValue(0.5);
+//            fadeTransition.play();
+//        } else {
+//            fadeTransition.setFromValue(0.5);
+//            fadeTransition.setToValue(0.0);
+//            fadeTransition.play();
+//            id_pnAllShadow.setVisible(false);
+//        }
+//
+//
 //    }
 
 }

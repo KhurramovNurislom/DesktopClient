@@ -1,5 +1,6 @@
 package org.example;
 
+import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +12,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -59,15 +61,6 @@ public class Main extends Application {
     @Getter
     @Setter
     static AUsersMe aUsersMe;
-
-    /**
-     * PFX ni tekshirish uchun
-     */
-    static KeyPair keyPair;
-    /**
-     * /PFX ni tekshirish uchun
-     */
-
     @Getter
     @Setter
     static KeysGen keysGen;
@@ -110,10 +103,9 @@ public class Main extends Application {
     @Getter
     @Setter
     static String keyFilePath;
-    /**
-     * Displaynign o'lchamlari
-     */
-
+    @Getter
+    @Setter
+    static Pane paneShadow;
     static double x = 0, y = 0;
     static Stage passStage;
 
@@ -136,6 +128,14 @@ public class Main extends Application {
     }
 
     public static void showPassStage(boolean bool) {
+        new Thread() {
+            @Override
+            public void run() {
+                allShadow(bool);
+            }
+        }.start();
+
+
         if (bool) {
             passStage = new Stage();
             Scene scene = new Scene(new FXMLLoaderMade().getPane("PasswordKey"));
@@ -158,8 +158,49 @@ public class Main extends Application {
             passStage.initStyle(StageStyle.TRANSPARENT);
             passStage.centerOnScreen();
             passStage.show();
-        } else passStage.close();
+
+        } else {
+            allShadow(false);
+            passStage.close();
+        }
+
     }
+
+
+    public static void allShadow(boolean bool) {
+
+        if (bool) {
+            FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.3), paneShadow);
+            paneShadow.setVisible(true);
+            fadeTransition.setFromValue(0.0);
+            fadeTransition.setToValue(0.6);
+            fadeTransition.play();
+
+        } else {
+            new Thread() {
+                @Override
+                public void run() {
+                    FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.3), paneShadow);
+                    fadeTransition.setFromValue(0.6);
+                    fadeTransition.setToValue(0.0);
+                    fadeTransition.play();
+                }
+            }.start();
+            new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(300);
+                        paneShadow.setVisible(false);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+
+            }.start();
+        }
+    }
+
 
     public static void main(String[] args) {
         launch(args);
