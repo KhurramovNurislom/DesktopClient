@@ -10,180 +10,221 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="id_pnFund" prefHeight="720.0" prefWidth="750.0" style="-fx-background-color: #e4eaff;"
-      xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="org.example.controllers.SigningPageController">
+<?import javafx.scene.control.PasswordField?>
+<Pane fx:id="id_pnFund" prefHeight="720.0" prefWidth="750.0" style="-fx-background-color: #e4eaff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.SigningPageController">
 
-    <Pane fx:id="id_pnShadow" layoutY="220.0" opacity="0.6" prefHeight="500.0" prefWidth="748.0"
-          style="-fx-background-color: #e4eaff;" visible="false">
-        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="40.0" layoutY="33.0" pickOnBounds="true"
-                   preserveRatio="true">
-            <Image url="@../images/signedPage/circle-user.png"/>
+    <Pane fx:id="id_pnShadow" layoutY="220.0" opacity="0.6" prefHeight="500.0" prefWidth="748.0" style="-fx-background-color: #e4eaff;" visible="false">
+        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="40.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../images/signedPage/circle-user.png" />
         </ImageView>
 
-        <Label alignment="TOP_LEFT" contentDisplay="CENTER" layoutX="80.0" layoutY="35.0" prefHeight="27.0"
-               prefWidth="310.0" text="IMZO EGASINING MA'LUMOTLARI:" textFill="#063970" wrapText="true">
+        <Label alignment="TOP_LEFT" contentDisplay="CENTER" layoutX="80.0" layoutY="35.0" prefHeight="27.0" prefWidth="310.0" text="IMZO EGASINING MA'LUMOTLARI:" textFill="#063970" wrapText="true">
             <font>
-                <Font name="Arial Bold" size="18.0"/>
+                <Font name="Arial Bold" size="18.0" />
             </font>
         </Label>
 
-        <Label contentDisplay="CENTER" layoutX="40.0" layoutY="88.0" prefHeight="25.0" prefWidth="63.0" text="Login:"
-               textFill="#063970" wrapText="true">
+        <Label contentDisplay="CENTER" layoutX="40.0" layoutY="88.0" prefHeight="25.0" prefWidth="63.0" text="Login:" textFill="#063970" wrapText="true">
             <font>
-                <Font name="Arial Bold" size="18.0"/>
+                <Font name="Arial Bold" size="18.0" />
             </font>
         </Label>
 
-        <TextField fx:id="id_tfLogin" layoutX="120.0" layoutY="85.0" prefHeight="30.0" prefWidth="300.0"
-                   promptText="Login"/>
+        <TextField fx:id="id_tfLogin" layoutX="120.0" layoutY="85.0" prefHeight="30.0" prefWidth="300.0" promptText="Login" />
 
-        <Label contentDisplay="CENTER" layoutX="40.0" layoutY="138.0" prefHeight="27.0" prefWidth="63.0" text="e-mail:"
-               textFill="#063970" wrapText="true">
+        <Label contentDisplay="CENTER" layoutX="40.0" layoutY="138.0" prefHeight="27.0" prefWidth="63.0" text="e-mail:" textFill="#063970" wrapText="true">
             <font>
-                <Font name="Arial Bold" size="18.0"/>
+                <Font name="Arial Bold" size="18.0" />
             </font>
         </Label>
 
-        <TextField fx:id="id_tfEmail" layoutX="120.0" layoutY="135.0" prefHeight="30.0" prefWidth="300.0"
-                   promptText="e-mail"/>
+        <TextField fx:id="id_tfEmail" layoutX="120.0" layoutY="135.0" prefHeight="30.0" prefWidth="300.0" promptText="e-mail" />
 
-        <ImageView fx:id="id_ivUserImage" fitHeight="300.0" fitWidth="300.0" layoutX="435.0" layoutY="85.0"
-                   pickOnBounds="true" preserveRatio="true">
-            <Image url="@../images/signedPage/user-blue.png"/>
+        <ImageView fx:id="id_ivUserImage" fitHeight="300.0" fitWidth="300.0" layoutX="435.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../images/signedPage/user-blue.png" />
         </ImageView>
 
-        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="40.0" layoutY="203.0" pickOnBounds="true"
-                   preserveRatio="true">
-            <Image url="@../images/signedPage/file-invoice.png"/>
+        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="40.0" layoutY="203.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../images/signedPage/file-invoice.png" />
         </ImageView>
 
-        <Label alignment="TOP_LEFT" contentDisplay="RIGHT" layoutX="80.0" layoutY="205.0" prefHeight="30.0"
-               prefWidth="335.0" text="IMZOLANGAN FAYL MA'LUMOTLARI:" textFill="#063970" wrapText="true">
+        <Label alignment="TOP_LEFT" contentDisplay="RIGHT" layoutX="80.0" layoutY="205.0" prefHeight="30.0" prefWidth="335.0" text="IMZOLANGAN FAYL MA'LUMOTLARI:" textFill="#063970" wrapText="true">
             <font>
-                <Font name="Arial Bold" size="18.0"/>
+                <Font name="Arial Bold" size="18.0" />
             </font>
         </Label>
 
-        <Label layoutX="20.0" layoutY="255.0" prefHeight="30.0" prefWidth="92.0" text="Fayl nomi:" textFill="#063970"
-               wrapText="true">
+        <Label layoutX="20.0" layoutY="255.0" prefHeight="30.0" prefWidth="92.0" text="Fayl nomi:" textFill="#063970" wrapText="true">
             <font>
-                <Font name="Arial Bold" size="18.0"/>
+                <Font name="Arial Bold" size="18.0" />
             </font>
         </Label>
 
-        <TextField fx:id="id_tfSignedFileName" layoutX="120.0" layoutY="255.0" prefHeight="30.0" prefWidth="300.0"
-                   promptText="Fayl nomi"/>
+        <TextField fx:id="id_tfSignedFileName" layoutX="120.0" layoutY="255.0" prefHeight="30.0" prefWidth="300.0" promptText="Fayl nomi" />
 
-        <Label layoutX="20.0" layoutY="305.0" prefHeight="30.0" prefWidth="92.0" text="Fayl yo'li:" textFill="#063970"
-               wrapText="true">
+        <Label layoutX="20.0" layoutY="305.0" prefHeight="30.0" prefWidth="92.0" text="Fayl yo'li:" textFill="#063970" wrapText="true">
             <font>
-                <Font name="Arial Bold" size="18.0"/>
+                <Font name="Arial Bold" size="18.0" />
             </font>
         </Label>
 
-        <TextField fx:id="id_tfSignedFilePath" layoutX="120.0" layoutY="305.0" prefHeight="30.0" prefWidth="300.0"
-                   promptText="Fayl yo'li"/>
+        <TextField fx:id="id_tfSignedFilePath" layoutX="120.0" layoutY="305.0" prefHeight="30.0" prefWidth="300.0" promptText="Fayl yo'li" />
 
-        <Label layoutX="20.0" layoutY="355.0" prefHeight="30.0" prefWidth="100.0" text="Fayl hajmi:" textFill="#063970"
-               wrapText="true">
+        <Label layoutX="20.0" layoutY="355.0" prefHeight="30.0" prefWidth="100.0" text="Fayl hajmi:" textFill="#063970" wrapText="true">
             <font>
-                <Font name="Arial Bold" size="18.0"/>
+                <Font name="Arial Bold" size="18.0" />
             </font>
         </Label>
 
-        <TextField fx:id="id_tfSignedFileVolume" layoutX="120.0" layoutY="355.0" prefHeight="30.0" prefWidth="300.0"
-                   promptText="Fayl hajmi"/>
+        <TextField fx:id="id_tfSignedFileVolume" layoutX="120.0" layoutY="355.0" prefHeight="30.0" prefWidth="300.0" promptText="Fayl hajmi" />
 
-        <Label layoutX="20.0" layoutY="405.0" prefHeight="30.0" prefWidth="200.0" text="Fayl imzolangan vaqti:"
-               textFill="#063970" wrapText="true">
+        <Label layoutX="20.0" layoutY="405.0" prefHeight="30.0" prefWidth="200.0" text="Fayl imzolangan vaqti:" textFill="#063970" wrapText="true">
             <font>
-                <Font name="Arial Bold" size="18.0"/>
+                <Font name="Arial Bold" size="18.0" />
             </font>
         </Label>
 
-        <TextField fx:id="id_tfFileSignedTime" layoutX="220.0" layoutY="405.0" prefHeight="30.0" prefWidth="200.0"
-                   promptText="Imzolangan vaqti"/>
+        <TextField fx:id="id_tfFileSignedTime" layoutX="220.0" layoutY="405.0" prefHeight="30.0" prefWidth="200.0" promptText="Imzolangan vaqti" />
     </Pane>
     <Pane fx:id="id_pnSign" layoutY="350.0" prefHeight="200.0" prefWidth="750.0">
-        <Label contentDisplay="CENTER" layoutX="100.0" layoutY="45.0" text="Imzolanadigan faylni tanlang"
-               textFill="#0f2a62">
+        <Label contentDisplay="CENTER" layoutX="100.0" layoutY="45.0" text="Imzolanadigan faylni tanlang" textFill="#0f2a62">
             <font>
-                <Font name="Arial" size="18.0"/>
+                <Font name="Arial" size="18.0" />
             </font>
         </Label>
 
-        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="30.0" layoutY="75.0" pickOnBounds="true"
-                   preserveRatio="true">
-            <Image url="@../images/signedPage/file-pdf.png"/>
+        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="30.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../images/signedPage/file-pdf.png" />
         </ImageView>
 
-        <TextField fx:id="id_tfFilePath" layoutX="70.0" layoutY="75.0" prefHeight="30.0" prefWidth="510.0"
-                   promptText="Imzolanadigan fayl yo'li"/>
+        <TextField fx:id="id_tfFilePath" layoutX="70.0" layoutY="75.0" prefHeight="30.0" prefWidth="510.0" promptText="Imzolanadigan fayl yo'li" />
 
-        <JFXButton fx:id="id_btnChangeFile" alignment="CENTER" buttonType="RAISED" layoutX="600.0" layoutY="75.0"
-                   prefHeight="30.0" prefWidth="110.0" style="-fx-background-color: #0F2A62;" text="Fayl tanlash"
-                   textFill="WHITE">
+        <JFXButton fx:id="id_btnChangeFile" alignment="CENTER" buttonType="RAISED" layoutX="600.0" layoutY="75.0" prefHeight="30.0" prefWidth="110.0" style="-fx-background-color: #0F2A62;" text="Fayl tanlash" textFill="WHITE">
             <font>
-                <Font name="Arial Bold" size="14.0"/>
+                <Font name="Arial Bold" size="14.0" />
             </font>
             <cursor>
-                <Cursor fx:constant="HAND"/>
+                <Cursor fx:constant="HAND" />
             </cursor>
         </JFXButton>
 
 
         <Label contentDisplay="CENTER" layoutX="100.0" layoutY="120.0" text="Imzoni tanlang" textFill="#0f2a62">
             <font>
-                <Font size="18.0"/>
+                <Font size="18.0" />
             </font>
         </Label>
 
-        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="30.0" layoutY="155.0" pickOnBounds="true"
-                   preserveRatio="true">
-            <Image url="@../images/signedPage/keys.png"/>
+        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="30.0" layoutY="155.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../images/signedPage/keys.png" />
         </ImageView>
 
-        <JFXButton fx:id="id_btnSign" buttonType="RAISED" layoutX="600.0" layoutY="150.0" prefHeight="30.0"
-                   prefWidth="110.0" style="-fx-background-color: #0F2A62;" text="Imzolash" textFill="#fff6f6">
+        <JFXButton fx:id="id_btnSign" buttonType="RAISED" layoutX="600.0" layoutY="150.0" prefHeight="30.0" prefWidth="110.0" style="-fx-background-color: #0F2A62;" text="Imzolash" textFill="#fff6f6">
             <font>
-                <Font name="Arial Bold" size="14.0"/>
+                <Font name="Arial Bold" size="14.0" />
             </font>
             <cursor>
-                <Cursor fx:constant="HAND"/>
+                <Cursor fx:constant="HAND" />
             </cursor>
         </JFXButton>
-        <JFXButton fx:id="id_btnKeyFileChooser" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER"
-                   layoutX="550.0" layoutY="150.0" prefHeight="30.0" prefWidth="30.0">
+        <JFXButton fx:id="id_btnKeyFileChooser" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" layoutX="550.0" layoutY="150.0" prefHeight="30.0" prefWidth="30.0">
             <graphic>
                 <ImageView fitHeight="25.0" fitWidth="25.0">
-                    <Image url="@../images/signedPage/file-in-folder.png"/>
+                    <Image url="@../images/signedPage/file-in-folder.png" />
                     <cursor>
-                        <Cursor fx:constant="HAND"/>
+                        <Cursor fx:constant="HAND" />
                     </cursor>
                 </ImageView>
             </graphic>
             <cursor>
-                <Cursor fx:constant="HAND"/>
+                <Cursor fx:constant="HAND" />
             </cursor>
         </JFXButton>
 
-        <JFXComboBox fx:id="id_cbSignes" layoutX="70.0" layoutY="150.0" maxWidth="500.0" prefHeight="30.0"
-                     prefWidth="480.0" viewOrder="4.0" visibleRowCount="4"/>
+        <JFXComboBox fx:id="id_cbSignes" layoutX="70.0" layoutY="150.0" maxWidth="500.0" prefHeight="30.0" prefWidth="480.0" viewOrder="4.0" visibleRowCount="4" />
 
-        <Label fx:id="id_lblKeysName" layoutX="75.0" layoutY="150.0" prefHeight="30.0" prefWidth="435.0"
-               style="-fx-background-color: #e4eaff;" textFill="#063970">
+        <Label fx:id="id_lblKeysName" layoutX="75.0" layoutY="150.0" prefHeight="30.0" prefWidth="435.0" style="-fx-background-color: #e4eaff;" textFill="#063970">
             <font>
-                <Font name="Arial" size="14.0"/>
+                <Font name="Arial" size="14.0" />
             </font>
         </Label>
     </Pane>
 
     <ImageView fx:id="id_ivLogo" fitHeight="261.0" fitWidth="300.0" layoutX="240.0" layoutY="29.0" pickOnBounds="true">
-        <Image url="@../images/icon.png"/>
+        <Image url="@../images/icon.png" />
     </ImageView>
+    <Pane fx:id="id_pnAllShadow" opacity="0.6" prefHeight="720.0" prefWidth="748.0" style="-fx-background-color: #000000;" visible="false" />
+   
+    <Pane fx:id="id_pnPane" layoutX="165.0" layoutY="230.0" prefHeight="260.0" prefWidth="420.0" style="-fx-background-color: #919ca0;">
+        <Pane layoutY="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="420.0" style="-fx-background-color: #e4eaff;">
+            <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="15.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../images/passKeys/passwordKey.png" />
+            </ImageView>
+            <Label layoutX="150.0" layoutY="10.0" prefHeight="30.0" prefWidth="220.0" style="-fx-text-fill: #0f2a62;" text="Kalit paroli kiriting" textFill="#063970">
+                <font>
+                    <Font name="Arial Bold" size="18.0" />
+                </font>
+            </Label>
+            <Label layoutX="130.0" layoutY="50.0" prefHeight="30.0" prefWidth="276.0" style="-fx-text-fill: #0f2a62;" text="Tanlangan kalit" textFill="#063970">
+                <font>
+                    <Font name="Arial Bold" size="16.0" />
+                </font>
+            </Label>
+            <Label fx:id="id_lblKeyPath" layoutX="130.0" layoutY="85.0" prefHeight="30.0" prefWidth="280.0" style="-fx-text-fill: #0f2a62;" text="filePath" textFill="#063970">
+                <font>
+                    <Font name="Arial Italic" size="16.0" />
+                </font>
+                <cursor>
+                    <Cursor fx:constant="HAND" />
+                </cursor>
+            </Label>
+        </Pane>
+        <TextField fx:id="id_tfPass" layoutX="100.0" layoutY="175.0" prefHeight="30.0" prefWidth="220.0" style="-fx-text-fill: #063970;">
+            <font>
+                <Font name="Arial" size="14.0" />
+            </font>
+        </TextField>
+        <PasswordField fx:id="id_pfPass" layoutX="100.0" layoutY="175.0" prefHeight="30.0" prefWidth="220.0" style="-fx-text-fill: #063970;">
+            <font>
+                <Font name="Arial" size="14.0" />
+            </font>
+        </PasswordField>
+        <JFXButton fx:id="id_btnEye" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" layoutX="282.0" layoutY="175.0" prefHeight="30.0" prefWidth="30.0">
+            <graphic>
+                <ImageView fx:id="id_ivEye" fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@../images/keysGenPage/show.png" />
+                </ImageView>
+            </graphic>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </JFXButton>
+        <JFXButton fx:id="id_btnOk" buttonType="RAISED" layoutX="100.0" layoutY="220.0" prefHeight="28.0" prefWidth="80.0" style="-fx-background-color: #0f2a62;" text="Ok" textFill="WHITE">
+            <font>
+                <Font name="Arial Bold" size="14.0" />
+            </font>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </JFXButton>
+        <JFXButton fx:id="id_btnExit" buttonType="RAISED" layoutX="240.0" layoutY="220.0" prefHeight="28.0" prefWidth="80.0" style="-fx-background-color: #0f2a62;" text="Chiqish" textFill="WHITE">
+            <font>
+                <Font name="Arial Bold" size="14.0" />
+            </font>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </JFXButton>
+        <Pane fx:id="id_pnTitle" prefHeight="20.0" prefWidth="420.0" style="-fx-background-color: white;">
+            <Label fx:id="id_lblTitle" layoutX="30.0" prefHeight="20.0" prefWidth="300.0" text="Oyna yopilgunicha 60 sekund" textFill="#063970" />
+            <ImageView fx:id="id_ivClose" fitHeight="24.0" fitWidth="24.0" layoutX="398.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../images/passKeys/close_red.png" />
+            </ImageView>
+            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../images/icon.png" />
+            </ImageView>
+        </Pane>
+    </Pane>
 
-    <Pane fx:id="id_pnAllShadow" opacity="0.0" prefHeight="720.0" prefWidth="748.0" visible="false"
-          style="-fx-background-color: #000000;"
-          xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"/>
+
 </Pane>
