@@ -1,4 +1,5 @@
 package org.example.controllers;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
@@ -10,6 +11,7 @@ import javafx.scene.control.Label;
 import lombok.Getter;
 import lombok.Setter;
 import org.example.Main;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -55,6 +57,7 @@ public class KeyInfoInPFXController implements Initializable {
             }
         });
     }
+
     private String formatDate(String date) {
         String day = date.substring(8, 10);
         String month = date.substring(5, 7);

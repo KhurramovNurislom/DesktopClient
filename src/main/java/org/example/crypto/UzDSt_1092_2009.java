@@ -44,6 +44,16 @@ public class UzDSt_1092_2009 {
         }
     }
 
+    public boolean verifyPassword(String privKey, String pubKey) {
+
+
+        String sign = ByteEncode.encodeHexString(signGeneration(readPrivateKey(privKey), "Nurislom".getBytes()));
+
+        return verification(readPublicKey(pubKey), "Nurislom".getBytes(), ByteEncode.decodeHexString(sign));
+
+    }
+
+
     private KeyPair generationKeyPair() {
         try {
             KeyPairGenerator g = KeyPairGenerator.getInstance("ECGOST3410", "BC");

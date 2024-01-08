@@ -119,7 +119,7 @@
         </ImageView>
 
         <TextField fx:id="id_tfFilePath" layoutX="70.0" layoutY="75.0" prefHeight="30.0" prefWidth="510.0"
-                   promptText="Imzolanadigan fayl yo'li"/>
+                   promptText="Imzolanadigan fayl yo'li"  text="D:\Tekshirishga\testDesktop\test.pdf"/>
 
         <JFXButton fx:id="id_btnChangeFile" alignment="CENTER" buttonType="RAISED" layoutX="600.0" layoutY="75.0"
                    prefHeight="30.0" prefWidth="110.0" style="-fx-background-color: #0F2A62;" text="Fayl tanlash"

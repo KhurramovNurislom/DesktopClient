@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<Pane focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="130.0" prefWidth="410.0" styleClass="style-Pane" xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1">
+
+    <Label fx:id="id_lblSurName" layoutX="10.0" layoutY="5.0" prefHeight="30.0" prefWidth="420.0" text="NULL">
+        <font>
+            <Font name="System Bold" size="14.0"/>
+        </font>
+    </Label>
+    <Label layoutX="10.0" layoutY="40.0" prefHeight="10.0" prefWidth="60.0" text="JSHSHIR:">
+        <font>
+            <Font name="Arial" size="12.0"/>
+        </font>
+    </Label>
+    <Label fx:id="id_lblSTIR" layoutX="170.0" layoutY="55.0" prefHeight="25.0" prefWidth="120.0" text="NULL">
+        <font>
+            <Font name="System Bold" size="14.0"/>
+        </font>
+    </Label>
+    <Label fx:id="id_lblJSHSHIR" layoutX="10.0" layoutY="55.0" prefHeight="25.0" prefWidth="140.0" text="NULL">
+        <font>
+            <Font name="System Bold" size="14.0"/>
+        </font>
+    </Label>
+    <Label layoutX="170.0" layoutY="40.0" prefHeight="10.0" prefWidth="40.0" text="STIR:">
+        <font>
+            <Font name="Arial" size="12.0"/>
+        </font>
+    </Label>
+    <Label layoutX="10.0" layoutY="85.0" prefHeight="10.0" prefWidth="100.0" text="Sertifikat raqami:">
+        <font>
+            <Font name="Arial" size="12.0"/>
+        </font>
+    </Label>
+    <Label fx:id="id_lblSerNumber" layoutX="10.0" layoutY="100.0" prefHeight="25.0" prefWidth="140.0" text="NULL">
+        <font>
+            <Font name="System Bold" size="14.0"/>
+        </font>
+    </Label>
+    <Label layoutX="170.0" layoutY="85.0" prefHeight="15.0" prefWidth="200.0"
+           text="Sertifikatning amal qilish muddati:">
+        <font>
+            <Font name="Arial" size="12.0"/>
+        </font>
+    </Label>
+    <Label fx:id="id_lblFromToDate" layoutX="170.0" layoutY="100.0" prefHeight="25.0" prefWidth="200.0" text="NULL">
+        <font>
+            <Font name="System Bold" size="14.0"/>
+        </font>
+    </Label>
+    <JFXButton fx:id="id_btnSign" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" layoutX="390.0"
+               layoutY="80.0" prefHeight="30.0" prefWidth="35.0"
+               style="-fx-background-color: green; -fx-text-fill: white;" textFill="WHITE" visible="false">
+        <font>
+            <Font size="1.0"/>
+        </font>
+        <graphic>
+            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../images/signedPage/right-arrow.png"/>
+            </ImageView>
+        </graphic>
+        <ripplerFill>
+            <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                <stops>
+                    <Stop>
+                        <color>
+                            <Color/>
+                        </color>
+                    </Stop>
+                    <Stop offset="1.0">
+                        <color>
+                            <Color red="0.6710526347160339" green="0.6306651830673218" blue="0.6306651830673218"/>
+                        </color>
+                    </Stop>
+                </stops>
+            </RadialGradient>
+        </ripplerFill>
+    </JFXButton>
+
+</Pane>

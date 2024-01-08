@@ -109,6 +109,7 @@ public class Main extends Application {
     static double x = 0, y = 0;
     static Stage passStage;
 
+
     @Override
     public void start(Stage stage) throws Exception {
 
@@ -135,7 +136,6 @@ public class Main extends Application {
             }
         }.start();
 
-
         if (bool) {
             passStage = new Stage();
             Scene scene = new Scene(new FXMLLoaderMade().getPane("PasswordKey"));
@@ -154,7 +154,7 @@ public class Main extends Application {
                 }
             });
             passStage.setScene(scene);
-            passStage.initModality(Modality.APPLICATION_MODAL);
+//            passStage.initModality(Modality.APPLICATION_MODAL);
             passStage.initStyle(StageStyle.TRANSPARENT);
             passStage.centerOnScreen();
             passStage.show();
@@ -175,7 +175,6 @@ public class Main extends Application {
             fadeTransition.setFromValue(0.0);
             fadeTransition.setToValue(0.6);
             fadeTransition.play();
-
         } else {
             new Thread() {
                 @Override
@@ -200,7 +199,6 @@ public class Main extends Application {
             }.start();
         }
     }
-
 
     public static void main(String[] args) {
         launch(args);

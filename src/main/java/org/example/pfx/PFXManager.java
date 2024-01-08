@@ -106,6 +106,9 @@ public class PFXManager {
 
     private String certificate(String pfxFile, String password) {
 
+        System.out.println(pfxFile);
+        System.out.println(password);
+
         // PFX faylni o'qish
         try (FileInputStream fis = new FileInputStream(pfxFile)) {
             KeyStore keyStore = KeyStore.getInstance("PKCS12");
@@ -114,7 +117,7 @@ public class PFXManager {
             Enumeration<String> aliases = keyStore.aliases();
             while (aliases.hasMoreElements()) {
                 String alias = aliases.nextElement();
-                System.err.println("Alias: " + alias);
+//                System.err.println("Alias: " + alias);
                 //--------------------------------------------------------------------//
                 try {
                     X509Certificate cert = (X509Certificate) keyStore.getCertificate(alias);

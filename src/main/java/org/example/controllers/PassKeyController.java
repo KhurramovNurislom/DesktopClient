@@ -21,6 +21,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import org.example.Main;
+import org.example.crypto.UzDSt_1092_2009;
+import org.example.pfx.ReadPrivateKey;
+import org.example.utils.Requests;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -37,20 +40,43 @@ public class PassKeyController implements Initializable {
     public Pane id_pnTitle;
     public JFXButton id_btnOk;
     public JFXButton id_btnEye;
+    public Label id_lblErrorPass;
     private boolean eyeBool = false;
 
     private int seconds = 60;
 
     private String passOld = "";
 
+    private Timeline timeline;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        System.out.println("asdasdasdadsaszdczxcZXcz");
         Main.setPassVerify(false);
         timer();
         hiddenEyes();
         Main.setPane(id_pnTitle);
+
+
+//        Timer timer = new Timer();
+//        TimerTask task = new TimerTask() {
+//            @Override
+//            public void run() {
+//
+//                id_lblTitle.setText("Oyna yopilgunicha " +  seconds + " sekund");
+//                seconds--;
+//            }
+//        };
+//
+//        timer.schedule(task, 0, 1000);
+//        timer.schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//                timer.cancel();
+//            }
+//        }, 60000);
+
 
         Tooltip tooltip = new Tooltip("matn ustiga bit marta bosib va nusxa oling");
         tooltip.setShowDelay(Duration.millis(100));
@@ -59,17 +85,19 @@ public class PassKeyController implements Initializable {
             @Override
             public void handle(ActionEvent actionEvent) {
 
-//                new PFXManager().readPfxFile(Main.getKeyFilePath(), id_pfPass.getText());
-//
-//                if (true) {
+                String privateKey = new ReadPrivateKey().readPrivKeyInPFX(Main.getKeyFilePath(), id_pfPass.getText());
 
-                Main.setPassVerify(true);
-                Main.showPassStage(false);
+                if (privateKey.equals("parolXato")) {
 
 
-//                } else {
-//
-//                }
+                    if (new UzDSt_1092_2009().verifyPassword(privateKey, new Requests().RequestGetPublicKey(374))) {
+                        id_lblErrorPass.setVisible(false);
+                        Main.setPassVerify(true);
+                        closeStage();
+                    }
+                } else {
+                    id_lblErrorPass.setVisible(true);
+                }
 
             }
         });
@@ -101,14 +129,14 @@ public class PassKeyController implements Initializable {
         id_btnExit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                Main.showPassStage(false);
+                closeStage();
             }
         });
 
         id_ivClose.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent e) {
-                Main.showPassStage(false);
+                closeStage();
             }
         });
 
@@ -162,7 +190,7 @@ public class PassKeyController implements Initializable {
     }
 
     private void timer() {
-        Timeline timeline = new Timeline(
+        timeline = new Timeline(
                 new KeyFrame(Duration.seconds(1), event -> {
                     seconds--;
                     updateTimerLabel();
@@ -174,9 +202,15 @@ public class PassKeyController implements Initializable {
 
     private void updateTimerLabel() {
         id_lblTitle.setText("Oyna yopilgunicha " + seconds + " sekund");
+        System.out.println(seconds);
         if (seconds == 0) {
-            Main.showPassStage(false);
+            closeStage();
         }
+    }
+
+    private void closeStage() {
+        timeline.stop();
+        Main.showPassStage(false);
     }
 
 

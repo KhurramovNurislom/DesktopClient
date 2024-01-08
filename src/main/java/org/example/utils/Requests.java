@@ -217,7 +217,6 @@ public class Requests {
             Main.setUserMessages(messages);
             response.close();
 
-            System.out.println("14.12.2023 => " + messages);
         } catch (IOException e) {
             System.out.println("exception : Requests().RequestUserMessages() => " + e.getMessage());
 //            throw new RuntimeException(e);
@@ -275,5 +274,40 @@ public class Requests {
             System.out.println("exception : Requests().RequestGetSignedFilesInfo() => " + e.getCause());
             throw new RuntimeException(e);
         }
+    }
+
+
+    public String RequestGetPublicKey(int keyId) {
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        MediaType mediaType = MediaType.parse("application/json");
+        RequestBody body = RequestBody.create(mediaType, "{\"query\":\"query GetKeys($id:ID){ kalits (filters : {user : {id : {eq: $id } } } ) " +
+                "{ data{ id attributes{ pubkey nomi createdAt } } } } \",\"variables\":{\"id\": "
+                + Main.getLoginData().getUser().getId() + "}}");
+
+        Request request = new Request.Builder()
+                .url(Main.getUrl() + "/graphql")
+                .method("POST", body)
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Authorization", "Bearer " + Main.getLoginData().getJwt())
+                .build();
+        try {
+            Response response = Main.getClient().newCall(request).execute();
+            assert response.body() != null;
+            Keys messages = objectMapper.readValue(response.body().byteStream(), Keys.class);
+
+//            Main.setUserMessages(messages);
+
+            for (int i = 0; i < messages.getData().getKalits().getData().length; i++) {
+                if (keyId == messages.getData().getKalits().getData()[i].getId()) {
+                    return messages.getData().getKalits().getData()[i].getAttributes().getPubkey();
+                }
+            }
+
+            response.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
     }
 }

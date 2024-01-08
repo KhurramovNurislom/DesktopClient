@@ -55,10 +55,6 @@ public class SigningPageController implements Initializable {
     public JFXButton id_btnChangeFile;
     public JFXButton id_btnSign;
     public TextField id_tfFilePath;
-    //    @FXML
-//    public ImageView id_ivCheckSign;
-
-    public Label id_lblVerification;
     public JFXComboBox<Pane> id_cbSignes;
     public ImageView id_ivUserImage;
     public TextField id_tfLogin;
@@ -71,31 +67,32 @@ public class SigningPageController implements Initializable {
     public Label id_lblKeysName;
 
     public Pane id_pnAllShadow;
-    public Pane id_pnView;
-    public ImageView id_ivFileChooserKey;
     public JFXButton id_btnKeyFileChooser;
     public Pane id_pnSign;
     public ImageView id_ivLogo;
     public Pane id_pnFund;
 
-    private AliesKeys aliesKeys;
 
     private final FileChooser fileChooser = new FileChooser();
     private final FileChooser fileChooserKey = new FileChooser();
 
-    public Pane id_pnBackground;
     private List<File> fileList;
     private File file;
     private final ObservableList<Pane> keysList = FXCollections.observableArrayList();
-    private String sign;
     private final boolean boolPane = true;
+
+    private KeyInfoInPFXController keyInfoInPFXController = null;
 
 
     Duration duration = Duration.seconds(0.1);
 
+    static double x = 0, y = 0;
+    static Stage passStage;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        Main.setPaneShadow(id_pnAllShadow);
+
+        Main.setPaneShadow(id_pnAllShadow);
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("pdf files", "*.pdf"), new FileChooser.ExtensionFilter("all files", "*.*"));
         fileChooserKey.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PFX files", "*.pfx"), new FileChooser.ExtensionFilter("all files", "*.*"));
 
@@ -122,7 +119,7 @@ public class SigningPageController implements Initializable {
             });
         } else {
             for (int i = 0; i < Main.getAliesKeys().getAliesKeyList().length; i++) {
-                KeyInfoInPFXController keyInfoInPFXController = new KeyInfoInPFXController();
+                keyInfoInPFXController = new KeyInfoInPFXController();
                 keyInfoInPFXController.setK(i);
                 keysList.add(new FXMLLoaderWithController().getPane("KeyInfoInPFX", keyInfoInPFXController));
             }
@@ -162,15 +159,14 @@ public class SigningPageController implements Initializable {
             }
         });
 
-
         id_btnSign.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 id_btnSign.setDisable(true);
                 if (new File(id_lblKeysName.getText()).isFile() && new File(id_tfFilePath.getText()).isFile() && id_tfFilePath.getText().endsWith(".pdf")) {
-                Main.setPaneShadow(id_pnAllShadow);
-                Main.showPassStage(true);
-                Main.setKeyFilePath(id_lblKeysName.getText());
+                    Main.setPaneShadow(id_pnAllShadow);
+                    Main.showPassStage(true);
+                    Main.setKeyFilePath(id_lblKeysName.getText());
                 } else {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("title");
@@ -179,8 +175,34 @@ public class SigningPageController implements Initializable {
                     alert.show();
                 }
 
+                /** Timer ishlaydi, btn bosilganda 60 s kutadi keyin davom ettiradi*/
 
-                //                /** Imzolanadigan pdf filelarni ajratib oladi */
+                Timer timer = new Timer();
+                TimerTask task = new TimerTask() {
+                    @Override
+                    public void run() {
+                        if (Main.isPassVerify()) {
+                            timer.cancel();
+
+                            /**  Shu yerga yozing */
+                            System.out.println("asdasdads");
+
+                            Main.setPassVerify(false);
+                        }
+                    }
+                };
+
+                timer.schedule(task, 0, 100);
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        System.out.println("Timer To'xtatdi......");
+                        timer.cancel();
+                    }
+                }, 60000);
+
+
+//                /** Imzolanadigan pdf filelarni ajratib oladi */
 //                String[] temp = id_tfFilePath.getText().replaceAll(", ", ",").split(",");
 //                if (!id_tfFilePath.getText().isEmpty()) {
 //                    /**  Fayllar tanlanganda imzo qo'yish */
@@ -208,8 +230,8 @@ public class SigningPageController implements Initializable {
 //                    alert.setContentText("Imzolanadigan faylni tanlang");
 //                    alert.show();
 //                }
-////                id_ivCheckSign.setVisible(true);
-////                id_ivCheckSign.setImage(new Image("/images/signedPage/check.png"));
+//                id_ivCheckSign.setVisible(true);
+//                id_ivCheckSign.setImage(new Image("/images/signedPage/check.png"));
 //                boolPane = false;
 //                shadow();
 //                id_lblVerification.setVisible(true);
@@ -219,6 +241,12 @@ public class SigningPageController implements Initializable {
             }
         });
 
+    }
+
+    private String signedFile() {
+
+
+        return null;
     }
 
     private void KeyFileChooser() {
@@ -280,6 +308,7 @@ public class SigningPageController implements Initializable {
             System.err.println("exception : SigningPageController().PaneSingerInfo => " + e.getCause());
         }
     }
+
 
 //    private void AddedKeysList() {
 //        /** Foydalanuvchining kalitlarini serverdan olib beradi */
