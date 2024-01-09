@@ -118,11 +118,15 @@ public class SigningPageController implements Initializable {
                 }
             });
         } else {
+
+
             for (int i = 0; i < Main.getAliesKeys().getAliesKeyList().length; i++) {
                 keyInfoInPFXController = new KeyInfoInPFXController();
                 keyInfoInPFXController.setK(i);
                 keysList.add(new FXMLLoaderWithController().getPane("KeyInfoInPFX", keyInfoInPFXController));
             }
+
+
             id_cbSignes.setItems(keysList);
             id_lblKeysName.setText(Main.getListPaths().get(0));
             id_lblKeysName.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -138,6 +142,11 @@ public class SigningPageController implements Initializable {
                     Main.setIndexPFXFilePath(id_cbSignes.getSelectionModel().getSelectedIndex());
                 }
             });
+
+
+
+
+
         }
         id_btnChangeFile.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -253,6 +262,12 @@ public class SigningPageController implements Initializable {
         file = fileChooserKey.showOpenDialog(new Stage());
         if (file != null) {
             id_lblKeysName.setText(file.getAbsolutePath());
+
+
+
+            keyInfoInPFXController = new KeyInfoInPFXController();
+
+
         }
     }
 

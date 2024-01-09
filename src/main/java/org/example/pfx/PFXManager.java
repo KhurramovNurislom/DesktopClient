@@ -1,5 +1,6 @@
 package org.example.pfx;
 
+import javafx.application.Platform;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,13 +9,21 @@ import lombok.experimental.FieldDefaults;
 import org.bouncycastle.jce.ECNamedCurveTable;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.jce.spec.ECNamedCurveParameterSpec;
+import org.example.Main;
 
 import java.io.*;
 import java.security.*;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.InstantSource;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.Enumeration;
+import java.util.Locale;
 
 /**
  * PFX faylni o'qish
@@ -141,7 +150,7 @@ public class PFXManager {
             System.err.println("exception: PFXManager().certificate() => " + e.getMessage());
             throw new RuntimeException(e);
         }
-return null;
+        return null;
 
     }
 
@@ -153,7 +162,27 @@ return null;
             ks.load(null, null);
             CreateCertificate signedCertificate = new CreateCertificate();
             X509Certificate cert = signedCertificate.managerCer(cerName, password, p);
-            ks.setKeyEntry("cn=xurramov nurislom parda o‘g‘li,name=nurislom,surname=xurramov,l=юнусобод тумани,st=тошкент ш.,c=uz,o=не указано,uid=563714282,1.2.860.3.16.1.2=32406966220011,serialnumber=77c7d9a1,validfrom=2022.08.22 14:51:25,validto=2024.08.22 23:59:59",
+
+
+//            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+
+
+//                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd kk:mm:ss");
+
+//                    String timeNow = simpleDateFormat.format("2024-01-09T04:01:37.167Z");
+
+//            System.out.println(timeNow);
+
+
+            String outputDateFormat = "yyyy.MM.dd kk:mm:ss";
+
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            SimpleDateFormat outputFormat = new SimpleDateFormat(outputDateFormat);
+
+            ks.setKeyEntry("cn=xurramov nurislom parda o‘g‘li,name=nurislom,surname=xurramov,l=юнусобод тумани,st=тошкент ш.,c=uz,o=не указано,uid=" +
+                            Main.getKeysGen().getData().getId() + ",1.2.860.3.16.1.2=32406966220011,serialnumber=77c7d9a1,validfrom="
+                            + outputFormat.format(inputFormat.parse(Main.getKeysGen().getData().getAttributes().getCreatedAt())) + ",validto="
+                            + outputFormat.format(inputFormat.parse(Main.getKeysGen().getData().getAttributes().getPublishedAt())),
                     sKey, password.toCharArray(), new Certificate[]{cert});
             ByteArrayOutputStream bOut = new ByteArrayOutputStream();
             ks.store(bOut, password.toCharArray());

@@ -123,7 +123,7 @@
 
                                 <Line endX="250.0" stroke="WHITE" />
 
-                <JFXButton fx:id="id_btnChat" alignment="BASELINE_LEFT" buttonType="RAISED" disable="true" prefHeight="50.0" prefWidth="250.0" style="-fx-cursor: hand;" text="  Chat" textAlignment="CENTER" textFill="WHITE">
+                <JFXButton fx:id="id_btnChat" alignment="BASELINE_LEFT" buttonType="RAISED" prefHeight="50.0" prefWidth="250.0" style="-fx-cursor: hand;" text="  Chat" textAlignment="CENTER" textFill="WHITE">
                     <font>
                         <Font name="Arial Bold" size="18.0" />
                     </font>

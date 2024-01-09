@@ -87,9 +87,7 @@ public class PassKeyController implements Initializable {
 
                 String privateKey = new ReadPrivateKey().readPrivKeyInPFX(Main.getKeyFilePath(), id_pfPass.getText());
 
-                if (privateKey.equals("parolXato")) {
-
-
+                if (!privateKey.equals("parolXato")) {
                     if (new UzDSt_1092_2009().verifyPassword(privateKey, new Requests().RequestGetPublicKey(374))) {
                         id_lblErrorPass.setVisible(false);
                         Main.setPassVerify(true);
