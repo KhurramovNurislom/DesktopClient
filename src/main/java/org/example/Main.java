@@ -115,7 +115,7 @@ public class Main extends Application {
 
         Security.addProvider(new BouncyCastleProvider());
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/PdfViewer.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/LoginPage.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
         stage.setTitle("Kirish oynasi...");

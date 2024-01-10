@@ -34,6 +34,7 @@ import org.example.Main;
 import org.example.crypto.UzDSt_1092_2009;
 import org.example.modules.AliesKey.AliesKeys;
 import org.example.pfx.AliesKeysReader;
+import org.example.pfx.ReadAliesInPFX;
 import org.example.utils.FXMLLoaderMade;
 import org.example.utils.FXMLLoaderWithController;
 import org.example.utils.PDFWorker;
@@ -101,8 +102,8 @@ public class SigningPageController implements Initializable {
         tooltip.setFont(Font.font(14));
         id_btnKeyFileChooser.setTooltip(tooltip);
 
-        new AliesKeysReader().AliesCorrect();
 
+        new AliesKeysReader().AliesCorrect("C:\\DSKEYS", false);
         if (Main.getAliesKeys().getAliesKeyList().length == 0) {
             id_lblKeysName.setText("C:\\DSKEYS papkada kalit mavjud emas, kalitni tanlang");
             id_lblKeysName.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -142,9 +143,6 @@ public class SigningPageController implements Initializable {
                     Main.setIndexPFXFilePath(id_cbSignes.getSelectionModel().getSelectedIndex());
                 }
             });
-
-
-
 
 
         }
@@ -262,12 +260,9 @@ public class SigningPageController implements Initializable {
         file = fileChooserKey.showOpenDialog(new Stage());
         if (file != null) {
             id_lblKeysName.setText(file.getAbsolutePath());
-
-
-
+            new AliesKeysReader().AliesCorrect(file.getAbsolutePath(), true);
             keyInfoInPFXController = new KeyInfoInPFXController();
-
-
+            keyInfoInPFXController.setK(0);
         }
     }
 
@@ -288,17 +283,13 @@ public class SigningPageController implements Initializable {
 
             // Panedan kursor chiqqanda
             id_pnShadow.setOnMouseExited(e -> {
-
                 Timeline timeline = new Timeline(new KeyFrame(duration, new KeyValue(id_pnShadow.opacityProperty(), 0.6)), new KeyFrame(Duration.ZERO, new KeyValue(id_pnShadow.opacityProperty(), 0.0)));
                 timeline.play();
-
             });
 
         } else {
-
             Timeline timeline = new Timeline(new KeyFrame(duration, new KeyValue(id_pnShadow.opacityProperty(), 0.0)), new KeyFrame(Duration.ZERO, new KeyValue(id_pnShadow.opacityProperty(), 0.6)));
             timeline.play();
-
             id_pnShadow.setVisible(false);
         }
     }

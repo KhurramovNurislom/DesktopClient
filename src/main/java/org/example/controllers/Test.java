@@ -39,7 +39,7 @@ operPDF("D:\\Tekshirishga\\testDesktop\\test.pdf");
         control.openDocument(file);
 
 
-id_pn.setClip(veiwer);
+//id_pn.setClip(veiwer);
 
 
     }catch(Exception ex){

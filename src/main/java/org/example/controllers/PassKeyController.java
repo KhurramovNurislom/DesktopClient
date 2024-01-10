@@ -20,6 +20,7 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+import org.apache.batik.util.ParsedURLProtocolHandler;
 import org.example.Main;
 import org.example.crypto.UzDSt_1092_2009;
 import org.example.pfx.ReadPrivateKey;
@@ -88,7 +89,14 @@ public class PassKeyController implements Initializable {
                 String privateKey = new ReadPrivateKey().readPrivKeyInPFX(Main.getKeyFilePath(), id_pfPass.getText());
 
                 if (!privateKey.equals("parolXato")) {
-                    if (new UzDSt_1092_2009().verifyPassword(privateKey, new Requests().RequestGetPublicKey(374))) {
+                    int k = 0;
+                    for (int i = 0; i < Main.getAliesKeys().getAliesKeyList().length; i++) {
+                        if (Main.getKeyFilePath().equals(Main.getAliesKeys().getAliesKeyList()[i].getPathFile())) {
+                            k = i;
+//                            break;
+                        }
+                    }
+                    if (new UzDSt_1092_2009().verifyPassword(privateKey, new Requests().RequestGetPublicKey(Integer.parseInt(Main.getAliesKeys().getAliesKeyList()[k].getUid())))) {
                         id_lblErrorPass.setVisible(false);
                         Main.setPassVerify(true);
                         closeStage();

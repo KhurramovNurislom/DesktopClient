@@ -11,13 +11,16 @@ import java.util.List;
 
 
 public class AliesKeysReader {
-    public void AliesCorrect() {
-        String[] arr = new ReadAliesInPFX().readAliesInPFX(keys());
+    public void AliesCorrect(String path, boolean isFile) {
+
+        String[] paths = keys(path, isFile);
+        String[] arr = new ReadAliesInPFX().readAliesInPFX(paths);
         AliesKey[] aliesKey = new AliesKey[arr.length];
         String[] textArr;
         AliesKey ak;
         for (int i = 0; i < arr.length; i++) {
             ak = new AliesKey();
+            ak.setPathFile(paths[i]);
             textArr = arr[i].split(",");
             ak.setId(i);
             for (String s : textArr) {
@@ -41,6 +44,8 @@ public class AliesKeysReader {
                     case "validto" -> ak.setValidto(temp[1]);
                 }
             }
+
+
             aliesKey[i] = ak;
         }
         AliesKeys aliesKeys = new AliesKeys();
@@ -49,26 +54,32 @@ public class AliesKeysReader {
         System.out.println(aliesKeys);
     }
 
-    private String[] keys() {
-        File folder = new File("C:\\DSKEYS");
+    private String[] keys(String path, boolean isFile) {
         List<String> list = new ArrayList<>();
-        if (folder.exists() && folder.isDirectory()) {
-            File[] files = folder.listFiles();
-            if (files != null) {
-                for (File file : files) {
-                    if (file.isFile() && file.getName().toLowerCase().endsWith(".pfx")) {
-                        list.add(file.getAbsolutePath());
+        String[] arrList = null;
+        if (isFile) {
+            arrList = new String[]{path};
+            list.add(path);
+        } else {
+            File folder = new File(path);
+            if (folder.exists() && folder.isDirectory()) {
+                File[] files = folder.listFiles();
+                if (files != null) {
+                    for (File file : files) {
+                        if (file.isFile() && file.getName().toLowerCase().endsWith(".pfx")) {
+                            list.add(file.getAbsolutePath());
+                        }
                     }
+                } else {
+                    System.out.println("Papka bo'sh");
                 }
             } else {
-                System.out.println("Papka bo'sh");
+                System.out.println("Papka mavjud emas yoki direktoriya emas");
             }
-        } else {
-            System.out.println("Papka mavjud emas yoki direktoriya emas");
-        }
-        String[] arrList = new String[list.size()];
-        for (int i = 0; i < arrList.length; i++) {
-            arrList[i] = list.get(i);
+            arrList = new String[list.size()];
+            for (int i = 0; i < arrList.length; i++) {
+                arrList[i] = list.get(i);
+            }
         }
         Main.setListPaths(list);
         return arrList;

@@ -26,4 +26,5 @@ public class AliesKey {
     String serialnumber;
     String validfrom;
     String validto;
+    String pathFile;
 }
