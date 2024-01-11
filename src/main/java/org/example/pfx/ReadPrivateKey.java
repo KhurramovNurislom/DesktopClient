@@ -25,14 +25,13 @@ public class ReadPrivateKey {
 
             System.out.println("PrivateKey: " + privateKey);
             assert privateKey != null;
+            System.out.println(ByteEncode.encodeHexString(privateKey.getEncoded()));
             return ByteEncode.encodeHexString(privateKey.getEncoded());
 //            System.out.println("Certificate: " + cert);
         } catch (Exception e) {
-            return "parolXato";
+            return null;
 
         }
 
     }
-
-
 }

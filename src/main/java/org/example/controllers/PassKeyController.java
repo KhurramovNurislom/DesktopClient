@@ -79,28 +79,45 @@ public class PassKeyController implements Initializable {
 //        }, 60000);
 
 
-        Tooltip tooltip = new Tooltip("matn ustiga bit marta bosib va nusxa oling");
+        Tooltip tooltip = new Tooltip("matn ustiga bir marta bosib va nusxa oling");
         tooltip.setShowDelay(Duration.millis(100));
         id_lblKeyPath.setTooltip(tooltip);
         id_btnOk.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
 
+
+                System.out.println(Main.getKeyFilePath());
+
+                System.out.println(id_pfPass.getText());
+
+
                 String privateKey = new ReadPrivateKey().readPrivKeyInPFX(Main.getKeyFilePath(), id_pfPass.getText());
 
-                if (!privateKey.equals("parolXato")) {
-                    int k = 0;
-                    for (int i = 0; i < Main.getAliesKeys().getAliesKeyList().length; i++) {
-                        if (Main.getKeyFilePath().equals(Main.getAliesKeys().getAliesKeyList()[i].getPathFile())) {
-                            k = i;
-//                            break;
-                        }
-                    }
-                    if (new UzDSt_1092_2009().verifyPassword(privateKey, new Requests().RequestGetPublicKey(Integer.parseInt(Main.getAliesKeys().getAliesKeyList()[k].getUid())))) {
-                        id_lblErrorPass.setVisible(false);
-                        Main.setPassVerify(true);
-                        closeStage();
-                    }
+
+
+                if (privateKey != null) {
+
+
+                    System.out.println("private key => " + privateKey);
+
+
+
+//                    for (int i = 0; i < Main.getAliesKeys().getAliesKeyList().length; i++) {
+//                        if (Main.getKeyFilePath().equals(Main.getAliesKeys().getAliesKeyList()[i].getPathFile())) {
+//                            System.out.println(true);
+//
+//                        }
+//                    }
+
+
+                    System.out.println(new UzDSt_1092_2009().verifyPassword(privateKey, new Requests().RequestGetPublicKey(/**Integer.parseInt(Main.getAliesKeys().getAliesKeyList()[k].getUid())*/380)));
+//                    if (new UzDSt_1092_2009().verifyPassword(privateKey, new Requests().RequestGetPublicKey(Integer.parseInt(Main.getAliesKeys().getAliesKeyList()[k].getUid())))) {
+//                        id_lblErrorPass.setVisible(false);
+//                        Main.setPassVerify(true);
+//                        closeStage();
+//                    }
+
                 } else {
                     id_lblErrorPass.setVisible(true);
                 }

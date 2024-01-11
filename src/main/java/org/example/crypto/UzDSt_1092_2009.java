@@ -47,9 +47,9 @@ public class UzDSt_1092_2009 {
     public boolean verifyPassword(String privKey, String pubKey) {
 
 
-        String sign = ByteEncode.encodeHexString(signGeneration(readPrivateKey(privKey), "Nurislom".getBytes()));
+        String sign = ByteEncode.encodeHexString(signGeneration(readPrivateKey(privKey), pubKey.getBytes()));
 
-        return verification(readPublicKey(pubKey), "Nurislom".getBytes(), ByteEncode.decodeHexString(sign));
+        return verification(readPublicKey(pubKey), pubKey.getBytes(), ByteEncode.decodeHexString(sign));
 
     }
 

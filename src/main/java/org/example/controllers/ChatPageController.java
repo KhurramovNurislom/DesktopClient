@@ -78,6 +78,7 @@ public class ChatPageController implements Initializable {
     public ScrollPane id_spFiles;
     public VBox id_vbFilesMessagesPane;
     public BorderPane id_bpMessageInfo;
+    public ImageView id_ivClose;
     private HBox hBox;
     private Label lbl;
     private Label lblSize;
@@ -95,6 +96,7 @@ public class ChatPageController implements Initializable {
 
 
     TranslateTransition slide = new TranslateTransition();
+    FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.4), id_pnShadow);
 
     /***** SendDocument ga kerak o'zgaruvchilar ****/
 
@@ -122,7 +124,7 @@ public class ChatPageController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
 //                System.out.println("AddDoc bosildi");
-//                AddDocs();
+                AddDocs();
             }
         });
         id_btnUserInfo.setOnAction(new EventHandler<ActionEvent>() {
@@ -185,6 +187,39 @@ public class ChatPageController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
 //                AddDocuments();
+            }
+        });
+
+        id_ivClose.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+
+                fadeTransition.setOnFinished(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        id_pnShadow.setVisible(false);
+                    }
+                });
+                fadeTransition.setFromValue(0.4);
+                fadeTransition.setToValue(0.0);
+                fadeTransition.play();
+                id_vbDocSend.setVisible(false);
+
+
+            }
+        });
+
+        id_ivClose.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                id_ivClose.setImage(new Image("/images/passKeys/close.gif"));
+            }
+        });
+
+        id_ivClose.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                id_ivClose.setImage(new Image("/images/passKeys/close_red.png"));
             }
         });
 
@@ -441,7 +476,7 @@ public class ChatPageController implements Initializable {
                 slide.play();
 
                 id_bpMessageInfo.setCenter(new FXMLLoaderMade().getPane("BtnInfo"));
-                id_btnPaneClose.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                id_ivClose.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
 
@@ -513,25 +548,16 @@ public class ChatPageController implements Initializable {
      * Fayl jo'natish uchun tanlanganda slide style qilib beradi
      */
     private void PaneShadow() {
-        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.4), id_pnShadow);
+
         fadeTransition.setFromValue(0.0);
         fadeTransition.setToValue(0.4);
         fadeTransition.play();
         id_pnShadow.setVisible(true);
         id_vbDocSend.setVisible(true);
-        id_btnDocInfoClose.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        id_ivClose.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                fadeTransition.setOnFinished(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        id_pnShadow.setVisible(false);
-                    }
-                });
-                fadeTransition.setFromValue(0.4);
-                fadeTransition.setToValue(0.0);
-                fadeTransition.play();
-                id_vbDocSend.setVisible(false);
+
             }
         });
     }

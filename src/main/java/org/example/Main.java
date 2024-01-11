@@ -19,6 +19,7 @@ import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import okhttp3.OkHttpClient;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.example.modules.AliesKey.AliesKey;
 import org.example.modules.AliesKey.AliesKeys;
 import org.example.modules.Hash;
 import org.example.modules.SignedFileInfo;
@@ -88,6 +89,9 @@ public class Main extends Application {
     @Getter
     @Setter
     static AliesKeys aliesKeys;
+    @Getter
+    @Setter
+    static AliesKey aliesKey;
     @Getter
     @Setter
     static List<String> listPaths;

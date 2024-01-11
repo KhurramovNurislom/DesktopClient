@@ -32,24 +32,46 @@ public class KeyInfoInPFXController implements Initializable {
 
     @Getter
     @Setter
-    private int k;
+    private int k=0;
+
+    @Getter
+    @Setter
+    private boolean bool=true;
 
     @JsonIgnoreProperties
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        if (Main.getAliesKeys().getAliesKeyList()[k].getCn().isEmpty()) {
-            id_lblSurName.setText("Null");
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Xatolik!");
-            alert.setHeaderText("Siz tanlagan kalit mazkur tizimga tegishli emas.");
-            alert.setContentText("Kechirasiz, kalitingizni qaytadan tekshirib ko'ring...");
+        if (bool) {
+            if (Main.getAliesKeys().getAliesKeyList()[k].getCn().isEmpty()) {
+                id_lblSurName.setText("Null");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Xatolik!");
+                alert.setHeaderText("Siz tanlagan kalit mazkur tizimga tegishli emas.");
+                alert.setContentText("Kechirasiz, kalitingizni qaytadan tekshirib ko'ring...");
+            } else {
+                id_lblSurName.setText(Main.getAliesKeys().getAliesKeyList()[k].getCn().toUpperCase());
+            }
+            id_lblJSHSHIR.setText(Main.getAliesKeys().getAliesKeyList()[k].getJshshir());
+            id_lblSTIR.setText(Main.getAliesKeys().getAliesKeyList()[k].getUid());
+            id_lblSerNumber.setText(Main.getAliesKeys().getAliesKeyList()[k].getSerialnumber());
+            id_lblFromToDate.setText(formatDate(Main.getAliesKeys().getAliesKeyList()[k].getValidfrom()) + "  /  " + formatDate(Main.getAliesKeys().getAliesKeyList()[k].getValidto()));
         } else {
-            id_lblSurName.setText(Main.getAliesKeys().getAliesKeyList()[k].getCn().toUpperCase());
+            if (Main.getAliesKey().getCn().isEmpty()) {
+                id_lblSurName.setText("Null");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Xatolik!");
+                alert.setHeaderText("Siz tanlagan kalit mazkur tizimga tegishli emas.");
+                alert.setContentText("Kechirasiz, kalitingizni qaytadan tekshirib ko'ring...");
+            } else {
+                id_lblSurName.setText(Main.getAliesKey().getCn().toUpperCase());
+            }
+            id_lblJSHSHIR.setText(Main.getAliesKey().getJshshir());
+            id_lblSTIR.setText(Main.getAliesKey().getUid());
+            id_lblSerNumber.setText(Main.getAliesKey().getSerialnumber());
+            id_lblFromToDate.setText(formatDate(Main.getAliesKey().getValidfrom()) + "  /  " + formatDate(Main.getAliesKey().getValidto()));
         }
-        id_lblJSHSHIR.setText(Main.getAliesKeys().getAliesKeyList()[k].getJshshir());
-        id_lblSTIR.setText(Main.getAliesKeys().getAliesKeyList()[k].getUid());
-        id_lblSerNumber.setText(Main.getAliesKeys().getAliesKeyList()[k].getSerialnumber());
-        id_lblFromToDate.setText(formatDate(Main.getAliesKeys().getAliesKeyList()[k].getValidfrom()) + "  /  " + formatDate(Main.getAliesKeys().getAliesKeyList()[k].getValidto()));
+
+
         id_btnSign.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {

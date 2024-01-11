@@ -43,5 +43,21 @@ public class ReadAliesInPFX {
 
         return arrList;
     }
+
+    public String readAliesInPFXFile(String path) {
+        String alias = "";
+        try {
+            KeyStore keyStore = KeyStore.getInstance("PKCS12");
+            FileInputStream fis = new FileInputStream(path);
+            keyStore.load(fis, null);
+            Enumeration<String> aliases = keyStore.aliases();
+            while (aliases.hasMoreElements()) {
+                alias =aliases.nextElement();
+            }
+        } catch (CertificateException | KeyStoreException | IOException | NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+        return alias;
+    }
 }
 

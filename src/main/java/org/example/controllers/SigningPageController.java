@@ -103,7 +103,7 @@ public class SigningPageController implements Initializable {
         id_btnKeyFileChooser.setTooltip(tooltip);
 
 
-        new AliesKeysReader().AliesCorrect("C:\\DSKEYS", false);
+        new AliesKeysReader().AliesCorrect();
         if (Main.getAliesKeys().getAliesKeyList().length == 0) {
             id_lblKeysName.setText("C:\\DSKEYS papkada kalit mavjud emas, kalitni tanlang");
             id_lblKeysName.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -170,10 +170,15 @@ public class SigningPageController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 id_btnSign.setDisable(true);
-                if (new File(id_lblKeysName.getText()).isFile() && new File(id_tfFilePath.getText()).isFile() && id_tfFilePath.getText().endsWith(".pdf")) {
+
+                if (new File(id_lblKeysName.getText()).isFile() &&
+                        new File(id_tfFilePath.getText()).isFile() &&
+                        id_tfFilePath.getText().endsWith(".pdf")) {
+
                     Main.setPaneShadow(id_pnAllShadow);
                     Main.showPassStage(true);
                     Main.setKeyFilePath(id_lblKeysName.getText());
+
                 } else {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("title");
@@ -188,6 +193,7 @@ public class SigningPageController implements Initializable {
                 TimerTask task = new TimerTask() {
                     @Override
                     public void run() {
+
                         if (Main.isPassVerify()) {
                             timer.cancel();
 
@@ -196,6 +202,7 @@ public class SigningPageController implements Initializable {
 
                             Main.setPassVerify(false);
                         }
+
                     }
                 };
 
@@ -252,7 +259,6 @@ public class SigningPageController implements Initializable {
 
     private String signedFile() {
 
-
         return null;
     }
 
@@ -260,9 +266,9 @@ public class SigningPageController implements Initializable {
         file = fileChooserKey.showOpenDialog(new Stage());
         if (file != null) {
             id_lblKeysName.setText(file.getAbsolutePath());
-            new AliesKeysReader().AliesCorrect(file.getAbsolutePath(), true);
+            new AliesKeysReader().AliesCorrectFile(id_lblKeysName.getText());
             keyInfoInPFXController = new KeyInfoInPFXController();
-            keyInfoInPFXController.setK(0);
+            keyInfoInPFXController.setBool(false);
         }
     }
 
