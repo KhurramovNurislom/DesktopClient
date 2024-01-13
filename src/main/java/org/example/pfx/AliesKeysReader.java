@@ -2,12 +2,11 @@ package org.example.pfx;
 
 import org.example.Main;
 import org.example.modules.AliesKey.AliesKey;
-import org.example.modules.AliesKey.AliesKeys;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import org.example.modules.AliesKey.AliesKeys;
 
 
 public class AliesKeysReader {
@@ -18,7 +17,6 @@ public class AliesKeysReader {
         AliesKey ak;
         for (int i = 0; i < arr.length; i++) {
             ak = new AliesKey();
-            ak.setPathFile(arr[i]);
             textArr = arr[i].split(",");
             ak.setId(i);
             for (String s : textArr) {
@@ -106,7 +104,6 @@ public class AliesKeysReader {
             }
         }
         Main.setAliesKey(aliesKey);
-
     }
 
 }

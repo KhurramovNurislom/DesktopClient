@@ -7,7 +7,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -35,7 +34,6 @@ import org.example.modules.verificationInfo.VerificationInfo;
 import org.example.utils.FXMLLoaderMade;
 import org.example.utils.SSLClient;
 
-import java.security.KeyPair;
 import java.security.Security;
 import java.util.*;
 
@@ -109,6 +107,9 @@ public class Main extends Application {
     static String keyFilePath;
     @Getter
     @Setter
+    static String privateKey;
+    @Getter
+    @Setter
     static Pane paneShadow;
     static double x = 0, y = 0;
     static Stage passStage;
@@ -157,11 +158,10 @@ public class Main extends Application {
                 }
             });
             passStage.setScene(scene);
-//            passStage.initModality(Modality.APPLICATION_MODAL);
+            passStage.initModality(Modality.APPLICATION_MODAL);
             passStage.initStyle(StageStyle.TRANSPARENT);
             passStage.centerOnScreen();
             passStage.show();
-
         } else {
             allShadow(false);
             passStage.close();

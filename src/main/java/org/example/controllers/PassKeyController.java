@@ -20,9 +20,10 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-import org.apache.batik.util.ParsedURLProtocolHandler;
 import org.example.Main;
 import org.example.crypto.UzDSt_1092_2009;
+import org.example.modules.AliesKey.AliesKey;
+import org.example.pfx.AliesKeysReader;
 import org.example.pfx.ReadPrivateKey;
 import org.example.utils.Requests;
 
@@ -53,7 +54,7 @@ public class PassKeyController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println("asdasdasdadsaszdczxcZXcz");
+
         Main.setPassVerify(false);
         timer();
         hiddenEyes();
@@ -86,40 +87,19 @@ public class PassKeyController implements Initializable {
             @Override
             public void handle(ActionEvent actionEvent) {
 
-
-                System.out.println(Main.getKeyFilePath());
-
-                System.out.println(id_pfPass.getText());
-
-
-                String privateKey = new ReadPrivateKey().readPrivKeyInPFX(Main.getKeyFilePath(), id_pfPass.getText());
-
-
-
+                String privateKey = new ReadPrivateKey().readPrivKeyInPFX(id_lblKeyPath.getText(), id_pfPass.getText());
                 if (privateKey != null) {
-
-
-                    System.out.println("private key => " + privateKey);
-
-
-
-//                    for (int i = 0; i < Main.getAliesKeys().getAliesKeyList().length; i++) {
-//                        if (Main.getKeyFilePath().equals(Main.getAliesKeys().getAliesKeyList()[i].getPathFile())) {
-//                            System.out.println(true);
-//
-//                        }
-//                    }
-
-
-                    System.out.println(new UzDSt_1092_2009().verifyPassword(privateKey, new Requests().RequestGetPublicKey(/**Integer.parseInt(Main.getAliesKeys().getAliesKeyList()[k].getUid())*/380)));
-//                    if (new UzDSt_1092_2009().verifyPassword(privateKey, new Requests().RequestGetPublicKey(Integer.parseInt(Main.getAliesKeys().getAliesKeyList()[k].getUid())))) {
-//                        id_lblErrorPass.setVisible(false);
-//                        Main.setPassVerify(true);
-//                        closeStage();
-//                    }
-
+                    new AliesKeysReader().AliesCorrectFile(id_lblKeyPath.getText());
+                    if (new UzDSt_1092_2009().verifyPassword(privateKey, new Requests().RequestGetPublicKey(Integer.parseInt((Main.getAliesKey().getUid()))))) {
+                        id_lblErrorPass.setVisible(false);
+                        Main.setPassVerify(true);
+                        Main.setPrivateKey(privateKey);
+                        closeStage();
+                    }
                 } else {
                     id_lblErrorPass.setVisible(true);
+                    id_pfPass.setStyle("-fx-text-fill: RED");
+                    id_tfPass.setStyle("-fx-text-fill: RED");
                 }
 
             }
@@ -199,7 +179,6 @@ public class PassKeyController implements Initializable {
                 id_ivClose.setImage(new Image("/images/passKeys/close_red.png"));
             }
         });
-
     }
 
     private void hiddenEyes() {
@@ -225,7 +204,12 @@ public class PassKeyController implements Initializable {
 
     private void updateTimerLabel() {
         id_lblTitle.setText("Oyna yopilgunicha " + seconds + " sekund");
-        System.out.println(seconds);
+        if (seconds < 30 && seconds > 9) {
+            id_lblTitle.setStyle("-fx-text-fill: GREEN");
+        } else if (seconds < 10) {
+            id_lblTitle.setStyle("-fx-text-fill: RED");
+        }
+
         if (seconds == 0) {
             closeStage();
         }

@@ -2,7 +2,6 @@ package org.example.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
-import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import org.example.Main;
+import org.example.crypto.ByteEncode;
 import org.example.crypto.UzDSt_1092_2009;
 import org.example.pfx.PFXManager;
 import org.example.utils.Requests;
@@ -123,6 +123,8 @@ public class KeysGenPageController implements Initializable {
 
                     UzDSt_1092_2009 uzDSt10922009 = new UzDSt_1092_2009();
                     KeyPair keyPair = uzDSt10922009.generateKeyPair();
+                    System.out.println(ByteEncode.encodeHexString(keyPair.getPrivate().getEncoded()));
+                    System.out.println(ByteEncode.encodeHexString(keyPair.getPublic().getEncoded()));
 
                     new Requests().RequestkeysGen("Hex.toHexString(keyPair.getPrivate().getEncoded())",
                             Hex.toHexString(keyPair.getPublic().getEncoded()), id_tfCerName.getText());

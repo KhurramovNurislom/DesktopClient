@@ -92,11 +92,7 @@ public class SignVerPageController implements Initializable {
                     });
                 }
                 temp = id_tfFilePath.getText().replaceAll(", ", ",").split(",");
-                /** QRCodeni o'qish */
-                for (String s : temp) {
-                    link = new PDFWorker().ReadSignLink(s);
-                    new Requests().RequestGetSignedFilesInfo(link);
-                }
+
                 id_btnChangeFile.setDisable(false);
             }
         });
@@ -105,46 +101,64 @@ public class SignVerPageController implements Initializable {
         id_btnSignVerification.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                id_btnSignVerification.setDisable(true);
+                /**********************  Begin verification ***************************/
                 for (String s : temp) {
-                    boolean boolSignVerify = new UzDSt_1092_2009().verifySignature(Main.getVerification().getPubkey(), s, Main.getVerification().getFayl().getImzo());
-                    if (boolSignVerify) {
-                        id_lblVerification.setVisible(true);
-                        id_lblVerification.setText("Imzo tasdiqlandi");
-                        id_lblVerification.setTextFill(Color.GREEN);
-                        id_ivCheckSign.setImage(new Image("/images/signVerPage/accept.png"));
-                        boolPane = false;
-                        shadow();
-                        id_tfLogin.setText(Main.getVerification().getUser().getUsername());
-                        id_tfEmail.setText(Main.getVerification().getUser().getEmail());
-                        new Requests().RequestUsers();
-                        for (int j = 0; j < Main.getAUsers().getData().getUsersPermissionsUsers().getData().length; j++) {
-                            if (Main.getVerification().getUser().getId() == Main.getAUsers().getData().getUsersPermissionsUsers().getData()[j].getId()) {
-                                id_ivUserImage.setImage(new Image(Main.getUrl() + Main.getAUsers().getData().getUsersPermissionsUsers().getData()[j].getAttributes().getRasm().getData().getAttributes().getUrl()));
-                            } else {
-                                if (Main.getVerification().getUser().getId() == Main.getLoginData().getUser().getId()) {
-                                    id_ivUserImage.setImage(new Image(Main.getUrl() + Main.getAUsersMe().getData().getUsersPermissionsUser().getData().getAttributes().getRasm().getData().getAttributes().getUrl()));
-                                }
-                            }
-                        }
-                        id_tfSignedFileName.setText(Main.getVerification().getFayl().getName());
-                        id_tfSignedFilePath.setText(s);
-                        try {
-                            id_tfSignedFileVolume.setText(new DecimalFormat("#.##").format((double) Files.size(Path.of(id_tfSignedFilePath.getText())) / (1024 * 1024)) + " Mb");
-                            id_tfFileSignedTime.setText(new SimpleDateFormat("HH:mm:ss dd.MM.yyyy").format(new Date(Files.readAttributes(Path.of(id_tfSignedFilePath.getText()),
-                                    BasicFileAttributes.class).creationTime().toMillis())));
-                        } catch (IOException e) {
-                            System.err.println("exception : SignVerPageController(btnSignVerification) => " + e.getCause());
-                        }
 
-                    } else {
-                        id_lblVerification.setText("Imzo tasdiqlanmadi");
-                        id_lblVerification.setTextFill(Color.RED);
-                        id_ivCheckSign.setImage(new Image("/images/signVerPage/warning.png"));
-                    }
+                    new Requests().RequestGetSignedFilesInfo(new PDFWorker().ReadSignLink(s));
+                    System.out.println(s);
+                    System.out.println("Main.getVerification().getPubkey() => " + Main.getVerification().getPubkey());
+                    System.out.println("Main.getVerification().getFayl().getImzo() => " + Main.getVerification().getFayl().getImzo());
+
+                    System.out.println("\n");
+                    boolean boolSignVerify = new UzDSt_1092_2009().verifySignature(Main.getVerification().getPubkey(), s, Main.getVerification().getFayl().getImzo());
+
+                    System.out.println(boolSignVerify);
+
+
+//                    if (boolSignVerify) {
+//                        id_lblVerification.setVisible(true);
+//                        id_lblVerification.setText("Imzo tasdiqlandi");
+//                        id_lblVerification.setTextFill(Color.GREEN);
+//                        id_ivCheckSign.setImage(new Image("/images/signVerPage/accept.png"));
+//                        boolPane = false;
+//                        shadow();
+//                        id_tfLogin.setText(Main.getVerification().getUser().getUsername());
+//                        id_tfEmail.setText(Main.getVerification().getUser().getEmail());
+//                        new Requests().RequestUsers();
+//                        for (int j = 0; j < Main.getAUsers().getData().getUsersPermissionsUsers().getData().length; j++) {
+//                            if (Main.getVerification().getUser().getId() == Main.getAUsers().getData().getUsersPermissionsUsers().getData()[j].getId()) {
+//                                id_ivUserImage.setImage(new Image(Main.getUrl() + Main.getAUsers().getData().getUsersPermissionsUsers().getData()[j].getAttributes().getRasm().getData().getAttributes().getUrl()));
+//                            } else {
+//                                if (Main.getVerification().getUser().getId() == Main.getLoginData().getUser().getId()) {
+//                                    id_ivUserImage.setImage(new Image(Main.getUrl() + Main.getAUsersMe().getData().getUsersPermissionsUser().getData().getAttributes().getRasm().getData().getAttributes().getUrl()));
+//                                }
+//                            }
+//                        }
+//                        id_tfSignedFileName.setText(Main.getVerification().getFayl().getName());
+//                        id_tfSignedFilePath.setText(s);
+//                        try {
+//                            id_tfSignedFileVolume.setText(new DecimalFormat("#.##").format((double) Files.size(Path.of(id_tfSignedFilePath.getText())) / (1024 * 1024)) + " Mb");
+//                            id_tfFileSignedTime.setText(new SimpleDateFormat("HH:mm:ss dd.MM.yyyy").format(new Date(Files.readAttributes(Path.of(id_tfSignedFilePath.getText()),
+//                                    BasicFileAttributes.class).creationTime().toMillis())));
+//                        } catch (IOException e) {
+//                            System.err.println("exception : SignVerPageController(btnSignVerification) => " + e.getCause());
+//                        }
+//
+//                    } else {
+//                        id_lblVerification.setText("Imzo tasdiqlanmadi");
+//                        id_lblVerification.setTextFill(Color.RED);
+//                        id_ivCheckSign.setImage(new Image("/images/signVerPage/warning.png"));
+//                    }
                 }
+                /**********************  End verification ***************************/
+
+
+                id_btnSignVerification.setDisable(false);
             }
         });
     }
+
 
     private void shadow() {
         if (boolPane) {

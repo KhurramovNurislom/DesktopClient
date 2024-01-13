@@ -269,6 +269,7 @@ public class Requests {
             assert response.body() != null;
             VerificationInfo verification = gson.fromJson(response.body().string(), VerificationInfo.class);
             Main.setVerification(verification);
+
             response.close();
         } catch (IOException e) {
             System.out.println("exception : Requests().RequestGetSignedFilesInfo() => " + e.getCause());

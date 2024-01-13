@@ -111,7 +111,7 @@ public class LoginPageController implements Initializable {
                                 /** Userlarni serverdan oladi */
                                 requests.RequestUsers();
                                 /** Foydalanuvchining kalitlarini olib beradi */
-                                requests.RequestKeys();
+//                                requests.RequestKeys();
                             }
                         };
                         thread.start();

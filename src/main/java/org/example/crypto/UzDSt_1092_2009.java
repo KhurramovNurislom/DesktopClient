@@ -24,7 +24,7 @@ public class UzDSt_1092_2009 {
     }
 
     public String signGenerate(String privKey, String path) {
-        System.out.println(path);
+//        System.out.println(path);
 
         try {
             return ByteEncode.encodeHexString(signGeneration(readPrivateKey(privKey), Files.readAllBytes(Paths.get(path))));
@@ -35,7 +35,7 @@ public class UzDSt_1092_2009 {
     }
 
     public boolean verifySignature(String pubKey, String path, String sign) {
-        System.out.println(path);
+//        System.out.println(path);
         try {
             return verification(readPublicKey(pubKey), Files.readAllBytes(Paths.get(path)), ByteEncode.decodeHexString(sign));
         } catch (IOException e) {

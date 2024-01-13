@@ -15,7 +15,7 @@ public class ReadPrivateKey {
             keyStore.load(fis, password.toCharArray());
 
             // Asosiy kalitni olish
-            String alias = (String) keyStore.aliases().nextElement();
+            String alias = keyStore.aliases().nextElement();
             privateKey = (PrivateKey) keyStore.getKey(alias, password.toCharArray());
 
 //            // Serifikatni olish (kerak bo'lsa)
@@ -23,9 +23,9 @@ public class ReadPrivateKey {
 
             // Boshqa operatsiyalarni amalga oshirishingiz mumkin
 
-            System.out.println("PrivateKey: " + privateKey);
+//            System.out.println("PrivateKey: " + privateKey);
             assert privateKey != null;
-            System.out.println(ByteEncode.encodeHexString(privateKey.getEncoded()));
+//            System.out.println(ByteEncode.encodeHexString(privateKey.getEncoded()));
             return ByteEncode.encodeHexString(privateKey.getEncoded());
 //            System.out.println("Certificate: " + cert);
         } catch (Exception e) {
